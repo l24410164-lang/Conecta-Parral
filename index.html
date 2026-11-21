@@ -11,20 +11,28 @@
   <style>
     :root {
       --navy: #0B3B60;
-      --navy-dark: #072740;
+      --navy-dark: #07243B;
       --teal: #1E7E8B;
-      --teal-soft: #E6F3F5;
+      --teal-dark: #15626C;
+      --teal-soft: #E5F3F5;
       --gold: #C99A2E;
-      --gold-soft: #FDF6E4;
-      --bg: #F6F5F0;
-      --card: #FFFFFF;
-      --text: #162430;
+      --gold-dark: #A97E1D;
+      --gold-soft: #FDF6E3;
+      --cream: #F6F5F0;
+      --surface: #FFFFFF;
+      --surface-alt: #F9FAFB;
+      --text: #15222E;
       --muted: #5A6B7A;
-      --border: #DCE3E8;
-      --success: #15803D;
-      --danger: #B91C1C;
-      --radius: 14px;
-      --shadow: 0 8px 24px rgba(11, 59, 96, 0.08);
+      --border: #DCE3E9;
+      --open-bg: #DCFCE7;
+      --open-fg: #15803D;
+      --closed-bg: #FEE2E2;
+      --closed-fg: #B91C1C;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 4px 14px rgba(11, 59, 96, 0.06);
+      --shadow-md: 0 12px 30px rgba(11, 59, 96, 0.10);
     }
 
     * {
@@ -35,24 +43,26 @@
 
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg);
+      background-color: var(--cream);
       color: var(--text);
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
+    /* Top bar */
     header {
-      background: var(--card);
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 1000;
+      box-shadow: 0 2px 10px rgba(11, 59, 96, 0.04);
     }
 
     .header-inner {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
-      padding: 12px 20px;
+      padding: 12px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -67,25 +77,26 @@
       cursor: pointer;
     }
 
-    .brand-text {
+    .brand-copy {
       display: flex;
       flex-direction: column;
     }
 
-    .brand-title {
+    .brand-name {
+      font-size: 1.18rem;
       font-weight: 800;
-      font-size: 1.15rem;
       color: var(--navy);
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
       line-height: 1.1;
     }
 
-    .brand-sub {
-      font-size: 0.7rem;
+    .brand-tagline {
+      font-size: 0.68rem;
       font-weight: 700;
       color: var(--teal);
-      letter-spacing: 0.6px;
+      letter-spacing: 0.7px;
       text-transform: uppercase;
+      margin-top: 2px;
     }
 
     .header-actions {
@@ -95,30 +106,46 @@
       flex-wrap: wrap;
     }
 
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal-soft);
+      color: var(--navy);
+      border: 1px solid rgba(30, 126, 139, 0.25);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    /* Buttons */
     .btn {
       border: none;
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       padding: 9px 15px;
       font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 600;
+      font-size: 0.86rem;
+      font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      transition: transform 0.12s ease, opacity 0.15s ease, background 0.15s ease;
+      text-decoration: none;
+      transition: transform 0.12s ease, background 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
     }
 
     .btn:active {
       transform: scale(0.98);
     }
 
-    .btn-primary {
+    .btn-navy {
       background: var(--navy);
       color: #fff;
     }
 
-    .btn-primary:hover {
+    .btn-navy:hover {
       background: var(--navy-dark);
     }
 
@@ -128,145 +155,248 @@
     }
 
     .btn-teal:hover {
-      opacity: 0.92;
+      background: var(--teal-dark);
     }
 
     .btn-gold {
       background: var(--gold);
       color: #fff;
+      box-shadow: 0 4px 12px rgba(201, 154, 46, 0.28);
     }
 
-    .btn-outline {
-      background: transparent;
+    .btn-gold:hover {
+      background: var(--gold-dark);
+    }
+
+    .btn-ghost {
+      background: var(--surface);
       color: var(--navy);
       border: 1px solid var(--border);
     }
 
-    .btn-outline:hover {
-      background: #F0F4F7;
+    .btn-ghost:hover {
+      background: var(--surface-alt);
+      border-color: #C4D0DA;
     }
 
     .btn-sm {
-      padding: 6px 11px;
+      padding: 7px 12px;
       font-size: 0.8rem;
-      border-radius: 8px;
     }
 
-    /* Mission Banner */
-    .mission-banner {
-      background: linear-gradient(120deg, var(--navy) 0%, var(--teal) 100%);
+    /* Hero / Propuesta de valor */
+    .hero {
+      background: radial-gradient(circle at top right, rgba(201, 154, 46, 0.18), transparent 42%),
+                  linear-gradient(125deg, var(--navy-dark) 0%, var(--navy) 52%, var(--teal) 100%);
       color: #fff;
-      padding: 22px 20px;
+      padding: 28px 22px;
+      border-bottom: 3px solid var(--gold);
     }
 
-    .mission-inner {
-      max-width: 1280px;
+    .hero-inner {
+      max-width: 1320px;
       margin: 0 auto;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
       align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
     }
 
-    .mission-inner h1 {
-      font-size: 1.45rem;
-      font-weight: 800;
-      margin-bottom: 4px;
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .mission-inner p {
-      font-size: 0.92rem;
-      opacity: 0.94;
-      max-width: 680px;
-    }
-
-    .mission-badges {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge-pill {
-      background: rgba(255, 255, 255, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      padding: 6px 12px;
+    .hero-kicker {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 4px 12px;
       border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.45rem, 2.6vw, 2.05rem);
+      font-weight: 800;
+      line-height: 1.18;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 0.94rem;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 640px;
+    }
+
+    .hero-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .hero-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-mini {
+      background: rgba(255, 255, 255, 0.11);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .hero-mini strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      color: #FFE599;
+    }
+
+    .hero-mini span {
       font-size: 0.8rem;
-      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      display: block;
     }
 
-    /* Main Container */
+    /* Main container */
     .container {
-      max-width: 1280px;
-      margin: 22px auto;
-      padding: 0 20px 50px;
+      max-width: 1320px;
+      margin: 24px auto;
+      padding: 0 22px 60px;
     }
 
-    /* Search & Filters */
-    .filters-bar {
-      background: var(--card);
+    /* Owner Dashboard */
+    .owner-panel {
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
+      border-left: 5px solid var(--gold);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 24px;
+      display: none;
+    }
+
+    .owner-panel.active {
+      display: block;
+    }
+
+    .owner-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 13px 15px;
+    }
+
+    .stat-card small {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-top: 2px;
+    }
+
+    /* Search & filter bar */
+    .filter-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
       margin-bottom: 22px;
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
-    .search-row {
+    .search-line {
       display: flex;
       gap: 12px;
-      flex-wrap: wrap;
       align-items: center;
+      flex-wrap: wrap;
     }
 
-    .search-input {
+    .search-box {
       flex: 1;
       min-width: 240px;
-      padding: 11px 14px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      padding: 11px 15px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
       font-family: inherit;
       font-size: 0.92rem;
-      background: #FAFBFD;
+      background: var(--surface-alt);
     }
 
-    .search-input:focus {
+    .search-box:focus {
       outline: none;
+      background: var(--surface);
       border-color: var(--teal);
-      background: #fff;
     }
 
-    .toggle-open {
-      display: flex;
+    .check-open {
+      display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.88rem;
-      font-weight: 600;
+      font-size: 0.86rem;
+      font-weight: 700;
       color: var(--navy);
       cursor: pointer;
       user-select: none;
     }
 
-    .category-chips {
+    .chips-row {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
     }
 
     .chip {
-      padding: 6px 13px;
+      padding: 7px 14px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: #fff;
+      background: var(--surface);
       color: var(--text);
       font-size: 0.82rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.14s ease;
+    }
+
+    .chip:hover {
+      border-color: var(--teal);
     }
 
     .chip.active {
@@ -275,191 +405,209 @@
       border-color: var(--navy);
     }
 
-    /* Content Layout: Map + List */
-    .workspace {
+    /* Workspace split: Directory left, Map right */
+    .content-grid {
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
-      gap: 20px;
+      grid-template-columns: 1.08fr 1fr;
+      gap: 22px;
       align-items: start;
     }
 
-    @media (max-width: 960px) {
-      .workspace {
+    @media (max-width: 980px) {
+      .content-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    .map-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      position: sticky;
-      top: 82px;
-    }
-
-    @media (max-width: 960px) {
-      .map-card {
-        position: static;
-      }
-    }
-
-    .map-header {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: var(--navy);
-    }
-
-    #map {
-      height: 460px;
-      width: 100%;
-      z-index: 1;
-    }
-
-    .business-list {
+    .cards-column {
       display: flex;
       flex-direction: column;
       gap: 14px;
     }
 
     .biz-card {
-      background: var(--card);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
+      border-radius: var(--radius-lg);
+      padding: 15px;
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      grid-template-columns: 116px 1fr;
+      gap: 15px;
       cursor: pointer;
-      transition: border-color 0.15s ease, transform 0.12s ease;
+      transition: transform 0.14s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    @media (max-width: 540px) {
+      .biz-card {
+        grid-template-columns: 1fr;
+      }
     }
 
     .biz-card:hover {
+      transform: translateY(-2px);
       border-color: var(--teal);
-      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
     }
 
-    .biz-top {
+    .biz-thumb {
+      width: 100%;
+      height: 112px;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      text-align: center;
+      padding: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .biz-thumb span {
+      font-size: 0.72rem;
+      opacity: 0.9;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .biz-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+
+    .biz-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
-    .biz-name {
+    .cat-tag {
+      display: inline-block;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 4px;
+    }
+
+    .local-tag {
+      display: inline-block;
+      background: var(--gold-soft);
+      color: var(--gold-dark);
+      border: 1px solid rgba(201, 154, 46, 0.35);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-left: 4px;
+    }
+
+    .biz-title {
       font-size: 1.05rem;
       font-weight: 800;
       color: var(--navy);
     }
 
-    .biz-cat {
-      display: inline-block;
-      background: var(--teal-soft);
-      color: var(--teal);
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 999px;
-      margin-bottom: 6px;
-    }
-
-    .status-badge {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 9px;
+    .pill-status {
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 4px 10px;
       border-radius: 999px;
       white-space: nowrap;
     }
 
-    .status-open {
-      background: #DCFCE7;
-      color: var(--success);
+    .pill-open {
+      background: var(--open-bg);
+      color: var(--open-fg);
     }
 
-    .status-closed {
-      background: #FEE2E2;
-      color: var(--danger);
+    .pill-closed {
+      background: var(--closed-bg);
+      color: var(--closed-fg);
     }
 
     .biz-desc {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .biz-details {
+      font-size: 0.8rem;
+      color: var(--text);
       margin-bottom: 10px;
     }
 
-    .biz-meta {
-      font-size: 0.82rem;
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      margin-bottom: 12px;
+    .biz-details div {
+      margin-bottom: 2px;
     }
 
-    .biz-actions {
+    .biz-footer {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
       align-items: center;
     }
 
-    /* Owner Panel */
-    .owner-panel {
-      background: var(--card);
+    /* Map side */
+    .map-panel {
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 84px;
     }
 
-    .owner-header {
+    @media (max-width: 980px) {
+      .map-panel {
+        position: static;
+      }
+    }
+
+    .map-top {
+      padding: 13px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .stat-box {
-      background: #F8FAFC;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 14px;
-    }
-
-    .stat-label {
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .stat-val {
-      font-size: 1.35rem;
+      gap: 10px;
+      font-size: 0.86rem;
       font-weight: 800;
       color: var(--navy);
     }
 
+    #map {
+      height: 500px;
+      width: 100%;
+      z-index: 1;
+    }
+
+    #pickerMap {
+      height: 230px;
+      width: 100%;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      margin: 8px 0 12px;
+    }
+
+    /* Form elements */
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .field {
@@ -469,7 +617,7 @@
     }
 
     .field label {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--navy);
     }
@@ -479,148 +627,161 @@
     .field textarea {
       padding: 9px 12px;
       border: 1px solid var(--border);
-      border-radius: 9px;
+      border-radius: var(--radius-sm);
       font-family: inherit;
       font-size: 0.88rem;
-      background: #fff;
+      background: var(--surface);
+      color: var(--text);
     }
 
-    #pickerMap {
-      height: 240px;
-      width: 100%;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      margin-bottom: 12px;
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--teal);
     }
 
     /* Modals */
-    .modal-backdrop {
+    .modal-bg {
       position: fixed;
       inset: 0;
-      background: rgba(7, 39, 64, 0.55);
+      background: rgba(7, 36, 59, 0.58);
+      backdrop-filter: blur(2px);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 16px;
-      z-index: 2000;
+      z-index: 2500;
     }
 
-    .modal-backdrop.open {
+    .modal-bg.open {
       display: flex;
     }
 
-    .modal {
-      background: var(--card);
-      border-radius: var(--radius);
-      max-width: 540px;
+    .modal-box {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      max-width: 560px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
       padding: 22px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
     }
 
-    .modal-head {
+    .modal-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+      gap: 12px;
       margin-bottom: 14px;
     }
 
-    .modal-head h2 {
-      font-size: 1.15rem;
+    .modal-top h2 {
+      font-size: 1.18rem;
       font-weight: 800;
       color: var(--navy);
     }
 
-    .close-btn {
-      background: #F1F5F9;
-      border: none;
+    .x-btn {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
-      font-size: 1.1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      font-size: 1.15rem;
       cursor: pointer;
       color: var(--text);
+      flex-shrink: 0;
     }
 
-    .role-switch {
+    .role-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-bottom: 14px;
     }
 
-    .role-card {
-      border: 1.5px solid var(--border);
-      border-radius: 11px;
-      padding: 12px;
-      cursor: pointer;
-      text-align: left;
-      background: #fff;
-    }
-
-    .role-card.active {
-      border-color: var(--teal);
-      background: var(--teal-soft);
-    }
-
-    .role-card strong {
-      display: block;
-      font-size: 0.9rem;
-      color: var(--navy);
-    }
-
-    .role-card span {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .plans-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin: 12px 0;
-    }
-
-    @media (max-width: 520px) {
-      .plans-grid {
+    @media (max-width: 500px) {
+      .role-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    .plan-box {
+    .role-option {
       border: 1.5px solid var(--border);
-      border-radius: 11px;
+      border-radius: var(--radius-md);
       padding: 12px;
+      text-align: left;
+      background: var(--surface);
       cursor: pointer;
-      background: #FAFBFD;
+      font-family: inherit;
     }
 
-    .plan-box.selected {
+    .role-option.active {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+    }
+
+    .role-option strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    .role-option span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: block;
+    }
+
+    .plans-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 8px 0 12px;
+    }
+
+    @media (max-width: 500px) {
+      .plans-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .plan-card {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      background: var(--surface-alt);
+      cursor: pointer;
+    }
+
+    .plan-card.selected {
       border-color: var(--gold);
       background: var(--gold-soft);
     }
 
     .plan-price {
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       font-weight: 800;
       color: var(--navy);
-      margin: 4px 0;
+      margin: 3px 0;
     }
 
-    .quick-demos {
-      background: #F8FAFC;
+    .demo-strip {
+      background: var(--surface-alt);
       border: 1px dashed var(--border);
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       padding: 10px 12px;
       margin-bottom: 14px;
       font-size: 0.8rem;
     }
 
-    .review-item {
-      background: #F8FAFC;
-      border-radius: 9px;
+    .review-box {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
       padding: 10px 12px;
       margin-bottom: 8px;
       font-size: 0.84rem;
@@ -628,16 +789,17 @@
 
     .toast {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--navy);
+      bottom: 22px;
+      right: 22px;
+      background: var(--navy-dark);
       color: #fff;
-      padding: 11px 16px;
-      border-radius: 10px;
+      border-left: 4px solid var(--gold);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
       font-size: 0.86rem;
-      font-weight: 600;
-      box-shadow: var(--shadow);
-      z-index: 3000;
+      font-weight: 700;
+      box-shadow: var(--shadow-md);
+      z-index: 3500;
       opacity: 0;
       transform: translateY(10px);
       transition: all 0.2s ease;
@@ -654,9 +816,9 @@
 
   <header>
     <div class="header-inner">
-      <div class="brand" onclick="resetView()">
+      <div class="brand" onclick="resetHome()">
         <!-- Logotipo Geométrico CP Conecta Parral -->
-        <svg width="46" height="46" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Conecta Parral">
+        <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logotipo Conecta Parral">
           <polygon points="36,12 60,26 60,52 36,66 12,52 12,26" fill="#0B3B60"/>
           <polygon points="36,12 60,26 36,39" fill="#1E7E8B"/>
           <polygon points="60,26 60,52 36,39" fill="#145A73"/>
@@ -665,9 +827,7 @@
           <polygon points="64,26 88,12 110,26 110,54 88,68 64,54" fill="#1E7E8B"/>
           <polygon points="64,26 88,12 88,40" fill="#C99A2E"/>
           <polygon points="64,54 88,68 64,98" fill="#0B3B60"/>
-          <!-- Silueta simplificada urbana en centro -->
           <path d="M24 54 V40 L29 36 L34 40 V54 M34 54 V33 L39 26 L44 33 V54 M44 54 V42 L49 38 L53 42 V54" fill="#F6F5F0"/>
-          <!-- Nodos de conexión -->
           <circle cx="24" cy="10" r="4" fill="#1E7E8B"/>
           <line x1="24" y1="14" x2="28" y2="20" stroke="#1E7E8B" stroke-width="2"/>
           <circle cx="96" cy="10" r="4" fill="#1E7E8B"/>
@@ -675,9 +835,9 @@
           <circle cx="112" cy="44" r="4" fill="#0B3B60"/>
           <line x1="108" y1="44" x2="102" y2="44" stroke="#0B3B60" stroke-width="2"/>
         </svg>
-        <div class="brand-text">
-          <span class="brand-title">CONECTA PARRAL</span>
-          <span class="brand-sub">Plataforma Digital · Su Negocio Local en Línea</span>
+        <div class="brand-copy">
+          <span class="brand-name">CONECTA PARRAL</span>
+          <span class="brand-tagline">Plataforma Digital · Su Negocio Local en Línea</span>
         </div>
       </div>
 
@@ -685,47 +845,54 @@
     </div>
   </header>
 
-  <section class="mission-banner">
-    <div class="mission-inner">
+  <section class="hero">
+    <div class="hero-inner">
       <div>
-        <h1>Impulsamos los negocios locales de Hidalgo del Parral</h1>
+        <span class="hero-kicker">HIDALGO DEL PARRAL, CHIHUAHUA</span>
+        <h1>Visibilidad real para los negocios de barrio que merecen conocerse</h1>
         <p>
-          Descubre emprendimientos de barrio, repostería, estética, uñas, ropa y antojitos que merecen ser conocidos.
-          Explorar es <strong>100% gratis e ilimitado</strong> para usuarios; publicar y administrar locales cuenta con planes accesibles para dueños.
+          Conecta con creperías, estudios de uñas, boutiques locales, barberías y antojitos de Parral.
+          Explorar es libre para todos los usuarios; publicar y gestionar tu local cuenta con planes accesibles.
         </p>
       </div>
-      <div class="mission-badges">
-        <span class="badge-pill">Usuarios: Gratis e Ilimitado</span>
-        <span class="badge-pill">Dueños: Planes desde $149/mes</span>
+      <div class="hero-cards">
+        <div class="hero-mini">
+          <strong>Usuarios y Clientes</strong>
+          <span>Acceso gratuito e ilimitado para explorar, guardar favoritos y dejar reseñas.</span>
+        </div>
+        <div class="hero-mini">
+          <strong>Dueños de Local</strong>
+          <span>Planes mensuales de paga para aparecer en el mapa y recibir mensajes por WhatsApp.</span>
+        </div>
       </div>
     </div>
   </section>
 
   <main class="container">
     <!-- Panel exclusivo de Dueño de Local -->
-    <section class="owner-panel" id="ownerPanel" style="display: none;">
-      <div class="owner-header">
+    <section class="owner-panel" id="ownerPanel">
+      <div class="owner-top">
         <div>
-          <h2 style="color: var(--navy); font-size: 1.2rem;">Panel de Dueño de Local</h2>
-          <p id="ownerSubtext" style="font-size: 0.85rem; color: var(--muted);"></p>
+          <h2 style="color: var(--navy); font-size: 1.18rem;">Panel de Dueño de Local</h2>
+          <p id="ownerPlanInfo" style="font-size: 0.84rem; color: var(--muted);"></p>
         </div>
-        <button class="btn btn-outline btn-sm" onclick="toggleBusinessForm()">+ Registrar nuevo local</button>
+        <button type="button" class="btn btn-teal btn-sm" onclick="toggleForm()">+ Publicar o registrar local</button>
       </div>
 
-      <div class="stats-grid" id="ownerStats"></div>
+      <div class="stats-row" id="ownerStats"></div>
 
-      <div id="businessFormWrap" style="display: none; border-top: 1px solid var(--border); padding-top: 16px; margin-top: 10px;">
-        <h3 id="formTitle" style="font-size: 1rem; color: var(--navy); margin-bottom: 12px;">Registrar negocio en Parral</h3>
-        <form id="businessForm" onsubmit="saveBusiness(event)">
-          <input type="hidden" id="editBizId" />
+      <div id="formContainer" style="display: none; border-top: 1px solid var(--border); padding-top: 16px; margin-bottom: 14px;">
+        <h3 id="formHeading" style="font-size: 0.98rem; color: var(--navy); margin-bottom: 12px;">Nuevo negocio local en Parral</h3>
+        <form id="bizForm" onsubmit="submitBusiness(event)">
+          <input type="hidden" id="editId" />
           <div class="form-grid">
             <div class="field">
               <label>Nombre del negocio *</label>
-              <input type="text" id="bizName" required placeholder="Ej. CREPE (Crepas & waffles)" />
+              <input type="text" id="fName" required placeholder="Ej. CREPE (Crepas & waffles)" />
             </div>
             <div class="field">
               <label>Categoría *</label>
-              <select id="bizCategory" required>
+              <select id="fCategory" required>
                 <option value="Comida y Postres">Comida y Postres</option>
                 <option value="Uñas y Belleza">Uñas y Belleza</option>
                 <option value="Ropa y Boutique">Ropa y Boutique</option>
@@ -735,166 +902,169 @@
             </div>
             <div class="field">
               <label>Teléfono / WhatsApp *</label>
-              <input type="text" id="bizPhone" required placeholder="627 123 3087" />
+              <input type="text" id="fPhone" required placeholder="627 123 3087" />
             </div>
             <div class="field">
               <label>Horario de atención *</label>
-              <input type="text" id="bizHours" required placeholder="Lun - Dom · 16:00 - 22:00" />
+              <input type="text" id="fHours" required placeholder="Mar - Dom · 17:00 - 22:30" />
             </div>
           </div>
 
           <div class="field" style="margin-bottom: 12px;">
-            <label>Dirección en Hidalgo del Parral *</label>
-            <input type="text" id="bizAddress" required placeholder="Calle, colonia y código postal" />
+            <label>Dirección completa en Hidalgo del Parral *</label>
+            <input type="text" id="fAddress" required placeholder="Calle, colonia y código postal" />
           </div>
 
           <div class="field" style="margin-bottom: 12px;">
-            <label>Descripción corta (qué ofrecen y por qué visitarlos) *</label>
-            <textarea id="bizDesc" rows="2" required placeholder="Describe tus productos o servicios locales..."></textarea>
+            <label>Descripción del negocio *</label>
+            <textarea id="fDesc" rows="2" required placeholder="¿Qué venden o qué servicio ofrecen?"></textarea>
           </div>
 
-          <div class="field" style="margin-bottom: 6px;">
-            <label>Selecciona o arrastra el marcador en el mapa de Parral:</label>
+          <div class="field">
+            <label>Haz clic en el mapa o arrastra el pin para fijar la ubicación en Parral:</label>
           </div>
           <div id="pickerMap"></div>
-          <div style="display: flex; gap: 12px; font-size: 0.78rem; color: var(--muted); margin-bottom: 12px;">
-            <span>Latitud: <strong id="latDisplay">26.9317</strong></span>
-            <span>Longitud: <strong id="lngDisplay">-105.6664</strong></span>
+          <div style="display:flex; gap:14px; font-size:0.78rem; color:var(--muted); margin-bottom:12px;">
+            <span>Latitud: <strong id="pickLat">26.9317</strong></span>
+            <span>Longitud: <strong id="pickLng">-105.6664</strong></span>
           </div>
 
-          <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            <button type="button" class="btn btn-outline btn-sm" onclick="toggleBusinessForm(false)">Cancelar</button>
-            <button type="submit" class="btn btn-teal btn-sm">Guardar local</button>
+          <div style="display:flex; gap:8px; justify-content:flex-end;">
+            <button type="button" class="btn btn-ghost btn-sm" onclick="toggleForm(false)">Cancelar</button>
+            <button type="submit" class="btn btn-navy btn-sm">Guardar negocio</button>
           </div>
         </form>
       </div>
 
-      <div id="myBusinessesList" style="margin-top: 14px;"></div>
+      <div id="myBizContainer"></div>
     </section>
 
     <!-- Filtros -->
-    <section class="filters-bar">
-      <div class="search-row">
+    <section class="filter-card">
+      <div class="search-line">
         <input
           type="text"
-          id="searchInput"
-          class="search-input"
-          placeholder="Buscar por nombre, colonia (Topo Chico, Centro...) o servicio..."
+          id="searchBox"
+          class="search-box"
+          placeholder="Buscar negocio, colonia (Topo Chico, Centro, Almanceña...) o servicio..."
           oninput="renderAll()"
         />
-        <label class="toggle-open">
-          <input type="checkbox" id="openOnlyCheckbox" onchange="renderAll()" />
+        <label class="check-open">
+          <input type="checkbox" id="openOnly" onchange="renderAll()" />
           Solo abiertos ahora
         </label>
-        <button class="btn btn-outline btn-sm" onclick="clearFilters()">Limpiar</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="clearAllFilters()">Restablecer</button>
       </div>
-      <div class="category-chips" id="categoryChips"></div>
+      <div class="chips-row" id="categoryChips"></div>
     </section>
 
-    <!-- Mapa + Directorio -->
-    <section class="workspace">
-      <div class="map-card">
-        <div class="map-header">
-          <span>Mapa de Negocios Locales · Parral, Chih.</span>
-          <span id="visibleCountLabel" style="color: var(--teal);"></span>
+    <!-- Directorio y Mapa -->
+    <section class="content-grid">
+      <div class="cards-column" id="bizList"></div>
+
+      <aside class="map-panel">
+        <div class="map-top">
+          <span>Mapa Interactivo · Hidalgo del Parral</span>
+          <span id="countBadge" style="color: var(--teal);"></span>
         </div>
         <div id="map"></div>
-      </div>
-
-      <div class="business-list" id="businessList"></div>
+      </aside>
     </section>
   </main>
 
-  <!-- Modal de Inicio de Sesión / Registro -->
-  <div class="modal-backdrop" id="authModal">
-    <div class="modal">
-      <div class="modal-head">
-        <h2>Acceso a Conecta Parral</h2>
-        <button class="close-btn" onclick="closeModal('authModal')">&times;</button>
+  <!-- Modal de Sesión / Planes -->
+  <div class="modal-bg" id="authModal">
+    <div class="modal-box">
+      <div class="modal-top">
+        <div>
+          <h2>Iniciar sesión o registrar cuenta</h2>
+          <p style="font-size:0.8rem; color:var(--muted);">Usuarios exploradores: acceso libre e ilimitado · Dueños: plan mensual de paga.</p>
+        </div>
+        <button type="button" class="x-btn" onclick="closeModal('authModal')">&times;</button>
       </div>
 
-      <div class="quick-demos">
-        <strong>Pruebas rápidas (1 clic):</strong>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
-          <button type="button" class="btn btn-outline btn-sm" onclick="quickLogin('explorer')">Entrar como Explorador (Gratis)</button>
-          <button type="button" class="btn btn-gold btn-sm" onclick="quickLogin('owner')">Entrar como Dueño con Plan Activo</button>
+      <div class="demo-strip">
+        <strong>Acceso rápido de prueba:</strong>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="quickDemo('user')">Modo Usuario (Gratis)</button>
+          <button type="button" class="btn btn-gold btn-sm" onclick="quickDemo('owner')">Modo Dueño (Plan Activo)</button>
         </div>
       </div>
 
-      <div class="role-switch">
-        <button type="button" class="role-card active" id="roleExplorerBtn" onclick="selectRole('explorer')">
-          <strong>Usuario / Explorador</strong>
-          <span>Gratis e ilimitado. Guarda favoritos y opina.</span>
+      <div class="role-grid">
+        <button type="button" class="role-option active" id="optUser" onclick="setRoleMode('explorer')">
+          <strong>Explorador / Cliente</strong>
+          <span>Gratis e ilimitado. Guarda favoritos y comenta.</span>
         </button>
-        <button type="button" class="role-card" id="roleOwnerBtn" onclick="selectRole('owner')">
+        <button type="button" class="role-option" id="optOwner" onclick="setRoleMode('owner')">
           <strong>Dueño de Local</strong>
-          <span>Planes de paga para publicar y gestionar tu local.</span>
+          <span>Requiere plan mensual para publicar y administrar.</span>
         </button>
       </div>
 
-      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+      <form id="authForm" onsubmit="submitAuth(event)">
         <div class="form-grid" style="grid-template-columns: 1fr;">
           <div class="field">
-            <label>Nombre completo o del negocio *</label>
-            <input type="text" id="authName" required placeholder="Ej. Valeria Mendoza / CREPE" />
+            <label>Nombre completo o razón comercial *</label>
+            <input type="text" id="authName" required placeholder="Ej. Carla Martínez / CREPE" />
           </div>
           <div class="field">
             <label>Correo electrónico *</label>
-            <input type="email" id="authEmail" required placeholder="correo@ejemplo.com" />
+            <input type="email" id="authEmail" required placeholder="ejemplo@correo.com" />
           </div>
         </div>
 
-        <div id="ownerPlanSection" style="display: none;">
-          <label style="font-size: 0.82rem; font-weight: 700; color: var(--navy);">Elige tu plan mensual para publicar locales:</label>
-          <div class="plans-grid">
-            <div class="plan-box selected" id="planEmprendedor" onclick="selectPlan('emprendedor')">
-              <strong style="font-size: 0.88rem; color: var(--navy);">Plan Emprendedor</strong>
+        <div id="planBlock" style="display: none;">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--navy);">Selecciona tu plan de suscripción para dueños:</label>
+          <div class="plans-row">
+            <div class="plan-card selected" id="cardPlanBasic" onclick="choosePlan('basic')">
+              <strong style="font-size:0.88rem; color:var(--navy);">Plan Emprendedor</strong>
               <div class="plan-price">$149 MXN / mes</div>
-              <p style="font-size: 0.76rem; color: var(--muted);">Hasta 1 local en mapa, WhatsApp directo y edición de horarios.</p>
+              <p style="font-size:0.75rem; color:var(--muted);">1 local en el mapa, botón directo a WhatsApp y edición de horario.</p>
             </div>
-            <div class="plan-box" id="planImpulso" onclick="selectPlan('impulso')">
-              <strong style="font-size: 0.88rem; color: var(--navy);">Plan Impulso Local</strong>
+            <div class="plan-card" id="cardPlanPro" onclick="choosePlan('pro')">
+              <strong style="font-size:0.88rem; color:var(--navy);">Plan Impulso Parral</strong>
               <div class="plan-price">$279 MXN / mes</div>
-              <p style="font-size: 0.76rem; color: var(--muted);">Hasta 3 locales, insignia destacada y métricas detalladas.</p>
+              <p style="font-size:0.75rem; color:var(--muted);">Hasta 3 locales, insignia destacada y métricas de visitas.</p>
             </div>
           </div>
 
-          <div class="form-grid" style="margin-top: 8px;">
+          <div class="form-grid">
             <div class="field">
-              <label>Método de pago (simulación)</label>
+              <label>Método de pago</label>
               <select id="payMethod">
-                <option value="Tarjeta débito/crédito">Tarjeta débito/crédito</option>
+                <option value="Tarjeta débito / crédito">Tarjeta débito / crédito</option>
                 <option value="Transferencia SPEI">Transferencia SPEI</option>
-                <option value="Depósito OXXO">Depósito en tienda / OXXO</option>
+                <option value="Pago en tienda / OXXO">Pago en tienda / OXXO</option>
               </select>
             </div>
             <div class="field">
-              <label>Referencia / Últimos 4 dígitos</label>
-              <input type="text" id="payRef" value="4242" placeholder="Ej. 4242" />
+              <label>Últimos 4 dígitos o folio</label>
+              <input type="text" id="payFolio" value="8841" required />
             </div>
           </div>
         </div>
 
-        <div style="margin-top: 14px; display: flex; justify-content: flex-end; gap: 8px;">
-          <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('authModal')">Cancelar</button>
-          <button type="submit" id="authSubmitBtn" class="btn btn-primary btn-sm">Entrar gratis e ilimitado</button>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal('authModal')">Cancelar</button>
+          <button type="submit" id="authSubmitBtn" class="btn btn-navy btn-sm">Entrar gratis e ilimitado</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal de Detalle de Negocio y Reseñas -->
-  <div class="modal-backdrop" id="detailModal">
-    <div class="modal" id="detailModalContent"></div>
+  <!-- Modal de Ficha del Negocio -->
+  <div class="modal-bg" id="detailModal">
+    <div class="modal-box" id="detailContent"></div>
   </div>
 
   <div class="toast" id="toast"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const STORAGE_KEY = 'conecta_parral_v2_data';
-    const USER_KEY = 'conecta_parral_v2_user';
-    const PARRAL_CENTER = [26.9317, -105.6664];
+    const DB_KEY = 'conecta_parral_db_v3';
+    const SESSION_KEY = 'conecta_parral_session_v3';
+    const PARRAL_COORDS = [26.9317, -105.6664];
 
     const CATEGORIES = [
       'Todos',
@@ -905,9 +1075,17 @@
       'Antojitos'
     ];
 
-    const INITIAL_BUSINESSES = [
+    const CATEGORY_STYLES = {
+      'Comida y Postres': { bg: 'linear-gradient(135deg, #0B3B60, #1E7E8B)', label: 'CREPAS & DULCE' },
+      'Uñas y Belleza': { bg: 'linear-gradient(135deg, #8A3B62, #C99A2E)', label: 'NAILS & ESTILO' },
+      'Ropa y Boutique': { bg: 'linear-gradient(135deg, #1E7E8B, #0B3B60)', label: 'BOUTIQUE LOCAL' },
+      'Barbería y Estética': { bg: 'linear-gradient(135deg, #15222E, #0B3B60)', label: 'SALÓN & BARBER' },
+      'Antojitos': { bg: 'linear-gradient(135deg, #A97E1D, #0B3B60)', label: 'ANTOJITOS' }
+    };
+
+    const SEED_BUSINESSES = [
       {
-        id: 'biz-1',
+        id: 'p-1',
         name: 'CREPE (Crepas & waffles)',
         category: 'Comida y Postres',
         address: 'Prof. Daniel Royal 1, Topo Chico, 33834 Hidalgo del Parral, Chih.',
@@ -916,30 +1094,30 @@
         isOpen: true,
         lat: 26.9254,
         lng: -105.6762,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 142,
-        description: 'Crepas dulces y saladas recién hechas, además de waffles con toppings variados en la colonia Topo Chico.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 164,
+        description: 'Crepas dulces y saladas recién preparadas y waffles con toppings locales en la colonia Topo Chico.',
         reviews: [
-          { author: 'Sofía R.', rating: 5, comment: 'Las crepas llegan calientitas y muy bien servidas, excelente opción local en Topo Chico.' }
+          { user: 'Andrea L.', stars: 5, text: 'Muy ricas las crepas y qué bueno que den a conocer lugares de Topo Chico.' }
         ]
       },
       {
-        id: 'biz-2',
+        id: 'p-2',
         name: 'Kiu Nails',
         category: 'Uñas y Belleza',
-        address: 'Col. Centro / Av. Independencia, Hidalgo del Parral, Chih.',
+        address: 'Col. Centro, Hidalgo del Parral, Chih.',
         phone: '627 518 4410',
         hours: 'Lun - Sáb · 10:00 - 19:30',
         isOpen: true,
         lat: 26.9325,
         lng: -105.6648,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 88,
-        description: 'Estudio local de aplicación de uñas acrílicas, gel semipermanente y diseños personalizados con agenda directa.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 92,
+        description: 'Aplicación de uñas acrílicas, gel y diseños a detalle con atención cercana y agenda por mensaje.',
         reviews: []
       },
       {
-        id: 'biz-3',
+        id: 'p-3',
         name: 'Uñas Cristy',
         category: 'Uñas y Belleza',
         address: 'Col. Almanceña, Hidalgo del Parral, Chih.',
@@ -948,13 +1126,13 @@
         isOpen: true,
         lat: 26.9382,
         lng: -105.6695,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 74,
-        description: 'Servicio de manicura, esmaltado en gel y cuidado de uñas en un espacio cercano y de trato personalizado.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 78,
+        description: 'Servicio local de uñas, acabado limpio y trato directo en la colonia Almanceña.',
         reviews: []
       },
       {
-        id: 'biz-4',
+        id: 'p-4',
         name: 'Sútu Uñas y Más',
         category: 'Uñas y Belleza',
         address: 'Col. Kennedy, Hidalgo del Parral, Chih.',
@@ -963,13 +1141,13 @@
         isOpen: false,
         lat: 26.9278,
         lng: -105.6580,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 63,
-        description: 'Emprendimiento de uñas, retoques y detalles de belleza con atención directa por WhatsApp.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 65,
+        description: 'Estudio local de uñas y detalles de belleza para eventos o uso diario en Parral.',
         reviews: []
       },
       {
-        id: 'biz-5',
+        id: 'p-5',
         name: 'Andromeda Boutique',
         category: 'Ropa y Boutique',
         address: 'Col. Centro, Hidalgo del Parral, Chih.',
@@ -978,13 +1156,13 @@
         isOpen: true,
         lat: 26.9311,
         lng: -105.6675,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 95,
-        description: 'Boutique local con prendas de temporada, conjuntos casuales y accesorios seleccionados para distintas ocasiones.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 103,
+        description: 'Boutique independiente con prendas seleccionadas, conjuntos casuales y accesorios.',
         reviews: []
       },
       {
-        id: 'biz-6',
+        id: 'p-6',
         name: 'María Bonita Boutique',
         category: 'Ropa y Boutique',
         address: 'Col. Talleres, Hidalgo del Parral, Chih.',
@@ -993,13 +1171,13 @@
         isOpen: true,
         lat: 26.9355,
         lng: -105.6720,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 69,
-        description: 'Ropa y moda local pensada para el día a día en Parral, con atención cercana y apartados por mensaje.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 71,
+        description: 'Moda y prendas locales con opciones de apartado y consulta de tallas por WhatsApp.',
         reviews: []
       },
       {
-        id: 'biz-7',
+        id: 'p-7',
         name: 'Eliana Boutique',
         category: 'Ropa y Boutique',
         address: 'Col. Juárez, Hidalgo del Parral, Chih.',
@@ -1008,13 +1186,13 @@
         isOpen: true,
         lat: 26.9292,
         lng: -105.6710,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 57,
-        description: 'Selección de ropa y complementos de moda local con precios accesibles y atención directa.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 59,
+        description: 'Ropa y complementos de emprendimiento local en la colonia Juárez.',
         reviews: []
       },
       {
-        id: 'biz-8',
+        id: 'p-8',
         name: 'Antojitos "Corral"',
         category: 'Antojitos',
         address: 'Col. Palmilla, Hidalgo del Parral, Chih.',
@@ -1023,13 +1201,13 @@
         isOpen: true,
         lat: 26.9225,
         lng: -105.6635,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 112,
-        description: 'Antojitos tradicionales preparados al momento para cenar en familia o pedir para llevar.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 118,
+        description: 'Antojitos de barrio preparados al momento para cenar o pedir para llevar.',
         reviews: []
       },
       {
-        id: 'biz-9',
+        id: 'p-9',
         name: 'Antojitos Tommy',
         category: 'Antojitos',
         address: 'Col. Héroes de la Revolución, Hidalgo del Parral, Chih.',
@@ -1038,13 +1216,13 @@
         isOpen: false,
         lat: 26.9401,
         lng: -105.6615,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 81,
-        description: 'Puesto y cocina local de antojitos con sabor casero y porciones generosas.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 84,
+        description: 'Cocina local de antojitos en Héroes de la Revolución con porciones abundantes.',
         reviews: []
       },
       {
-        id: 'biz-10',
+        id: 'p-10',
         name: 'Estética Michelle y Barbershop',
         category: 'Barbería y Estética',
         address: 'Col. Morelos, Hidalgo del Parral, Chih.',
@@ -1053,100 +1231,89 @@
         isOpen: true,
         lat: 26.9340,
         lng: -105.6595,
-        ownerEmail: 'socio@conectaparral.mx',
-        views: 91,
-        description: 'Cortes de cabello, degradados de barbería y servicios de estética para dama y caballero.',
+        ownerEmail: 'dueno@conectaparral.mx',
+        views: 96,
+        description: 'Cortes de cabello, estilo de barbería y servicios de estética en la colonia Morelos.',
         reviews: []
       }
     ];
 
-    let state = loadState();
-    let currentUser = loadUser();
-    let selectedCategory = 'Todos';
-    let selectedRole = 'explorer';
-    let selectedPlan = 'emprendedor';
-    let map, markersLayer, pickerMap, pickerMarker;
+    let db = initDb();
+    let session = initSession();
+    let activeCat = 'Todos';
+    let roleMode = 'explorer';
+    let planMode = 'basic';
+    let mainMap, markersGroup, pickMap, pickPin;
 
-    function loadState() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {}
-      }
-      const initial = {
-        businesses: INITIAL_BUSINESSES,
-        favoritesByUser: {}
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
+    function initDb() {
+      try {
+        const raw = localStorage.getItem(DB_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (_) {}
+      const initial = { businesses: SEED_BUSINESSES, favs: {} };
+      localStorage.setItem(DB_KEY, JSON.stringify(initial));
       return initial;
     }
 
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    function persistDb() {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
     }
 
-    function loadUser() {
-      const saved = localStorage.getItem(USER_KEY);
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {}
-      }
+    function initSession() {
+      try {
+        const raw = localStorage.getItem(SESSION_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (_) {}
       return null;
     }
 
-    function setUser(user) {
-      currentUser = user;
-      if (user) {
-        localStorage.setItem(USER_KEY, JSON.stringify(user));
+    function updateSession(nextUser) {
+      session = nextUser;
+      if (nextUser) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(nextUser));
       } else {
-        localStorage.removeItem(USER_KEY);
+        localStorage.removeItem(SESSION_KEY);
       }
       renderHeader();
-      renderOwnerPanel();
+      renderOwnerSection();
       renderAll();
     }
 
-    function showToast(msg) {
+    function notify(text) {
       const el = document.getElementById('toast');
-      el.textContent = msg;
+      el.textContent = text;
       el.classList.add('show');
       setTimeout(() => el.classList.remove('show'), 2800);
     }
 
     function renderHeader() {
-      const wrap = document.getElementById('headerActions');
-      if (!currentUser) {
-        wrap.innerHTML = `
-          <button class="btn btn-outline btn-sm" onclick="openAuthModal('explorer')">Iniciar sesión (Gratis)</button>
-          <button class="btn btn-gold btn-sm" onclick="openAuthModal('owner')">Publicar local (Plan de paga)</button>
+      const box = document.getElementById('headerActions');
+      if (!session) {
+        box.innerHTML = `
+          <button type="button" class="btn btn-ghost btn-sm" onclick="openAuth('explorer')">Iniciar sesión (Gratis)</button>
+          <button type="button" class="btn btn-gold btn-sm" onclick="openAuth('owner')">Publicar local (De paga)</button>
         `;
-      } else if (currentUser.role === 'owner') {
-        wrap.innerHTML = `
-          <span style="font-size: 0.84rem; font-weight: 700; color: var(--navy);">
-            Dueño · ${currentUser.name} (${currentUser.planName})
-          </span>
-          <button class="btn btn-outline btn-sm" onclick="logout()">Cerrar sesión</button>
+      } else if (session.role === 'owner') {
+        box.innerHTML = `
+          <span class="user-pill">Dueño · ${session.name} (${session.planLabel})</span>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="signOut()">Cerrar sesión</button>
         `;
       } else {
-        wrap.innerHTML = `
-          <span style="font-size: 0.84rem; font-weight: 700; color: var(--teal);">
-            Explorador · ${currentUser.name} (Ilimitado)
-          </span>
-          <button class="btn btn-gold btn-sm" onclick="openAuthModal('owner')">Soy dueño de local</button>
-          <button class="btn btn-outline btn-sm" onclick="logout()">Salir</button>
+        box.innerHTML = `
+          <span class="user-pill">Explorador · ${session.name} (Ilimitado)</span>
+          <button type="button" class="btn btn-gold btn-sm" onclick="openAuth('owner')">Soy dueño de local</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="signOut()">Salir</button>
         `;
       }
     }
 
-    function logout() {
-      setUser(null);
-      showToast('Sesión cerrada');
+    function signOut() {
+      updateSession(null);
+      notify('Sesión cerrada');
     }
 
-    function openAuthModal(role = 'explorer') {
-      selectRole(role);
+    function openAuth(defaultRole) {
+      setRoleMode(defaultRole);
       document.getElementById('authModal').classList.add('open');
     }
 
@@ -1154,323 +1321,487 @@
       document.getElementById(id).classList.remove('open');
     }
 
-    function selectRole(role) {
-      selectedRole = role;
-      document.getElementById('roleExplorerBtn').classList.toggle('active', role === 'explorer');
-      document.getElementById('roleOwnerBtn').classList.toggle('active', role === 'owner');
-      document.getElementById('ownerPlanSection').style.display = role === 'owner' ? 'block' : 'none';
+    function setRoleMode(role) {
+      roleMode = role;
+      document.getElementById('optUser').classList.toggle('active', role === 'explorer');
+      document.getElementById('optOwner').classList.toggle('active', role === 'owner');
+      document.getElementById('planBlock').style.display = role === 'owner' ? 'block' : 'none';
       const btn = document.getElementById('authSubmitBtn');
       if (role === 'owner') {
-        btn.textContent = 'Pagar y activar cuenta de dueño';
+        btn.textContent = 'Pagar y activar plan de dueño';
         btn.className = 'btn btn-gold btn-sm';
       } else {
         btn.textContent = 'Entrar gratis e ilimitado';
-        btn.className = 'btn btn-primary btn-sm';
+        btn.className = 'btn btn-navy btn-sm';
       }
     }
 
-    function selectPlan(planKey) {
-      selectedPlan = planKey;
-      document.getElementById('planEmprendedor').classList.toggle('selected', planKey === 'emprendedor');
-      document.getElementById('planImpulso').classList.toggle('selected', planKey === 'impulso');
+    function choosePlan(plan) {
+      planMode = plan;
+      document.getElementById('cardPlanBasic').classList.toggle('selected', plan === 'basic');
+      document.getElementById('cardPlanPro').classList.toggle('selected', plan === 'pro');
     }
 
-    function quickLogin(type) {
-      if (type === 'explorer') {
-        setUser({
-          name: 'Explorador Parral',
-          email: 'explorador@conectaparral.mx',
+    function quickDemo(kind) {
+      if (kind === 'user') {
+        updateSession({
+          name: 'Vecino/a de Parral',
+          email: 'cliente@conectaparral.mx',
           role: 'explorer',
-          planName: 'Gratis Ilimitado'
+          planLabel: 'Gratis Ilimitado'
         });
         closeModal('authModal');
-        showToast('Acceso gratuito ilimitado activado');
+        notify('Sesión gratuita ilimitada activa');
       } else {
-        setUser({
+        updateSession({
           name: 'CREPE & Socios',
-          email: 'socio@conectaparral.mx',
+          email: 'dueno@conectaparral.mx',
           role: 'owner',
-          planKey: 'emprendedor',
-          planName: 'Plan Emprendedor ($149/mes)',
-          maxListings: 1
+          plan: 'basic',
+          planLabel: 'Plan Emprendedor $149/mes',
+          quota: 1
         });
         closeModal('authModal');
-        showToast('Panel de dueño activado');
+        notify('Panel de dueño activado');
       }
     }
 
-    function handleAuthSubmit(e) {
+    function submitAuth(e) {
       e.preventDefault();
       const name = document.getElementById('authName').value.trim();
       const email = document.getElementById('authEmail').value.trim().toLowerCase();
       if (!name || !email) return;
 
-      if (selectedRole === 'owner') {
-        const isImpulso = selectedPlan === 'impulso';
+      if (roleMode === 'owner') {
+        const isPro = planMode === 'pro';
         const method = document.getElementById('payMethod').value;
-        setUser({
+        updateSession({
           name,
           email,
           role: 'owner',
-          planKey: selectedPlan,
-          planName: isImpulso ? 'Plan Impulso Local ($279/mes)' : 'Plan Emprendedor ($149/mes)',
-          maxListings: isImpulso ? 3 : 1,
-          payMethod: method
+          plan: planMode,
+          planLabel: isPro ? 'Plan Impulso Parral $279/mes' : 'Plan Emprendedor $149/mes',
+          quota: isPro ? 3 : 1,
+          method
         });
         closeModal('authModal');
-        showToast(`Pago confirmado (${method}). Ya puedes gestionar tu local.`);
+        notify(`Suscripción confirmada (${method}). Ya puedes publicar.`);
       } else {
-        setUser({
+        updateSession({
           name,
           email,
           role: 'explorer',
-          planName: 'Gratis Ilimitado'
+          planLabel: 'Gratis Ilimitado'
         });
         closeModal('authModal');
-        showToast(`Bienvenido/a ${name}. Acceso gratuito sin límites.`);
+        notify(`Bienvenido/a ${name}. Acceso libre sin límites.`);
       }
     }
 
-    function renderOwnerPanel() {
+    function renderOwnerSection() {
       const panel = document.getElementById('ownerPanel');
-      if (!currentUser || currentUser.role !== 'owner') {
-        panel.style.display = 'none';
+      if (!session || session.role !== 'owner') {
+        panel.classList.remove('active');
         return;
       }
 
-      panel.style.display = 'block';
-      const mine = state.businesses.filter(b => b.ownerEmail === currentUser.email);
-      const totalViews = mine.reduce((acc, b) => acc + (b.views || 0), 0);
-      const totalReviews = mine.reduce((acc, b) => acc + (b.reviews ? b.reviews.length : 0), 0);
+      panel.classList.add('active');
+      const mine = db.businesses.filter(b => b.ownerEmail === session.email);
+      const viewsSum = mine.reduce((sum, b) => sum + (b.views || 0), 0);
+      const reviewsSum = mine.reduce((sum, b) => sum + (b.reviews ? b.reviews.length : 0), 0);
 
-      document.getElementById('ownerSubtext').textContent =
-        `Plan activo: ${currentUser.planName} · Locales registrados: ${mine.length} de ${currentUser.maxListings}`;
+      document.getElementById('ownerPlanInfo').textContent =
+        `${session.planLabel} · Locales usados: ${mine.length} de ${session.quota}`;
 
       document.getElementById('ownerStats').innerHTML = `
-        <div class="stat-box">
-          <div class="stat-label">Mis locales activos</div>
-          <div class="stat-val">${mine.length} / ${currentUser.maxListings}</div>
+        <div class="stat-card">
+          <small>Locales en el plan</small>
+          <strong>${mine.length} / ${session.quota}</strong>
         </div>
-        <div class="stat-box">
-          <div class="stat-label">Visitas en directorio</div>
-          <div class="stat-val">${totalViews}</div>
+        <div class="stat-card">
+          <small>Visitas en el directorio</small>
+          <strong>${viewsSum}</strong>
         </div>
-        <div class="stat-box">
-          <div class="stat-label">Reseñas de clientes</div>
-          <div class="stat-val">${totalReviews}</div>
+        <div class="stat-card">
+          <small>Reseñas recibidas</small>
+          <strong>${reviewsSum}</strong>
         </div>
       `;
 
-      const listEl = document.getElementById('myBusinessesList');
+      const listDiv = document.getElementById('myBizContainer');
       if (mine.length === 0) {
-        listEl.innerHTML = `<p style="font-size: 0.86rem; color: var(--muted);">Aún no has registrado ningún local con este correo. Haz clic en <strong>"+ Registrar nuevo local"</strong>.</p>`;
+        listDiv.innerHTML = `<p style="font-size:0.86rem; color:var(--muted);">Aún no tienes locales registrados con este correo. Usa <strong>"+ Publicar o registrar local"</strong> para agregar el primero.</p>`;
       } else {
-        listEl.innerHTML = mine.map(biz => `
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 12px; border:1px solid var(--border); border-radius:10px; margin-bottom:8px; background:#FAFBFD;">
+        listDiv.innerHTML = mine.map(b => `
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:11px 14px; border:1px solid var(--border); border-radius:10px; margin-bottom:8px; background:var(--surface-alt);">
             <div>
-              <strong style="color:var(--navy);">${biz.name}</strong>
-              <div style="font-size:0.78rem; color:var(--muted);">${biz.address} · Tel: ${biz.phone}</div>
+              <strong style="color:var(--navy);">${b.name}</strong>
+              <div style="font-size:0.78rem; color:var(--muted);">${b.address} · Tel: ${b.phone}</div>
             </div>
             <div style="display:flex; gap:8px; align-items:center;">
-              <button class="btn btn-sm ${biz.isOpen ? 'btn-teal' : 'btn-outline'}" onclick="toggleOpenStatus('${biz.id}')">
-                ${biz.isOpen ? 'Abierto' : 'Cerrado'}
+              <button type="button" class="btn btn-sm ${b.isOpen ? 'btn-teal' : 'btn-ghost'}" onclick="flipStatus('${b.id}')">
+                ${b.isOpen ? 'Abierto' : 'Cerrado'}
               </button>
-              <button class="btn btn-outline btn-sm" onclick="startEditBusiness('${biz.id}')">Editar</button>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="editBiz('${b.id}')">Editar</button>
             </div>
           </div>
         `).join('');
       }
     }
 
-    function toggleBusinessForm(show) {
-      const wrap = document.getElementById('businessFormWrap');
-      const shouldShow = typeof show === 'boolean' ? show : wrap.style.display === 'none';
+    function toggleForm(forceShow) {
+      const box = document.getElementById('formContainer');
+      const openIt = typeof forceShow === 'boolean' ? forceShow : box.style.display === 'none';
 
-      if (shouldShow && currentUser && currentUser.role === 'owner') {
-        const mine = state.businesses.filter(b => b.ownerEmail === currentUser.email);
-        const isEditing = Boolean(document.getElementById('editBizId').value);
-        if (!isEditing && mine.length >= currentUser.maxListings) {
-          showToast(`Tu ${currentUser.planName} permite hasta ${currentUser.maxListings} local(es).`);
+      if (openIt && session && session.role === 'owner') {
+        const mine = db.businesses.filter(b => b.ownerEmail === session.email);
+        const editing = Boolean(document.getElementById('editId').value);
+        if (!editing && mine.length >= session.quota) {
+          notify(`Tu ${session.planLabel} incluye hasta ${session.quota} local(es).`);
           return;
         }
       }
 
-      wrap.style.display = shouldShow ? 'block' : 'none';
-      if (shouldShow) {
-        initPickerMap();
+      box.style.display = openIt ? 'block' : 'none';
+      if (openIt) {
+        initPicker(PARRAL_COORDS[0], PARRAL_COORDS[1]);
       } else {
-        document.getElementById('businessForm').reset();
-        document.getElementById('editBizId').value = '';
-        document.getElementById('formTitle').textContent = 'Registrar negocio en Parral';
+        document.getElementById('bizForm').reset();
+        document.getElementById('editId').value = '';
+        document.getElementById('formHeading').textContent = 'Nuevo negocio local en Parral';
       }
     }
 
-    function initPickerMap(lat = PARRAL_CENTER[0], lng = PARRAL_CENTER[1]) {
+    function initPicker(lat, lng) {
       setTimeout(() => {
-        if (!pickerMap) {
-          pickerMap = L.map('pickerMap').setView([lat, lng], 14);
+        if (!pickMap) {
+          pickMap = L.map('pickerMap').setView([lat, lng], 14);
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
-          }).addTo(pickerMap);
-          pickerMarker = L.marker([lat, lng], { draggable: true }).addTo(pickerMap);
-
-          pickerMarker.on('dragend', () => {
-            const pos = pickerMarker.getLatLng();
-            updateCoordsLabel(pos.lat, pos.lng);
+          }).addTo(pickMap);
+          pickPin = L.marker([lat, lng], { draggable: true }).addTo(pickMap);
+          pickPin.on('dragend', () => {
+            const p = pickPin.getLatLng();
+            setCoords(p.lat, p.lng);
           });
-
-          pickerMap.on('click', (e) => {
-            pickerMarker.setLatLng(e.latlng);
-            updateCoordsLabel(e.latlng.lat, e.latlng.lng);
+          pickMap.on('click', (ev) => {
+            pickPin.setLatLng(ev.latlng);
+            setCoords(ev.latlng.lat, ev.latlng.lng);
           });
         } else {
-          pickerMap.invalidateSize();
-          pickerMap.setView([lat, lng], 14);
-          pickerMarker.setLatLng([lat, lng]);
+          pickMap.invalidateSize();
+          pickMap.setView([lat, lng], 14);
+          pickPin.setLatLng([lat, lng]);
         }
-        updateCoordsLabel(lat, lng);
+        setCoords(lat, lng);
       }, 80);
     }
 
-    function updateCoordsLabel(lat, lng) {
-      document.getElementById('latDisplay').textContent = Number(lat).toFixed(4);
-      document.getElementById('lngDisplay').textContent = Number(lng).toFixed(4);
+    function setCoords(lat, lng) {
+      document.getElementById('pickLat').textContent = Number(lat).toFixed(4);
+      document.getElementById('pickLng').textContent = Number(lng).toFixed(4);
     }
 
-    function startEditBusiness(id) {
-      const biz = state.businesses.find(b => b.id === id);
-      if (!biz) return;
-      document.getElementById('editBizId').value = biz.id;
-      document.getElementById('bizName').value = biz.name;
-      document.getElementById('bizCategory').value = biz.category;
-      document.getElementById('bizPhone').value = biz.phone;
-      document.getElementById('bizHours').value = biz.hours;
-      document.getElementById('bizAddress').value = biz.address;
-      document.getElementById('bizDesc').value = biz.description;
-      document.getElementById('formTitle').textContent = 'Editar negocio en Parral';
-      document.getElementById('businessFormWrap').style.display = 'block';
-      initPickerMap(biz.lat, biz.lng);
+    function editBiz(id) {
+      const b = db.businesses.find(item => item.id === id);
+      if (!b) return;
+      document.getElementById('editId').value = b.id;
+      document.getElementById('fName').value = b.name;
+      document.getElementById('fCategory').value = b.category;
+      document.getElementById('fPhone').value = b.phone;
+      document.getElementById('fHours').value = b.hours;
+      document.getElementById('fAddress').value = b.address;
+      document.getElementById('fDesc').value = b.description;
+      document.getElementById('formHeading').textContent = 'Editar negocio local';
+      document.getElementById('formContainer').style.display = 'block';
+      initPicker(b.lat, b.lng);
     }
 
-    function saveBusiness(e) {
+    function submitBusiness(e) {
       e.preventDefault();
-      if (!currentUser || currentUser.role !== 'owner') {
-        openAuthModal('owner');
+      if (!session || session.role !== 'owner') {
+        openAuth('owner');
         return;
       }
 
-      const id = document.getElementById('editBizId').value;
-      const lat = parseFloat(document.getElementById('latDisplay').textContent);
-      const lng = parseFloat(document.getElementById('lngDisplay').textContent);
+      const id = document.getElementById('editId').value;
+      const lat = parseFloat(document.getElementById('pickLat').textContent);
+      const lng = parseFloat(document.getElementById('pickLng').textContent);
 
-      const payload = {
-        name: document.getElementById('bizName').value.trim(),
-        category: document.getElementById('bizCategory').value,
-        phone: document.getElementById('bizPhone').value.trim(),
-        hours: document.getElementById('bizHours').value.trim(),
-        address: document.getElementById('bizAddress').value.trim(),
-        description: document.getElementById('bizDesc').value.trim(),
+      const data = {
+        name: document.getElementById('fName').value.trim(),
+        category: document.getElementById('fCategory').value,
+        phone: document.getElementById('fPhone').value.trim(),
+        hours: document.getElementById('fHours').value.trim(),
+        address: document.getElementById('fAddress').value.trim(),
+        description: document.getElementById('fDesc').value.trim(),
         lat,
         lng
       };
 
       if (id) {
-        state.businesses = state.businesses.map(b => b.id === id ? { ...b, ...payload } : b);
-        showToast('Local actualizado');
+        db.businesses = db.businesses.map(item => item.id === id ? { ...item, ...data } : item);
+        notify('Negocio actualizado');
       } else {
-        state.businesses.unshift({
-          id: 'biz-' + Date.now(),
-          ...payload,
+        db.businesses.unshift({
+          id: 'p-' + Date.now(),
+          ...data,
           isOpen: true,
-          ownerEmail: currentUser.email,
+          ownerEmail: session.email,
           views: 1,
           reviews: []
         });
-        showToast('Local publicado en Conecta Parral');
+        notify('Negocio publicado en Conecta Parral');
       }
 
-      saveState();
-      toggleBusinessForm(false);
-      renderOwnerPanel();
+      persistDb();
+      toggleForm(false);
+      renderOwnerSection();
       renderAll();
     }
 
-    function toggleOpenStatus(id) {
-      state.businesses = state.businesses.map(b => b.id === id ? { ...b, isOpen: !b.isOpen } : b);
-      saveState();
-      renderOwnerPanel();
+    function flipStatus(id) {
+      db.businesses = db.businesses.map(item => item.id === id ? { ...item, isOpen: !item.isOpen } : item);
+      persistDb();
+      renderOwnerSection();
       renderAll();
-      showToast('Estado de apertura actualizado');
+      notify('Estado de apertura actualizado');
     }
 
-    function renderCategoryChips() {
+    function renderChips() {
       const wrap = document.getElementById('categoryChips');
       wrap.innerHTML = CATEGORIES.map(cat => `
         <button
           type="button"
-          class="chip ${selectedCategory === cat ? 'active' : ''}"
-          onclick="selectCategory('${cat.replace(/'/g, "\\'")}')"
+          class="chip ${activeCat === cat ? 'active' : ''}"
+          onclick="pickCategory('${cat.replace(/'/g, "\\'")}')"
         >${cat}</button>
       `).join('');
     }
 
-    function selectCategory(cat) {
-      selectedCategory = cat;
-      renderCategoryChips();
+    function pickCategory(cat) {
+      activeCat = cat;
+      renderChips();
       renderAll();
     }
 
-    function clearFilters() {
-      selectedCategory = 'Todos';
-      document.getElementById('searchInput').value = '';
-      document.getElementById('openOnlyCheckbox').checked = false;
-      renderCategoryChips();
+    function clearAllFilters() {
+      activeCat = 'Todos';
+      document.getElementById('searchBox').value = '';
+      document.getElementById('openOnly').checked = false;
+      renderChips();
       renderAll();
     }
 
-    function resetView() {
-      clearFilters();
-      if (map) {
-        map.setView(PARRAL_CENTER, 13);
-      }
+    function resetHome() {
+      clearAllFilters();
+      if (mainMap) mainMap.setView(PARRAL_COORDS, 13);
     }
 
-    function getFilteredBusinesses() {
-      const q = document.getElementById('searchInput').value.trim().toLowerCase();
-      const openOnly = document.getElementById('openOnlyCheckbox').checked;
+    function filteredList() {
+      const query = document.getElementById('searchBox').value.trim().toLowerCase();
+      const onlyOpen = document.getElementById('openOnly').checked;
 
-      return state.businesses.filter(biz => {
-        const matchesCat = selectedCategory === 'Todos' || biz.category === selectedCategory;
-        const matchesOpen = !openOnly || biz.isOpen;
-        const matchesText = !q ||
-          biz.name.toLowerCase().includes(q) ||
-          biz.address.toLowerCase().includes(q) ||
-          biz.category.toLowerCase().includes(q) ||
-          biz.description.toLowerCase().includes(q);
-        return matchesCat && matchesOpen && matchesText;
+      return db.businesses.filter(b => {
+        const okCat = activeCat === 'Todos' || b.category === activeCat;
+        const okOpen = !onlyOpen || b.isOpen;
+        const okQuery = !query ||
+          b.name.toLowerCase().includes(query) ||
+          b.address.toLowerCase().includes(query) ||
+          b.category.toLowerCase().includes(query) ||
+          b.description.toLowerCase().includes(query);
+        return okCat && okOpen && okQuery;
       });
     }
 
-    function getUserFavorites() {
-      if (!currentUser) return [];
-      return state.favoritesByUser[currentUser.email] || [];
+    function userFavs() {
+      if (!session) return [];
+      return db.favs[session.email] || [];
     }
 
-    function toggleFavorite(id, event) {
-      if (event) event.stopPropagation();
-      if (!currentUser) {
-        openAuthModal('explorer');
-        showToast('Inicia sesión gratis para guardar favoritos');
+    function toggleFav(id, ev) {
+      if (ev) ev.stopPropagation();
+      if (!session) {
+        openAuth('explorer');
+        notify('Inicia sesión gratis para guardar favoritos');
         return;
       }
-      const list = getUserFavorites();
-      const exists = list.includes(id);
-      const next = exists ? list.filter(x => x !== id) : [...list, id];
-      state.favoritesByUser[currentUser.email] = next;
-      saveState();
+      const current = userFavs();
+      const exists = current.includes(id);
+      db.favs[session.email] = exists ? current.filter(x => x !== id) : [...current, id];
+      persistDb();
       renderAll();
-      showToast(exists ? 'Eliminado de favoritos' : 'Guardado en favoritos');
+      notify(exists ? 'Quitado de favoritos' : 'Guardado en favoritos');
     }
 
-    function openDetailModal(id) {
-      const biz = state.businesses.find(b => b.id === id);
+    function openDetail(id) {
+      const b = db.businesses.find(item => item.id === id);
+      if (!b) return;
+
+      b.views = (b.views || 0) + 1;
+      persistDb();
+      renderOwnerSection();
+
+      const isFav = userFavs().includes(b.id);
+      const digits = b.phone.replace(/\D/g, '');
+      const waUrl = `https://wa.me/52${digits}?text=${encodeURIComponent(`Hola, encontré ${b.name} en Conecta Parral y me gustaría pedir información.`)}`;
+
+      const reviewsHtml = (b.reviews || []).length
+        ? b.reviews.map(r => `
+            <div class="review-box">
+              <strong>${r.user}</strong> · <span style="color:var(--gold);">${'★'.repeat(r.stars)}</span>
+              <p style="margin-top:3px;">${r.text}</p>
+            </div>
+          `).join('')
+        : `<p style="font-size:0.82rem; color:var(--muted); margin-bottom:10px;">Sin reseñas todavía. Comparte tu experiencia con este negocio local.</p>`;
+
+      document.getElementById('detailContent').innerHTML = `
+        <div class="modal-top">
+          <div>
+            <span class="cat-tag">${b.category}</span>
+            <span class="local-tag">Negocio Local Parral</span>
+            <h2 style="margin-top:4px;">${b.name}</h2>
+          </div>
+          <button type="button" class="x-btn" onclick="closeModal('detailModal')">&times;</button>
+        </div>
+
+        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:12px;">${b.description}</p>
+
+        <div class="biz-details" style="background:var(--surface-alt); border:1px solid var(--border); border-radius:10px; padding:12px;">
+          <div><strong>Dirección:</strong> ${b.address}</div>
+          <div><strong>Teléfono:</strong> ${b.phone}</div>
+          <div><strong>Horario:</strong> ${b.hours}</div>
+          <div><strong>Estado:</strong> <span class="pill-status ${b.isOpen ? 'pill-open' : 'pill-closed'}">${b.isOpen ? 'Abierto' : 'Cerrado'}</span></div>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin:14px 0;">
+          <a href="${waUrl}" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Enviar WhatsApp</a>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="toggleFav('${b.id}')">${isFav ? '♥ Guardado' : '♡ Favorito'}</button>
+        </div>
+
+        <hr style="border:none; border-top:1px solid var(--border); margin:14px 0;" />
+        <h3 style="font-size:0.94rem; color:var(--navy); margin-bottom:8px;">Reseñas de la comunidad</h3>
+        ${reviewsHtml}
+
+        <form onsubmit="postReview(event, '${b.id}')" style="margin-top:10px;">
+          <div class="form-grid" style="grid-template-columns: 1fr 105px;">
+            <input type="text" id="revText" required placeholder="Escribe tu comentario..." style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:0.84rem;" />
+            <select id="revStars" style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:0.84rem;">
+              <option value="5">5 ★</option>
+              <option value="4">4 ★</option>
+              <option value="3">3 ★</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-navy btn-sm">Publicar reseña</button>
+        </form>
+      `;
+
+      document.getElementById('detailModal').classList.add('open');
+      if (mainMap) mainMap.setView([b.lat, b.lng], 15);
+    }
+
+    function postReview(e, bizId) {
+      e.preventDefault();
+      const text = document.getElementById('revText').value.trim();
+      const stars = parseInt(document.getElementById('revStars').value, 10);
+      if (!text) return;
+
+      const user = session ? session.name : 'Visitante de Parral';
+      db.businesses = db.businesses.map(item => {
+        if (item.id !== bizId) return item;
+        return { ...item, reviews: [{ user, stars, text }, ...(item.reviews || [])] };
+      });
+      persistDb();
+      openDetail(bizId);
+      renderAll();
+      notify('Reseña publicada');
+    }
+
+    function renderAll() {
+      const list = filteredList();
+      const favs = userFavs();
+      document.getElementById('countBadge').textContent = `${list.length} negocio(s)`;
+
+      const listEl = document.getElementById('bizList');
+      if (list.length === 0) {
+        listEl.innerHTML = `
+          <div class="biz-card" style="grid-template-columns:1fr; text-align:center;">
+            <div>
+              <p style="font-weight:800; color:var(--navy); margin-bottom:4px;">Sin coincidencias en Parral</p>
+              <p style="font-size:0.85rem; color:var(--muted); margin-bottom:10px;">Intenta con otra palabra o restablece los filtros.</p>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="clearAllFilters()">Ver todos los negocios</button>
+            </div>
+          </div>
+        `;
+      } else {
+        listEl.innerHTML = list.map(b => {
+          const st = CATEGORY_STYLES[b.category] || { bg: 'linear-gradient(135deg, #0B3B60, #1E7E8B)', label: 'LOCAL' };
+          const saved = favs.includes(b.id);
+          return `
+            <article class="biz-card" onclick="openDetail('${b.id}')">
+              <div class="biz-thumb" style="background:${st.bg};">
+                <div>${st.label}</div>
+                <span>${b.name.split(' ')[0]}</span>
+              </div>
+              <div class="biz-body">
+                <div>
+                  <div class="biz-header">
+                    <div>
+                      <span class="cat-tag">${b.category}</span>
+                      <span class="local-tag">Local</span>
+                      <h3 class="biz-title">${b.name}</h3>
+                    </div>
+                    <span class="pill-status ${b.isOpen ? 'pill-open' : 'pill-closed'}">
+                      ${b.isOpen ? 'Abierto' : 'Cerrado'}
+                    </span>
+                  </div>
+                  <p class="biz-desc">${b.description}</p>
+                  <div class="biz-details">
+                    <div><strong>Dirección:</strong> ${b.address}</div>
+                    <div><strong>Tel:</strong> ${b.phone} · <strong>Horario:</strong> ${b.hours}</div>
+                  </div>
+                </div>
+                <div class="biz-footer">
+                  <button type="button" class="btn btn-navy btn-sm" onclick="event.stopPropagation(); openDetail('${b.id}')">Ver ficha y reseñas</button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="toggleFav('${b.id}', event)">
+                    ${saved ? '♥ Favorito' : '♡ Favorito'}
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      if (mainMap && markersGroup) {
+        markersGroup.clearLayers();
+        list.forEach(b => {
+          const m = L.marker([b.lat, b.lng]).addTo(markersGroup);
+          m.bindPopup(`
+            <strong>${b.name}</strong><br/>
+            <span style="font-size:12px; color:#1E7E8B;">${b.category}</span><br/>
+            <span style="font-size:11px; color:#444;">${b.address}</span><br/>
+            <button onclick="openDetail('${b.id}')" style="margin-top:6px; padding:4px 9px; background:#0B3B60; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:11px;">Abrir ficha</button>
+          `);
+        });
+      }
+    }
+
+    function initMap() {
+      mainMap = L.map('map').setView(PARRAL_COORDS, 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(mainMap);
+      markersGroup = L.layerGroup().addTo(mainMap);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderHeader();
+      renderChips();
+      renderOwnerSection();
+      initMap();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
