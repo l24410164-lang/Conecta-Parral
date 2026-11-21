@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Conecta Parral — Su Negocio Local en Línea</title>
+  <title>Conecta Parral — Directorio de Negocios Locales</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -11,14 +11,14 @@
   <style>
     :root {
       --navy: #0B3B60;
-      --navy-dark: #07243B;
+      --navy-dark: #07233A;
       --teal: #1E7E8B;
-      --teal-dark: #15626C;
+      --teal-dark: #145D67;
       --teal-soft: #E5F3F5;
       --gold: #C99A2E;
-      --gold-dark: #A97E1D;
+      --gold-dark: #A67B18;
       --gold-soft: #FDF6E3;
-      --cream: #F6F5F0;
+      --bg: #F6F5F0;
       --surface: #FFFFFF;
       --surface-alt: #F9FAFB;
       --text: #15222E;
@@ -28,11 +28,13 @@
       --open-fg: #15803D;
       --closed-bg: #FEE2E2;
       --closed-fg: #B91C1C;
-      --radius-lg: 18px;
+      --delivery-bg: #E0F2FE;
+      --delivery-fg: #0369A1;
+      --radius-lg: 16px;
       --radius-md: 12px;
       --radius-sm: 8px;
-      --shadow-sm: 0 4px 14px rgba(11, 59, 96, 0.06);
-      --shadow-md: 0 12px 30px rgba(11, 59, 96, 0.10);
+      --shadow-sm: 0 3px 12px rgba(11, 59, 96, 0.06);
+      --shadow-md: 0 12px 28px rgba(11, 59, 96, 0.10);
     }
 
     * {
@@ -43,26 +45,26 @@
 
     body {
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      background-color: var(--cream);
+      background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Top bar */
+    /* Header */
     header {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(11, 59, 96, 0.04);
+      box-shadow: 0 2px 10px rgba(11, 59, 96, 0.05);
     }
 
     .header-inner {
-      max-width: 1320px;
+      max-width: 1340px;
       margin: 0 auto;
-      padding: 12px 22px;
+      padding: 10px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -77,20 +79,20 @@
       cursor: pointer;
     }
 
-    .brand-copy {
+    .brand-text {
       display: flex;
       flex-direction: column;
     }
 
-    .brand-name {
-      font-size: 1.18rem;
+    .brand-title {
+      font-size: 1.2rem;
       font-weight: 800;
       color: var(--navy);
       letter-spacing: 0.4px;
       line-height: 1.1;
     }
 
-    .brand-tagline {
+    .brand-sub {
       font-size: 0.68rem;
       font-weight: 700;
       color: var(--teal);
@@ -99,33 +101,37 @@
       margin-top: 2px;
     }
 
-    .header-actions {
+    .owner-cta-group {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
     }
 
-    .user-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--teal-soft);
-      color: var(--navy);
-      border: 1px solid rgba(30, 126, 139, 0.25);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.82rem;
+    .owner-prompt {
+      font-size: 0.85rem;
       font-weight: 700;
+      color: var(--navy);
+      margin-right: 2px;
+    }
+
+    .owner-badge {
+      background: var(--gold-soft);
+      color: var(--navy);
+      border: 1.5px solid var(--gold);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 800;
     }
 
     /* Buttons */
     .btn {
       border: none;
       border-radius: var(--radius-sm);
-      padding: 9px 15px;
+      padding: 8px 14px;
       font-family: inherit;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
@@ -133,20 +139,31 @@
       justify-content: center;
       gap: 6px;
       text-decoration: none;
-      transition: transform 0.12s ease, background 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
     }
 
     .btn:active {
       transform: scale(0.98);
     }
 
-    .btn-navy {
+    .btn-register {
       background: var(--navy);
       color: #fff;
+      border: 1.5px solid var(--navy);
     }
 
-    .btn-navy:hover {
+    .btn-register:hover {
       background: var(--navy-dark);
+    }
+
+    .btn-login {
+      background: var(--surface);
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
+    }
+
+    .btn-login:hover {
+      background: var(--teal-soft);
     }
 
     .btn-teal {
@@ -161,7 +178,6 @@
     .btn-gold {
       background: var(--gold);
       color: #fff;
-      box-shadow: 0 4px 12px rgba(201, 154, 46, 0.28);
     }
 
     .btn-gold:hover {
@@ -176,112 +192,29 @@
 
     .btn-ghost:hover {
       background: var(--surface-alt);
-      border-color: #C4D0DA;
     }
 
     .btn-sm {
-      padding: 7px 12px;
-      font-size: 0.8rem;
+      padding: 6px 11px;
+      font-size: 0.79rem;
     }
 
-    /* Hero / Propuesta de valor */
-    .hero {
-      background: radial-gradient(circle at top right, rgba(201, 154, 46, 0.18), transparent 42%),
-                  linear-gradient(125deg, var(--navy-dark) 0%, var(--navy) 52%, var(--teal) 100%);
-      color: #fff;
-      padding: 28px 22px;
-      border-bottom: 3px solid var(--gold);
-    }
-
-    .hero-inner {
-      max-width: 1320px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 24px;
-      align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .hero-kicker {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-      margin-bottom: 10px;
-    }
-
-    .hero h1 {
-      font-size: clamp(1.45rem, 2.6vw, 2.05rem);
-      font-weight: 800;
-      line-height: 1.18;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      font-size: 0.94rem;
-      color: rgba(255, 255, 255, 0.92);
-      max-width: 640px;
-    }
-
-    .hero-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    @media (max-width: 520px) {
-      .hero-cards {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .hero-mini {
-      background: rgba(255, 255, 255, 0.11);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: var(--radius-md);
-      padding: 14px;
-    }
-
-    .hero-mini strong {
-      display: block;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-      color: #FFE599;
-    }
-
-    .hero-mini span {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.9);
-      display: block;
-    }
-
-    /* Main container */
+    /* Main Container */
     .container {
-      max-width: 1320px;
-      margin: 24px auto;
-      padding: 0 22px 60px;
+      max-width: 1340px;
+      margin: 20px auto;
+      padding: 0 22px 56px;
     }
 
-    /* Owner Dashboard */
+    /* Owner Panel */
     .owner-panel {
       background: var(--surface);
       border: 1px solid var(--border);
       border-left: 5px solid var(--gold);
       border-radius: var(--radius-lg);
-      padding: 22px;
+      padding: 20px;
       box-shadow: var(--shadow-md);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       display: none;
     }
 
@@ -293,29 +226,29 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
-      padding-bottom: 14px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .stat-card {
       background: var(--surface-alt);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 13px 15px;
+      padding: 12px 14px;
     }
 
     .stat-card small {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       color: var(--muted);
       text-transform: uppercase;
@@ -323,23 +256,23 @@
 
     .stat-card strong {
       display: block;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--navy);
       margin-top: 2px;
     }
 
-    /* Search & filter bar */
+    /* Filter Bar */
     .filter-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 16px 18px;
+      padding: 14px 16px;
       box-shadow: var(--shadow-sm);
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .search-line {
@@ -351,12 +284,12 @@
 
     .search-box {
       flex: 1;
-      min-width: 240px;
-      padding: 11px 15px;
+      min-width: 230px;
+      padding: 10px 14px;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       font-family: inherit;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       background: var(--surface-alt);
     }
 
@@ -366,11 +299,11 @@
       border-color: var(--teal);
     }
 
-    .check-open {
+    .check-filter {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.86rem;
+      gap: 7px;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--navy);
       cursor: pointer;
@@ -384,12 +317,12 @@
     }
 
     .chip {
-      padding: 7px 14px;
+      padding: 6px 13px;
       border-radius: 999px;
       border: 1px solid var(--border);
       background: var(--surface);
       color: var(--text);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.14s ease;
@@ -405,11 +338,11 @@
       border-color: var(--navy);
     }
 
-    /* Workspace split: Directory left, Map right */
+    /* Directory + Map */
     .content-grid {
       display: grid;
-      grid-template-columns: 1.08fr 1fr;
-      gap: 22px;
+      grid-template-columns: 1.12fr 1fr;
+      gap: 20px;
       align-items: start;
     }
 
@@ -432,7 +365,7 @@
       padding: 15px;
       box-shadow: var(--shadow-sm);
       display: grid;
-      grid-template-columns: 116px 1fr;
+      grid-template-columns: 112px 1fr;
       gap: 15px;
       cursor: pointer;
       transition: transform 0.14s ease, border-color 0.15s ease, box-shadow 0.15s ease;
@@ -460,55 +393,58 @@
       justify-content: center;
       color: #fff;
       font-weight: 800;
+      font-size: 0.82rem;
       text-align: center;
       padding: 8px;
-      position: relative;
-      overflow: hidden;
     }
 
-    .biz-thumb span {
-      font-size: 0.72rem;
-      opacity: 0.9;
+    .biz-thumb small {
+      font-size: 0.68rem;
       font-weight: 600;
+      opacity: 0.92;
       margin-top: 4px;
-    }
-
-    .biz-body {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-width: 0;
     }
 
     .biz-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 5px;
     }
 
-    .cat-tag {
-      display: inline-block;
+    .tags-line {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .tag-cat {
       background: var(--teal-soft);
       color: var(--teal-dark);
       font-size: 0.72rem;
       font-weight: 800;
-      padding: 3px 9px;
+      padding: 2px 9px;
       border-radius: 999px;
-      margin-bottom: 4px;
     }
 
-    .local-tag {
-      display: inline-block;
-      background: var(--gold-soft);
-      color: var(--gold-dark);
-      border: 1px solid rgba(201, 154, 46, 0.35);
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 2px 8px;
+    .tag-delivery-yes {
+      background: var(--delivery-bg);
+      color: var(--delivery-fg);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 9px;
       border-radius: 999px;
-      margin-left: 4px;
+    }
+
+    .tag-delivery-no {
+      background: #F1F5F9;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 999px;
     }
 
     .biz-title {
@@ -518,9 +454,9 @@
     }
 
     .pill-status {
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       font-weight: 800;
-      padding: 4px 10px;
+      padding: 3px 9px;
       border-radius: 999px;
       white-space: nowrap;
     }
@@ -536,29 +472,46 @@
     }
 
     .biz-desc {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       color: var(--muted);
       margin-bottom: 8px;
     }
 
-    .biz-details {
+    .menu-preview {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 11px;
+      margin-bottom: 9px;
       font-size: 0.8rem;
+    }
+
+    .menu-preview strong {
+      color: var(--navy);
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .biz-meta {
+      font-size: 0.79rem;
       color: var(--text);
       margin-bottom: 10px;
     }
 
-    .biz-details div {
+    .biz-meta div {
       margin-bottom: 2px;
     }
 
-    .biz-footer {
+    .biz-actions {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      align-items: center;
     }
 
-    /* Map side */
+    /* Map */
     .map-panel {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -566,7 +519,7 @@
       overflow: hidden;
       box-shadow: var(--shadow-md);
       position: sticky;
-      top: 84px;
+      top: 76px;
     }
 
     @media (max-width: 980px) {
@@ -576,33 +529,31 @@
     }
 
     .map-top {
-      padding: 13px 16px;
-      background: var(--surface);
+      padding: 12px 16px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 800;
       color: var(--navy);
     }
 
     #map {
-      height: 500px;
+      height: 510px;
       width: 100%;
       z-index: 1;
     }
 
     #pickerMap {
-      height: 230px;
+      height: 220px;
       width: 100%;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      margin: 8px 0 12px;
+      margin: 6px 0 10px;
     }
 
-    /* Form elements */
+    /* Forms & Modals */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -613,7 +564,7 @@
     .field {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 4px;
     }
 
     .field label {
@@ -634,18 +585,10 @@
       color: var(--text);
     }
 
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      outline: none;
-      border-color: var(--teal);
-    }
-
-    /* Modals */
     .modal-bg {
       position: fixed;
       inset: 0;
-      background: rgba(7, 36, 59, 0.58);
+      background: rgba(7, 35, 58, 0.58);
       backdrop-filter: blur(2px);
       display: none;
       align-items: center;
@@ -678,7 +621,7 @@
     }
 
     .modal-top h2 {
-      font-size: 1.18rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--navy);
     }
@@ -691,49 +634,6 @@
       background: var(--surface-alt);
       font-size: 1.15rem;
       cursor: pointer;
-      color: var(--text);
-      flex-shrink: 0;
-    }
-
-    .role-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    @media (max-width: 500px) {
-      .role-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .role-option {
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 12px;
-      text-align: left;
-      background: var(--surface);
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .role-option.active {
-      border-color: var(--teal);
-      background: var(--teal-soft);
-    }
-
-    .role-option strong {
-      display: block;
-      font-size: 0.9rem;
-      color: var(--navy);
-      margin-bottom: 2px;
-    }
-
-    .role-option span {
-      font-size: 0.78rem;
-      color: var(--muted);
-      display: block;
     }
 
     .plans-row {
@@ -763,40 +663,59 @@
     }
 
     .plan-price {
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       font-weight: 800;
       color: var(--navy);
       margin: 3px 0;
     }
 
-    .demo-strip {
-      background: var(--surface-alt);
-      border: 1px dashed var(--border);
+    .menu-modal-list {
+      list-style: none;
+      border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 10px 12px;
-      margin-bottom: 14px;
-      font-size: 0.8rem;
+      overflow: hidden;
+      margin: 10px 0 14px;
     }
 
-    .review-box {
-      background: var(--surface-alt);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+    .menu-modal-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
       padding: 10px 12px;
-      margin-bottom: 8px;
-      font-size: 0.84rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+      background: var(--surface-alt);
+    }
+
+    .menu-modal-list li:last-child {
+      border-bottom: none;
+    }
+
+    .demo-box {
+      background: var(--surface-alt);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      margin-bottom: 12px;
+      font-size: 0.78rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .toast {
       position: fixed;
-      bottom: 22px;
-      right: 22px;
+      bottom: 20px;
+      right: 20px;
       background: var(--navy-dark);
       color: #fff;
       border-left: 4px solid var(--gold);
-      padding: 12px 16px;
+      padding: 11px 16px;
       border-radius: var(--radius-sm);
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 700;
       box-shadow: var(--shadow-md);
       z-index: 3500;
@@ -817,73 +736,59 @@
   <header>
     <div class="header-inner">
       <div class="brand" onclick="resetHome()">
-        <!-- Logotipo Geométrico CP Conecta Parral -->
-        <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logotipo Conecta Parral">
-          <polygon points="36,12 60,26 60,52 36,66 12,52 12,26" fill="#0B3B60"/>
-          <polygon points="36,12 60,26 36,39" fill="#1E7E8B"/>
-          <polygon points="60,26 60,52 36,39" fill="#145A73"/>
-          <polygon points="36,66 60,52 60,82 36,96 12,82 12,52" fill="#0B3B60"/>
-          <polygon points="12,52 36,39 36,66" fill="#1E7E8B"/>
-          <polygon points="64,26 88,12 110,26 110,54 88,68 64,54" fill="#1E7E8B"/>
-          <polygon points="64,26 88,12 88,40" fill="#C99A2E"/>
-          <polygon points="64,54 88,68 64,98" fill="#0B3B60"/>
-          <path d="M24 54 V40 L29 36 L34 40 V54 M34 54 V33 L39 26 L44 33 V54 M44 54 V42 L49 38 L53 42 V54" fill="#F6F5F0"/>
-          <circle cx="24" cy="10" r="4" fill="#1E7E8B"/>
-          <line x1="24" y1="14" x2="28" y2="20" stroke="#1E7E8B" stroke-width="2"/>
-          <circle cx="96" cy="10" r="4" fill="#1E7E8B"/>
-          <line x1="96" y1="14" x2="90" y2="20" stroke="#1E7E8B" stroke-width="2"/>
-          <circle cx="112" cy="44" r="4" fill="#0B3B60"/>
-          <line x1="108" y1="44" x2="102" y2="44" stroke="#0B3B60" stroke-width="2"/>
+        <!-- Logotipo CP Conecta Parral (nítido, con silueta urbana y nodos de red) -->
+        <svg width="52" height="52" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Conecta Parral">
+          <!-- Nodos exteriores -->
+          <circle cx="24" cy="12" r="4.5" fill="#1E7E8B"/>
+          <line x1="24" y1="16.5" x2="29" y2="23" stroke="#1E7E8B" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="96" cy="12" r="4.5" fill="#1E7E8B"/>
+          <line x1="96" y1="16.5" x2="88" y2="23" stroke="#1E7E8B" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="116" cy="46" r="4.5" fill="#0B3B60"/>
+          <line x1="111.5" y1="46" x2="105" y2="46" stroke="#0B3B60" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="10" cy="48" r="4" fill="#1E7E8B"/>
+          <line x1="14" y1="48" x2="19" y2="48" stroke="#1E7E8B" stroke-width="2.2" stroke-linecap="round"/>
+
+          <!-- Letra C geométrica -->
+          <path d="M58 26 L38 14 L18 26 L18 88 L38 100 L58 88 L58 73 L43 82 L31 75 L31 39 L43 32 L58 41 Z" fill="#0B3B60"/>
+          <polygon points="38,14 58,26 43,32 31,25" fill="#1E7E8B"/>
+          <polygon points="18,26 31,39 31,75 18,88" fill="#145D67"/>
+
+          <!-- Silueta urbana interior -->
+          <path d="M26 62 V51 L30 48 L34 51 V62 M34 62 V43 L38.5 37 L43 43 V62 M43 62 V52 L47 49 L51 52 V62" fill="#FFFFFF" stroke="#0B3B60" stroke-width="1.2" stroke-linejoin="round"/>
+
+          <!-- Letra P geométrica -->
+          <path d="M66 26 L86 14 L106 26 L106 54 L86 66 L79 62 L79 102 L66 94 Z" fill="#1E7E8B"/>
+          <polygon points="86,14 106,26 86,38 79,34" fill="#C99A2E"/>
+          <polygon points="79,34 86,38 86,52 79,48" fill="#FFFFFF"/>
+          <polygon points="66,64 79,71 79,102 66,94" fill="#0B3B60"/>
         </svg>
-        <div class="brand-copy">
-          <span class="brand-name">CONECTA PARRAL</span>
-          <span class="brand-tagline">Plataforma Digital · Su Negocio Local en Línea</span>
+
+        <div class="brand-text">
+          <span class="brand-title">CONECTA PARRAL</span>
+          <span class="brand-sub">Plataforma Digital · Su Negocio Local en Línea</span>
         </div>
       </div>
 
-      <div class="header-actions" id="headerActions"></div>
+      <div class="owner-cta-group" id="headerOwnerArea"></div>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div>
-        <span class="hero-kicker">HIDALGO DEL PARRAL, CHIHUAHUA</span>
-        <h1>Visibilidad real para los negocios de barrio que merecen conocerse</h1>
-        <p>
-          Conecta con creperías, estudios de uñas, boutiques locales, barberías y antojitos de Parral.
-          Explorar es libre para todos los usuarios; publicar y gestionar tu local cuenta con planes accesibles.
-        </p>
-      </div>
-      <div class="hero-cards">
-        <div class="hero-mini">
-          <strong>Usuarios y Clientes</strong>
-          <span>Acceso gratuito e ilimitado para explorar, guardar favoritos y dejar reseñas.</span>
-        </div>
-        <div class="hero-mini">
-          <strong>Dueños de Local</strong>
-          <span>Planes mensuales de paga para aparecer en el mapa y recibir mensajes por WhatsApp.</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <main class="container">
-    <!-- Panel exclusivo de Dueño de Local -->
+    <!-- Panel exclusivo para dueños de comercios -->
     <section class="owner-panel" id="ownerPanel">
       <div class="owner-top">
         <div>
-          <h2 style="color: var(--navy); font-size: 1.18rem;">Panel de Dueño de Local</h2>
-          <p id="ownerPlanInfo" style="font-size: 0.84rem; color: var(--muted);"></p>
+          <h2 style="color: var(--navy); font-size: 1.15rem;">Panel de Dueño de Comercio</h2>
+          <p id="ownerPlanText" style="font-size: 0.82rem; color: var(--muted);"></p>
         </div>
-        <button type="button" class="btn btn-teal btn-sm" onclick="toggleForm()">+ Publicar o registrar local</button>
+        <button type="button" class="btn btn-teal btn-sm" onclick="toggleForm()">+ Registrar nuevo local</button>
       </div>
 
       <div class="stats-row" id="ownerStats"></div>
 
-      <div id="formContainer" style="display: none; border-top: 1px solid var(--border); padding-top: 16px; margin-bottom: 14px;">
-        <h3 id="formHeading" style="font-size: 0.98rem; color: var(--navy); margin-bottom: 12px;">Nuevo negocio local en Parral</h3>
-        <form id="bizForm" onsubmit="submitBusiness(event)">
+      <div id="formWrap" style="display: none; border-top: 1px solid var(--border); padding-top: 14px; margin-bottom: 14px;">
+        <h3 id="formTitle" style="font-size: 0.96rem; color: var(--navy); margin-bottom: 10px;">Registrar comercio en Parral</h3>
+        <form id="bizForm" onsubmit="saveBusiness(event)">
           <input type="hidden" id="editId" />
           <div class="form-grid">
             <div class="field">
@@ -905,127 +810,133 @@
               <input type="text" id="fPhone" required placeholder="627 123 3087" />
             </div>
             <div class="field">
-              <label>Horario de atención *</label>
+              <label>Servicio a domicilio *</label>
+              <select id="fDelivery">
+                <option value="true">Sí cuenta con servicio a domicilio</option>
+                <option value="false">Solo en local / recoger</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Dirección en Hidalgo del Parral *</label>
+              <input type="text" id="fAddress" required placeholder="Calle, colonia y código postal" />
+            </div>
+            <div class="field">
+              <label>Horario *</label>
               <input type="text" id="fHours" required placeholder="Mar - Dom · 17:00 - 22:30" />
             </div>
           </div>
 
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Dirección completa en Hidalgo del Parral *</label>
-            <input type="text" id="fAddress" required placeholder="Calle, colonia y código postal" />
+          <div class="field" style="margin-bottom: 10px;">
+            <label>Descripción corta *</label>
+            <textarea id="fDesc" rows="2" required placeholder="Describe el negocio local..."></textarea>
           </div>
 
-          <div class="field" style="margin-bottom: 12px;">
-            <label>Descripción del negocio *</label>
-            <textarea id="fDesc" rows="2" required placeholder="¿Qué venden o qué servicio ofrecen?"></textarea>
+          <div class="field" style="margin-bottom: 10px;">
+            <label>Menú o lista de productos/servicios (uno por línea, formato: Producto — $Precio)</label>
+            <textarea id="fMenu" rows="3" placeholder="Crepa Nutella y fresa — $75&#10;Waffle con cajeta y nuez — $68"></textarea>
           </div>
 
           <div class="field">
-            <label>Haz clic en el mapa o arrastra el pin para fijar la ubicación en Parral:</label>
+            <label>Ubica el pin en el mapa de Parral:</label>
           </div>
           <div id="pickerMap"></div>
-          <div style="display:flex; gap:14px; font-size:0.78rem; color:var(--muted); margin-bottom:12px;">
-            <span>Latitud: <strong id="pickLat">26.9317</strong></span>
-            <span>Longitud: <strong id="pickLng">-105.6664</strong></span>
+          <div style="display:flex; gap:14px; font-size:0.76rem; color:var(--muted); margin-bottom:10px;">
+            <span>Lat: <strong id="pickLat">26.9317</strong></span>
+            <span>Lng: <strong id="pickLng">-105.6664</strong></span>
           </div>
 
           <div style="display:flex; gap:8px; justify-content:flex-end;">
             <button type="button" class="btn btn-ghost btn-sm" onclick="toggleForm(false)">Cancelar</button>
-            <button type="submit" class="btn btn-navy btn-sm">Guardar negocio</button>
+            <button type="submit" class="btn btn-register btn-sm">Guardar comercio</button>
           </div>
         </form>
       </div>
 
-      <div id="myBizContainer"></div>
+      <div id="myBusinessesWrap"></div>
     </section>
 
-    <!-- Filtros -->
+    <!-- Filtros para clientes -->
     <section class="filter-card">
       <div class="search-line">
         <input
           type="text"
-          id="searchBox"
+          id="searchInput"
           class="search-box"
-          placeholder="Buscar negocio, colonia (Topo Chico, Centro, Almanceña...) o servicio..."
+          placeholder="Buscar comercio, colonia (Topo Chico, Centro, Almanceña...), platillo o servicio..."
           oninput="renderAll()"
         />
-        <label class="check-open">
-          <input type="checkbox" id="openOnly" onchange="renderAll()" />
-          Solo abiertos ahora
+        <label class="check-filter">
+          <input type="checkbox" id="deliveryOnly" onchange="renderAll()" />
+          Con servicio a domicilio
         </label>
-        <button type="button" class="btn btn-ghost btn-sm" onclick="clearAllFilters()">Restablecer</button>
+        <label class="check-filter">
+          <input type="checkbox" id="openOnly" onchange="renderAll()" />
+          Abiertos ahora
+        </label>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="clearFilters()">Limpiar</button>
       </div>
       <div class="chips-row" id="categoryChips"></div>
     </section>
 
     <!-- Directorio y Mapa -->
     <section class="content-grid">
-      <div class="cards-column" id="bizList"></div>
+      <div class="cards-column" id="businessList"></div>
 
       <aside class="map-panel">
         <div class="map-top">
-          <span>Mapa Interactivo · Hidalgo del Parral</span>
-          <span id="countBadge" style="color: var(--teal);"></span>
+          <span>Ubicaciones en Hidalgo del Parral</span>
+          <span id="countLabel" style="color: var(--teal);"></span>
         </div>
         <div id="map"></div>
       </aside>
     </section>
   </main>
 
-  <!-- Modal de Sesión / Planes -->
-  <div class="modal-bg" id="authModal">
+  <!-- Modal exclusivo para Dueños de Comercio -->
+  <div class="modal-bg" id="ownerAuthModal">
     <div class="modal-box">
       <div class="modal-top">
         <div>
-          <h2>Iniciar sesión o registrar cuenta</h2>
-          <p style="font-size:0.8rem; color:var(--muted);">Usuarios exploradores: acceso libre e ilimitado · Dueños: plan mensual de paga.</p>
+          <h2 id="ownerModalTitle">Registro para Dueños de Comercio</h2>
+          <p id="ownerModalSubtitle" style="font-size:0.8rem; color:var(--muted);">
+            Espacio exclusivo para propietarios que desean promocionar su negocio local en Parral.
+          </p>
         </div>
-        <button type="button" class="x-btn" onclick="closeModal('authModal')">&times;</button>
+        <button type="button" class="x-btn" onclick="closeModal('ownerAuthModal')">&times;</button>
       </div>
 
-      <div class="demo-strip">
-        <strong>Acceso rápido de prueba:</strong>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-          <button type="button" class="btn btn-ghost btn-sm" onclick="quickDemo('user')">Modo Usuario (Gratis)</button>
-          <button type="button" class="btn btn-gold btn-sm" onclick="quickDemo('owner')">Modo Dueño (Plan Activo)</button>
-        </div>
+      <div class="demo-box">
+        <span>Demo rápida de propietario con plan activo:</span>
+        <button type="button" class="btn btn-gold btn-sm" onclick="demoOwnerLogin()">Entrar como Dueño Demo</button>
       </div>
 
-      <div class="role-grid">
-        <button type="button" class="role-option active" id="optUser" onclick="setRoleMode('explorer')">
-          <strong>Explorador / Cliente</strong>
-          <span>Gratis e ilimitado. Guarda favoritos y comenta.</span>
-        </button>
-        <button type="button" class="role-option" id="optOwner" onclick="setRoleMode('owner')">
-          <strong>Dueño de Local</strong>
-          <span>Requiere plan mensual para publicar y administrar.</span>
-        </button>
-      </div>
-
-      <form id="authForm" onsubmit="submitAuth(event)">
+      <form id="ownerAuthForm" onsubmit="submitOwnerAuth(event)">
         <div class="form-grid" style="grid-template-columns: 1fr;">
-          <div class="field">
-            <label>Nombre completo o razón comercial *</label>
-            <input type="text" id="authName" required placeholder="Ej. Carla Martínez / CREPE" />
+          <div class="field" id="ownerNameField">
+            <label>Nombre del dueño o comercio *</label>
+            <input type="text" id="ownerNameInput" placeholder="Ej. CREPE / Propietario" />
           </div>
           <div class="field">
-            <label>Correo electrónico *</label>
-            <input type="email" id="authEmail" required placeholder="ejemplo@correo.com" />
+            <label>Correo del dueño *</label>
+            <input type="email" id="ownerEmailInput" required placeholder="dueno@negocio.mx" />
           </div>
         </div>
 
-        <div id="planBlock" style="display: none;">
-          <label style="font-size:0.8rem; font-weight:700; color:var(--navy);">Selecciona tu plan de suscripción para dueños:</label>
+        <div id="registerPlanSection">
+          <label style="font-size:0.8rem; font-weight:700; color:var(--navy);">Selecciona tu plan de promoción (pago mensual):</label>
           <div class="plans-row">
-            <div class="plan-card selected" id="cardPlanBasic" onclick="choosePlan('basic')">
-              <strong style="font-size:0.88rem; color:var(--navy);">Plan Emprendedor</strong>
+            <div class="plan-card selected" id="planBasic" onclick="selectPlan('basic')">
+              <strong style="font-size:0.86rem; color:var(--navy);">Plan Emprendedor</strong>
               <div class="plan-price">$149 MXN / mes</div>
-              <p style="font-size:0.75rem; color:var(--muted);">1 local en el mapa, botón directo a WhatsApp y edición de horario.</p>
+              <p style="font-size:0.74rem; color:var(--muted);">1 local en el mapa, menú visible, estado de domicilio y WhatsApp.</p>
             </div>
-            <div class="plan-card" id="cardPlanPro" onclick="choosePlan('pro')">
-              <strong style="font-size:0.88rem; color:var(--navy);">Plan Impulso Parral</strong>
+            <div class="plan-card" id="planPro" onclick="selectPlan('pro')">
+              <strong style="font-size:0.86rem; color:var(--navy);">Plan Impulso Parral</strong>
               <div class="plan-price">$279 MXN / mes</div>
-              <p style="font-size:0.75rem; color:var(--muted);">Hasta 3 locales, insignia destacada y métricas de visitas.</p>
+              <p style="font-size:0.74rem; color:var(--muted);">Hasta 3 locales en el mapa y estadísticas de visitas.</p>
             </div>
           </div>
 
@@ -1040,20 +951,20 @@
             </div>
             <div class="field">
               <label>Últimos 4 dígitos o folio</label>
-              <input type="text" id="payFolio" value="8841" required />
+              <input type="text" id="payRef" value="5019" />
             </div>
           </div>
         </div>
 
         <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
-          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal('authModal')">Cancelar</button>
-          <button type="submit" id="authSubmitBtn" class="btn btn-navy btn-sm">Entrar gratis e ilimitado</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal('ownerAuthModal')">Cancelar</button>
+          <button type="submit" id="ownerSubmitBtn" class="btn btn-gold btn-sm">Pagar y registrar comercio</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal de Ficha del Negocio -->
+  <!-- Modal de Detalle, Menú y Domicilio para Clientes -->
   <div class="modal-bg" id="detailModal">
     <div class="modal-box" id="detailContent"></div>
   </div>
@@ -1062,9 +973,9 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const DB_KEY = 'conecta_parral_db_v3';
-    const SESSION_KEY = 'conecta_parral_session_v3';
-    const PARRAL_COORDS = [26.9317, -105.6664];
+    const DB_KEY = 'conecta_parral_db_v4';
+    const OWNER_KEY = 'conecta_parral_owner_v4';
+    const PARRAL_CENTER = [26.9317, -105.6664];
 
     const CATEGORIES = [
       'Todos',
@@ -1075,374 +986,328 @@
       'Antojitos'
     ];
 
-    const CATEGORY_STYLES = {
-      'Comida y Postres': { bg: 'linear-gradient(135deg, #0B3B60, #1E7E8B)', label: 'CREPAS & DULCE' },
-      'Uñas y Belleza': { bg: 'linear-gradient(135deg, #8A3B62, #C99A2E)', label: 'NAILS & ESTILO' },
-      'Ropa y Boutique': { bg: 'linear-gradient(135deg, #1E7E8B, #0B3B60)', label: 'BOUTIQUE LOCAL' },
-      'Barbería y Estética': { bg: 'linear-gradient(135deg, #15222E, #0B3B60)', label: 'SALÓN & BARBER' },
-      'Antojitos': { bg: 'linear-gradient(135deg, #A97E1D, #0B3B60)', label: 'ANTOJITOS' }
+    const THUMB_THEMES = {
+      'Comida y Postres': { bg: 'linear-gradient(135deg, #0B3B60, #1E7E8B)', badge: 'POSTRES & MENÚ' },
+      'Uñas y Belleza': { bg: 'linear-gradient(135deg, #8A3B62, #C99A2E)', badge: 'UÑAS & ESTILO' },
+      'Ropa y Boutique': { bg: 'linear-gradient(135deg, #1E7E8B, #0B3B60)', badge: 'ROPA LOCAL' },
+      'Barbería y Estética': { bg: 'linear-gradient(135deg, #15222E, #0B3B60)', badge: 'ESTÉTICA & BARBER' },
+      'Antojitos': { bg: 'linear-gradient(135deg, #A67B18, #0B3B60)', badge: 'ANTOJITOS' }
     };
 
-    const SEED_BUSINESSES = [
+    const INITIAL_LOCAL_BUSINESSES = [
       {
-        id: 'p-1',
+        id: 'loc-1',
         name: 'CREPE (Crepas & waffles)',
         category: 'Comida y Postres',
         address: 'Prof. Daniel Royal 1, Topo Chico, 33834 Hidalgo del Parral, Chih.',
         phone: '627 123 3087',
         hours: 'Mar - Dom · 17:00 - 22:30',
         isOpen: true,
+        hasDelivery: true,
+        deliveryNote: 'Domicilio disponible en Topo Chico y colonias cercanas',
         lat: 26.9254,
         lng: -105.6762,
         ownerEmail: 'dueno@conectaparral.mx',
-        views: 164,
-        description: 'Crepas dulces y saladas recién preparadas y waffles con toppings locales en la colonia Topo Chico.',
-        reviews: [
-          { user: 'Andrea L.', stars: 5, text: 'Muy ricas las crepas y qué bueno que den a conocer lugares de Topo Chico.' }
+        views: 94,
+        description: 'Pequeño negocio de crepas dulces y saladas recién hechas y waffles en Topo Chico.',
+        menu: [
+          { item: 'Crepa Nutella, fresa y plátano', price: '$78' },
+          { item: 'Crepa salada de jamón y queso manchego', price: '$72' },
+          { item: 'Waffle con cajeta, nuez y bola de nieve', price: '$69' }
         ]
       },
       {
-        id: 'p-2',
-        name: 'Kiu Nails',
-        category: 'Uñas y Belleza',
-        address: 'Col. Centro, Hidalgo del Parral, Chih.',
-        phone: '627 518 4410',
-        hours: 'Lun - Sáb · 10:00 - 19:30',
-        isOpen: true,
-        lat: 26.9325,
-        lng: -105.6648,
-        ownerEmail: 'dueno@conectaparral.mx',
-        views: 92,
-        description: 'Aplicación de uñas acrílicas, gel y diseños a detalle con atención cercana y agenda por mensaje.',
-        reviews: []
-      },
-      {
-        id: 'p-3',
-        name: 'Uñas Cristy',
-        category: 'Uñas y Belleza',
-        address: 'Col. Almanceña, Hidalgo del Parral, Chih.',
-        phone: '627 145 8920',
-        hours: 'Lun - Sáb · 09:30 - 19:00',
-        isOpen: true,
-        lat: 26.9382,
-        lng: -105.6695,
-        ownerEmail: 'dueno@conectaparral.mx',
-        views: 78,
-        description: 'Servicio local de uñas, acabado limpio y trato directo en la colonia Almanceña.',
-        reviews: []
-      },
-      {
-        id: 'p-4',
+        id: 'loc-2',
         name: 'Sútu Uñas y Más',
         category: 'Uñas y Belleza',
         address: 'Col. Kennedy, Hidalgo del Parral, Chih.',
         phone: '627 119 6034',
         hours: 'Mar - Dom · 11:00 - 20:00',
-        isOpen: false,
+        isOpen: true,
+        hasDelivery: false,
+        deliveryNote: 'Atención en estudio con cita previa',
         lat: 26.9278,
         lng: -105.6580,
         ownerEmail: 'dueno@conectaparral.mx',
-        views: 65,
-        description: 'Estudio local de uñas y detalles de belleza para eventos o uso diario en Parral.',
-        reviews: []
+        views: 41,
+        description: 'Emprendimiento de uñas acrílicas, gel semipermanente y detalles de belleza poco conocido en la colonia Kennedy.',
+        menu: [
+          { item: 'Aplicación de gel semipermanente', price: '$180' },
+          { item: 'Uñas acrílicas esculturales básicas', price: '$320' },
+          { item: 'Retiro y limpieza de uña natural', price: '$110' }
+        ]
       },
       {
-        id: 'p-5',
-        name: 'Andromeda Boutique',
-        category: 'Ropa y Boutique',
-        address: 'Col. Centro, Hidalgo del Parral, Chih.',
-        phone: '627 522 7731',
-        hours: 'Lun - Sáb · 10:30 - 19:30',
-        isOpen: true,
-        lat: 26.9311,
-        lng: -105.6675,
-        ownerEmail: 'dueno@conectaparral.mx',
-        views: 103,
-        description: 'Boutique independiente con prendas seleccionadas, conjuntos casuales y accesorios.',
-        reviews: []
-      },
-      {
-        id: 'p-6',
+        id: 'loc-3',
         name: 'María Bonita Boutique',
         category: 'Ropa y Boutique',
         address: 'Col. Talleres, Hidalgo del Parral, Chih.',
         phone: '627 134 2098',
         hours: 'Lun - Vie · 11:00 - 19:00',
         isOpen: true,
+        hasDelivery: true,
+        deliveryNote: 'Envíos locales a domicilio en Parral',
         lat: 26.9355,
         lng: -105.6720,
         ownerEmail: 'dueno@conectaparral.mx',
-        views: 71,
-        description: 'Moda y prendas locales con opciones de apartado y consulta de tallas por WhatsApp.',
-        reviews: []
+        views: 37,
+        description: 'Boutique de barrio en Talleres con prendas de temporada y opciones de apartado.',
+        menu: [
+          { item: 'Blusa casual de temporada', price: '$240' },
+          { item: 'Conjunto dos piezas', price: '$390' },
+          { item: 'Vestido midi para salida', price: '$350' }
+        ]
       },
       {
-        id: 'p-7',
+        id: 'loc-4',
         name: 'Eliana Boutique',
         category: 'Ropa y Boutique',
         address: 'Col. Juárez, Hidalgo del Parral, Chih.',
         phone: '627 108 5512',
         hours: 'Mar - Sáb · 10:00 - 19:00',
         isOpen: true,
+        hasDelivery: true,
+        deliveryNote: 'Entrega a domicilio previa coordinación',
         lat: 26.9292,
         lng: -105.6710,
         ownerEmail: 'dueno@conectaparral.mx',
-        views: 59,
-        description: 'Ropa y complementos de emprendimiento local en la colonia Juárez.',
-        reviews: []
+        views: 29,
+        description: 'Pequeña tienda de ropa y accesorios en la colonia Juárez con trato directo.',
+        menu: [
+          { item: 'Top básico en algodón', price: '$165' },
+          { item: 'Pantalón de vestir / casual', price: '$330' },
+          { item: 'Bolsa de mano local', price: '$260' }
+        ]
       },
       {
-        id: 'p-8',
+        id: 'loc-5',
         name: 'Antojitos "Corral"',
         category: 'Antojitos',
         address: 'Col. Palmilla, Hidalgo del Parral, Chih.',
         phone: '627 140 9921',
         hours: 'Vie - Dom · 18:00 - 23:00',
         isOpen: true,
+        hasDelivery: true,
+        deliveryNote: 'Servicio a domicilio en Palmilla y zonas cercanas',
         lat: 26.9225,
         lng: -105.6635,
         ownerEmail: 'dueno@conectaparral.mx',
-        views: 118,
-        description: 'Antojitos de barrio preparados al momento para cenar o pedir para llevar.',
-        reviews: []
+        views: 53,
+        description: 'Cocina de antojitos de barrio en Palmilla preparada en casa durante las tardes.',
+        menu: [
+          { item: 'Orden de flautas (4 pzas)', price: '$65' },
+          { item: 'Quesadillas hechas a mano (3 pzas)', price: '$70' },
+          { item: 'Tostadas preparadas (3 pzas)', price: '$60' }
+        ]
       },
       {
-        id: 'p-9',
-        name: 'Antojitos Tommy',
-        category: 'Antojitos',
-        address: 'Col. Héroes de la Revolución, Hidalgo del Parral, Chih.',
-        phone: '627 129 4480',
-        hours: 'Jue - Dom · 17:30 - 22:30',
-        isOpen: false,
-        lat: 26.9401,
-        lng: -105.6615,
-        ownerEmail: 'dueno@conectaparral.mx',
-        views: 84,
-        description: 'Cocina local de antojitos en Héroes de la Revolución con porciones abundantes.',
-        reviews: []
-      },
-      {
-        id: 'p-10',
+        id: 'loc-6',
         name: 'Estética Michelle y Barbershop',
         category: 'Barbería y Estética',
         address: 'Col. Morelos, Hidalgo del Parral, Chih.',
         phone: '627 519 8843',
         hours: 'Lun - Sáb · 10:00 - 20:00',
-        isOpen: true,
+        isOpen: false,
+        hasDelivery: false,
+        deliveryNote: 'Servicio presencial en la colonia Morelos',
         lat: 26.9340,
         lng: -105.6595,
         ownerEmail: 'dueno@conectaparral.mx',
-        views: 96,
-        description: 'Cortes de cabello, estilo de barbería y servicios de estética en la colonia Morelos.',
-        reviews: []
+        views: 46,
+        description: 'Espacio local en Morelos para cortes de cabello, perfilado de barba y cuidado capilar.',
+        menu: [
+          { item: 'Corte de cabello / fade', price: '$120' },
+          { item: 'Corte y arreglo de barba', price: '$160' },
+          { item: 'Peinado y tratamiento express', price: '$190' }
+        ]
       }
     ];
 
-    let db = initDb();
-    let session = initSession();
-    let activeCat = 'Todos';
-    let roleMode = 'explorer';
-    let planMode = 'basic';
-    let mainMap, markersGroup, pickMap, pickPin;
+    let db = loadDb();
+    let ownerSession = loadOwnerSession();
+    let activeCategory = 'Todos';
+    let authMode = 'register'; // 'register' | 'login'
+    let selectedPlan = 'basic';
+    let mainMap, markersLayer, pickerMap, pickerPin;
 
-    function initDb() {
+    function loadDb() {
       try {
         const raw = localStorage.getItem(DB_KEY);
         if (raw) return JSON.parse(raw);
       } catch (_) {}
-      const initial = { businesses: SEED_BUSINESSES, favs: {} };
-      localStorage.setItem(DB_KEY, JSON.stringify(initial));
-      return initial;
+      const init = { businesses: INITIAL_LOCAL_BUSINESSES };
+      localStorage.setItem(DB_KEY, JSON.stringify(init));
+      return init;
     }
 
-    function persistDb() {
+    function saveDb() {
       localStorage.setItem(DB_KEY, JSON.stringify(db));
     }
 
-    function initSession() {
+    function loadOwnerSession() {
       try {
-        const raw = localStorage.getItem(SESSION_KEY);
+        const raw = localStorage.getItem(OWNER_KEY);
         if (raw) return JSON.parse(raw);
       } catch (_) {}
       return null;
     }
 
-    function updateSession(nextUser) {
-      session = nextUser;
-      if (nextUser) {
-        localStorage.setItem(SESSION_KEY, JSON.stringify(nextUser));
+    function setOwnerSession(owner) {
+      ownerSession = owner;
+      if (owner) {
+        localStorage.setItem(OWNER_KEY, JSON.stringify(owner));
       } else {
-        localStorage.removeItem(SESSION_KEY);
+        localStorage.removeItem(OWNER_KEY);
       }
       renderHeader();
-      renderOwnerSection();
+      renderOwnerPanel();
       renderAll();
     }
 
-    function notify(text) {
+    function showToast(msg) {
       const el = document.getElementById('toast');
-      el.textContent = text;
+      el.textContent = msg;
       el.classList.add('show');
       setTimeout(() => el.classList.remove('show'), 2800);
     }
 
     function renderHeader() {
-      const box = document.getElementById('headerActions');
-      if (!session) {
-        box.innerHTML = `
-          <button type="button" class="btn btn-ghost btn-sm" onclick="openAuth('explorer')">Iniciar sesión (Gratis)</button>
-          <button type="button" class="btn btn-gold btn-sm" onclick="openAuth('owner')">Publicar local (De paga)</button>
-        `;
-      } else if (session.role === 'owner') {
-        box.innerHTML = `
-          <span class="user-pill">Dueño · ${session.name} (${session.planLabel})</span>
-          <button type="button" class="btn btn-ghost btn-sm" onclick="signOut()">Cerrar sesión</button>
+      const area = document.getElementById('headerOwnerArea');
+      if (!ownerSession) {
+        area.innerHTML = `
+          <span class="owner-prompt">¿Quieres promocionar tu negocio?</span>
+          <button type="button" class="btn btn-register btn-sm" onclick="openOwnerModal('register')">Registrarse</button>
+          <button type="button" class="btn btn-login btn-sm" onclick="openOwnerModal('login')">Iniciar sesión</button>
         `;
       } else {
-        box.innerHTML = `
-          <span class="user-pill">Explorador · ${session.name} (Ilimitado)</span>
-          <button type="button" class="btn btn-gold btn-sm" onclick="openAuth('owner')">Soy dueño de local</button>
-          <button type="button" class="btn btn-ghost btn-sm" onclick="signOut()">Salir</button>
+        area.innerHTML = `
+          <span class="owner-badge">Dueño: ${ownerSession.name} (${ownerSession.planLabel})</span>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="logoutOwner()">Cerrar sesión</button>
         `;
       }
     }
 
-    function signOut() {
-      updateSession(null);
-      notify('Sesión cerrada');
+    function logoutOwner() {
+      setOwnerSession(null);
+      showToast('Sesión de dueño cerrada');
     }
 
-    function openAuth(defaultRole) {
-      setRoleMode(defaultRole);
-      document.getElementById('authModal').classList.add('open');
+    function openOwnerModal(mode) {
+      authMode = mode;
+      const isReg = mode === 'register';
+      document.getElementById('ownerModalTitle').textContent = isReg
+        ? 'Registrarse como Dueño de Comercio'
+        : 'Iniciar sesión — Dueños de Comercio';
+      document.getElementById('ownerModalSubtitle').textContent = isReg
+        ? 'Elige tu plan mensual para publicar tu local, menú y ubicación en Conecta Parral.'
+        : 'Acceso exclusivo para propietarios que ya cuentan con su registro activo.';
+      document.getElementById('ownerNameField').style.display = isReg ? 'flex' : 'none';
+      document.getElementById('registerPlanSection').style.display = isReg ? 'block' : 'none';
+      document.getElementById('ownerSubmitBtn').textContent = isReg
+        ? 'Pagar y registrar comercio'
+        : 'Iniciar sesión de dueño';
+      document.getElementById('ownerAuthModal').classList.add('open');
     }
 
     function closeModal(id) {
       document.getElementById(id).classList.remove('open');
     }
 
-    function setRoleMode(role) {
-      roleMode = role;
-      document.getElementById('optUser').classList.toggle('active', role === 'explorer');
-      document.getElementById('optOwner').classList.toggle('active', role === 'owner');
-      document.getElementById('planBlock').style.display = role === 'owner' ? 'block' : 'none';
-      const btn = document.getElementById('authSubmitBtn');
-      if (role === 'owner') {
-        btn.textContent = 'Pagar y activar plan de dueño';
-        btn.className = 'btn btn-gold btn-sm';
-      } else {
-        btn.textContent = 'Entrar gratis e ilimitado';
-        btn.className = 'btn btn-navy btn-sm';
-      }
+    function selectPlan(plan) {
+      selectedPlan = plan;
+      document.getElementById('planBasic').classList.toggle('selected', plan === 'basic');
+      document.getElementById('planPro').classList.toggle('selected', plan === 'pro');
     }
 
-    function choosePlan(plan) {
-      planMode = plan;
-      document.getElementById('cardPlanBasic').classList.toggle('selected', plan === 'basic');
-      document.getElementById('cardPlanPro').classList.toggle('selected', plan === 'pro');
+    function demoOwnerLogin() {
+      setOwnerSession({
+        name: 'CREPE & Socios',
+        email: 'dueno@conectaparral.mx',
+        plan: 'pro',
+        planLabel: 'Plan Impulso Parral $279/mes',
+        quota: 3
+      });
+      closeModal('ownerAuthModal');
+      showToast('Sesión de dueño demo activada');
     }
 
-    function quickDemo(kind) {
-      if (kind === 'user') {
-        updateSession({
-          name: 'Vecino/a de Parral',
-          email: 'cliente@conectaparral.mx',
-          role: 'explorer',
-          planLabel: 'Gratis Ilimitado'
-        });
-        closeModal('authModal');
-        notify('Sesión gratuita ilimitada activa');
-      } else {
-        updateSession({
-          name: 'CREPE & Socios',
-          email: 'dueno@conectaparral.mx',
-          role: 'owner',
-          plan: 'basic',
-          planLabel: 'Plan Emprendedor $149/mes',
-          quota: 1
-        });
-        closeModal('authModal');
-        notify('Panel de dueño activado');
-      }
-    }
-
-    function submitAuth(e) {
+    function submitOwnerAuth(e) {
       e.preventDefault();
-      const name = document.getElementById('authName').value.trim();
-      const email = document.getElementById('authEmail').value.trim().toLowerCase();
-      if (!name || !email) return;
+      const email = document.getElementById('ownerEmailInput').value.trim().toLowerCase();
+      if (!email) return;
 
-      if (roleMode === 'owner') {
-        const isPro = planMode === 'pro';
+      if (authMode === 'register') {
+        const name = document.getElementById('ownerNameInput').value.trim() || 'Dueño de Comercio';
+        const isPro = selectedPlan === 'pro';
         const method = document.getElementById('payMethod').value;
-        updateSession({
+        setOwnerSession({
           name,
           email,
-          role: 'owner',
-          plan: planMode,
+          plan: selectedPlan,
           planLabel: isPro ? 'Plan Impulso Parral $279/mes' : 'Plan Emprendedor $149/mes',
           quota: isPro ? 3 : 1,
           method
         });
-        closeModal('authModal');
-        notify(`Suscripción confirmada (${method}). Ya puedes publicar.`);
+        closeModal('ownerAuthModal');
+        showToast(`Registro y pago confirmados (${method})`);
       } else {
-        updateSession({
-          name,
+        const existing = db.businesses.find(b => b.ownerEmail === email);
+        setOwnerSession({
+          name: existing ? existing.name : 'Propietario',
           email,
-          role: 'explorer',
-          planLabel: 'Gratis Ilimitado'
+          plan: 'basic',
+          planLabel: 'Plan Emprendedor $149/mes',
+          quota: 1
         });
-        closeModal('authModal');
-        notify(`Bienvenido/a ${name}. Acceso libre sin límites.`);
+        closeModal('ownerAuthModal');
+        showToast('Bienvenido de nuevo a tu panel de comercio');
       }
     }
 
-    function renderOwnerSection() {
+    function renderOwnerPanel() {
       const panel = document.getElementById('ownerPanel');
-      if (!session || session.role !== 'owner') {
+      if (!ownerSession) {
         panel.classList.remove('active');
         return;
       }
 
       panel.classList.add('active');
-      const mine = db.businesses.filter(b => b.ownerEmail === session.email);
-      const viewsSum = mine.reduce((sum, b) => sum + (b.views || 0), 0);
-      const reviewsSum = mine.reduce((sum, b) => sum + (b.reviews ? b.reviews.length : 0), 0);
+      const mine = db.businesses.filter(b => b.ownerEmail === ownerSession.email);
+      const totalViews = mine.reduce((acc, b) => acc + (b.views || 0), 0);
 
-      document.getElementById('ownerPlanInfo').textContent =
-        `${session.planLabel} · Locales usados: ${mine.length} de ${session.quota}`;
+      document.getElementById('ownerPlanText').textContent =
+        `${ownerSession.planLabel} · Comercios registrados: ${mine.length} de ${ownerSession.quota}`;
 
       document.getElementById('ownerStats').innerHTML = `
         <div class="stat-card">
-          <small>Locales en el plan</small>
-          <strong>${mine.length} / ${session.quota}</strong>
+          <small>Locales en plan</small>
+          <strong>${mine.length} / ${ownerSession.quota}</strong>
         </div>
         <div class="stat-card">
-          <small>Visitas en el directorio</small>
-          <strong>${viewsSum}</strong>
+          <small>Vistas de clientes</small>
+          <strong>${totalViews}</strong>
         </div>
         <div class="stat-card">
-          <small>Reseñas recibidas</small>
-          <strong>${reviewsSum}</strong>
+          <small>Estado de cuenta</small>
+          <strong style="font-size:1rem; color:var(--open-fg);">Activa</strong>
         </div>
       `;
 
-      const listDiv = document.getElementById('myBizContainer');
+      const wrap = document.getElementById('myBusinessesWrap');
       if (mine.length === 0) {
-        listDiv.innerHTML = `<p style="font-size:0.86rem; color:var(--muted);">Aún no tienes locales registrados con este correo. Usa <strong>"+ Publicar o registrar local"</strong> para agregar el primero.</p>`;
+        wrap.innerHTML = `<p style="font-size:0.84rem; color:var(--muted);">Aún no has dado de alta tu comercio. Haz clic en <strong>"+ Registrar nuevo local"</strong>.</p>`;
       } else {
-        listDiv.innerHTML = mine.map(b => `
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:11px 14px; border:1px solid var(--border); border-radius:10px; margin-bottom:8px; background:var(--surface-alt);">
+        wrap.innerHTML = mine.map(b => `
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 12px; border:1px solid var(--border); border-radius:10px; margin-bottom:8px; background:var(--surface-alt);">
             <div>
               <strong style="color:var(--navy);">${b.name}</strong>
-              <div style="font-size:0.78rem; color:var(--muted);">${b.address} · Tel: ${b.phone}</div>
+              <div style="font-size:0.77rem; color:var(--muted);">${b.address} · ${b.hasDelivery ? 'Con domicilio' : 'Sin domicilio'}</div>
             </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-              <button type="button" class="btn btn-sm ${b.isOpen ? 'btn-teal' : 'btn-ghost'}" onclick="flipStatus('${b.id}')">
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="btn btn-sm ${b.isOpen ? 'btn-teal' : 'btn-ghost'}" onclick="toggleOpen('${b.id}')">
                 ${b.isOpen ? 'Abierto' : 'Cerrado'}
               </button>
-              <button type="button" class="btn btn-ghost btn-sm" onclick="editBiz('${b.id}')">Editar</button>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="editBusiness('${b.id}')">Editar</button>
             </div>
           </div>
         `).join('');
@@ -1450,122 +1315,141 @@
     }
 
     function toggleForm(forceShow) {
-      const box = document.getElementById('formContainer');
-      const openIt = typeof forceShow === 'boolean' ? forceShow : box.style.display === 'none';
+      const wrap = document.getElementById('formWrap');
+      const openIt = typeof forceShow === 'boolean' ? forceShow : wrap.style.display === 'none';
 
-      if (openIt && session && session.role === 'owner') {
-        const mine = db.businesses.filter(b => b.ownerEmail === session.email);
+      if (openIt && ownerSession) {
+        const mine = db.businesses.filter(b => b.ownerEmail === ownerSession.email);
         const editing = Boolean(document.getElementById('editId').value);
-        if (!editing && mine.length >= session.quota) {
-          notify(`Tu ${session.planLabel} incluye hasta ${session.quota} local(es).`);
+        if (!editing && mine.length >= ownerSession.quota) {
+          showToast(`Tu ${ownerSession.planLabel} permite hasta ${ownerSession.quota} comercio(s).`);
           return;
         }
       }
 
-      box.style.display = openIt ? 'block' : 'none';
+      wrap.style.display = openIt ? 'block' : 'none';
       if (openIt) {
-        initPicker(PARRAL_COORDS[0], PARRAL_COORDS[1]);
+        initPicker(PARRAL_CENTER[0], PARRAL_CENTER[1]);
       } else {
         document.getElementById('bizForm').reset();
         document.getElementById('editId').value = '';
-        document.getElementById('formHeading').textContent = 'Nuevo negocio local en Parral';
+        document.getElementById('formTitle').textContent = 'Registrar comercio en Parral';
       }
     }
 
     function initPicker(lat, lng) {
       setTimeout(() => {
-        if (!pickMap) {
-          pickMap = L.map('pickerMap').setView([lat, lng], 14);
+        if (!pickerMap) {
+          pickerMap = L.map('pickerMap').setView([lat, lng], 14);
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
-          }).addTo(pickMap);
-          pickPin = L.marker([lat, lng], { draggable: true }).addTo(pickMap);
-          pickPin.on('dragend', () => {
-            const p = pickPin.getLatLng();
-            setCoords(p.lat, p.lng);
+          }).addTo(pickerMap);
+          pickerPin = L.marker([lat, lng], { draggable: true }).addTo(pickerMap);
+          pickerPin.on('dragend', () => {
+            const p = pickerPin.getLatLng();
+            setPickerCoords(p.lat, p.lng);
           });
-          pickMap.on('click', (ev) => {
-            pickPin.setLatLng(ev.latlng);
-            setCoords(ev.latlng.lat, ev.latlng.lng);
+          pickerMap.on('click', (ev) => {
+            pickerPin.setLatLng(ev.latlng);
+            setPickerCoords(ev.latlng.lat, ev.latlng.lng);
           });
         } else {
-          pickMap.invalidateSize();
-          pickMap.setView([lat, lng], 14);
-          pickPin.setLatLng([lat, lng]);
+          pickerMap.invalidateSize();
+          pickerMap.setView([lat, lng], 14);
+          pickerPin.setLatLng([lat, lng]);
         }
-        setCoords(lat, lng);
+        setPickerCoords(lat, lng);
       }, 80);
     }
 
-    function setCoords(lat, lng) {
+    function setPickerCoords(lat, lng) {
       document.getElementById('pickLat').textContent = Number(lat).toFixed(4);
       document.getElementById('pickLng').textContent = Number(lng).toFixed(4);
     }
 
-    function editBiz(id) {
+    function parseMenuLines(rawText) {
+      return rawText
+        .split('\n')
+        .map(line => line.trim())
+        .filter(Boolean)
+        .map(line => {
+          const parts = line.split('—');
+          if (parts.length >= 2) {
+            return { item: parts[0].trim(), price: parts.slice(1).join('—').trim() };
+          }
+          return { item: line, price: 'Consultar' };
+        });
+    }
+
+    function editBusiness(id) {
       const b = db.businesses.find(item => item.id === id);
       if (!b) return;
       document.getElementById('editId').value = b.id;
       document.getElementById('fName').value = b.name;
       document.getElementById('fCategory').value = b.category;
       document.getElementById('fPhone').value = b.phone;
-      document.getElementById('fHours').value = b.hours;
+      document.getElementById('fDelivery').value = String(Boolean(b.hasDelivery));
       document.getElementById('fAddress').value = b.address;
+      document.getElementById('fHours').value = b.hours;
       document.getElementById('fDesc').value = b.description;
-      document.getElementById('formHeading').textContent = 'Editar negocio local';
-      document.getElementById('formContainer').style.display = 'block';
+      document.getElementById('fMenu').value = (b.menu || []).map(m => `${m.item} — ${m.price}`).join('\n');
+      document.getElementById('formTitle').textContent = 'Editar comercio';
+      document.getElementById('formWrap').style.display = 'block';
       initPicker(b.lat, b.lng);
     }
 
-    function submitBusiness(e) {
+    function saveBusiness(e) {
       e.preventDefault();
-      if (!session || session.role !== 'owner') {
-        openAuth('owner');
+      if (!ownerSession) {
+        openOwnerModal('register');
         return;
       }
 
       const id = document.getElementById('editId').value;
       const lat = parseFloat(document.getElementById('pickLat').textContent);
       const lng = parseFloat(document.getElementById('pickLng').textContent);
+      const hasDelivery = document.getElementById('fDelivery').value === 'true';
 
-      const data = {
+      const payload = {
         name: document.getElementById('fName').value.trim(),
         category: document.getElementById('fCategory').value,
         phone: document.getElementById('fPhone').value.trim(),
-        hours: document.getElementById('fHours').value.trim(),
+        hasDelivery,
+        deliveryNote: hasDelivery ? 'Cuenta con servicio a domicilio' : 'Atención en local',
         address: document.getElementById('fAddress').value.trim(),
+        hours: document.getElementById('fHours').value.trim(),
         description: document.getElementById('fDesc').value.trim(),
+        menu: parseMenuLines(document.getElementById('fMenu').value),
         lat,
         lng
       };
 
       if (id) {
-        db.businesses = db.businesses.map(item => item.id === id ? { ...item, ...data } : item);
-        notify('Negocio actualizado');
+        db.businesses = db.businesses.map(item => item.id === id ? { ...item, ...payload } : item);
+        showToast('Comercio actualizado');
       } else {
         db.businesses.unshift({
-          id: 'p-' + Date.now(),
-          ...data,
+          id: 'loc-' + Date.now(),
+          ...payload,
           isOpen: true,
-          ownerEmail: session.email,
-          views: 1,
-          reviews: []
+          ownerEmail: ownerSession.email,
+          views: 1
         });
-        notify('Negocio publicado en Conecta Parral');
+        showToast('Comercio publicado en Conecta Parral');
       }
 
-      persistDb();
+      saveDb();
       toggleForm(false);
-      renderOwnerSection();
+      renderOwnerPanel();
       renderAll();
     }
 
-    function flipStatus(id) {
+    function toggleOpen(id) {
       db.businesses = db.businesses.map(item => item.id === id ? { ...item, isOpen: !item.isOpen } : item);
-      persistDb();
-      renderOwnerSection();
+      saveDb();
+      renderOwnerPanel();
       renderAll();
-      notify('Estado de apertura actualizado');
+      showToast('Estado actualizado');
     }
 
     function renderChips() {
@@ -1573,65 +1457,50 @@
       wrap.innerHTML = CATEGORIES.map(cat => `
         <button
           type="button"
-          class="chip ${activeCat === cat ? 'active' : ''}"
-          onclick="pickCategory('${cat.replace(/'/g, "\\'")}')"
+          class="chip ${activeCategory === cat ? 'active' : ''}"
+          onclick="selectCat('${cat.replace(/'/g, "\\'")}')"
         >${cat}</button>
       `).join('');
     }
 
-    function pickCategory(cat) {
-      activeCat = cat;
+    function selectCat(cat) {
+      activeCategory = cat;
       renderChips();
       renderAll();
     }
 
-    function clearAllFilters() {
-      activeCat = 'Todos';
-      document.getElementById('searchBox').value = '';
+    function clearFilters() {
+      activeCategory = 'Todos';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('deliveryOnly').checked = false;
       document.getElementById('openOnly').checked = false;
       renderChips();
       renderAll();
     }
 
     function resetHome() {
-      clearAllFilters();
-      if (mainMap) mainMap.setView(PARRAL_COORDS, 13);
+      clearFilters();
+      if (mainMap) mainMap.setView(PARRAL_CENTER, 13);
     }
 
-    function filteredList() {
-      const query = document.getElementById('searchBox').value.trim().toLowerCase();
+    function getFiltered() {
+      const q = document.getElementById('searchInput').value.trim().toLowerCase();
+      const onlyDelivery = document.getElementById('deliveryOnly').checked;
       const onlyOpen = document.getElementById('openOnly').checked;
 
       return db.businesses.filter(b => {
-        const okCat = activeCat === 'Todos' || b.category === activeCat;
-        const okOpen = !onlyOpen || b.isOpen;
-        const okQuery = !query ||
-          b.name.toLowerCase().includes(query) ||
-          b.address.toLowerCase().includes(query) ||
-          b.category.toLowerCase().includes(query) ||
-          b.description.toLowerCase().includes(query);
-        return okCat && okOpen && okQuery;
+        const okCat = activeCategory === 'Todos' || b.category === activeCategory;
+        const okDel = !onlyDelivery || Boolean(b.hasDelivery);
+        const okOpen = !onlyOpen || Boolean(b.isOpen);
+        const menuText = (b.menu || []).map(m => `${m.item} ${m.price}`).join(' ').toLowerCase();
+        const okQuery = !q ||
+          b.name.toLowerCase().includes(q) ||
+          b.address.toLowerCase().includes(q) ||
+          b.category.toLowerCase().includes(q) ||
+          b.description.toLowerCase().includes(q) ||
+          menuText.includes(q);
+        return okCat && okDel && okOpen && okQuery;
       });
-    }
-
-    function userFavs() {
-      if (!session) return [];
-      return db.favs[session.email] || [];
-    }
-
-    function toggleFav(id, ev) {
-      if (ev) ev.stopPropagation();
-      if (!session) {
-        openAuth('explorer');
-        notify('Inicia sesión gratis para guardar favoritos');
-        return;
-      }
-      const current = userFavs();
-      const exists = current.includes(id);
-      db.favs[session.email] = exists ? current.filter(x => x !== id) : [...current, id];
-      persistDb();
-      renderAll();
-      notify(exists ? 'Quitado de favoritos' : 'Guardado en favoritos');
     }
 
     function openDetail(id) {
@@ -1639,133 +1508,114 @@
       if (!b) return;
 
       b.views = (b.views || 0) + 1;
-      persistDb();
-      renderOwnerSection();
+      saveDb();
+      renderOwnerPanel();
 
-      const isFav = userFavs().includes(b.id);
       const digits = b.phone.replace(/\D/g, '');
-      const waUrl = `https://wa.me/52${digits}?text=${encodeURIComponent(`Hola, encontré ${b.name} en Conecta Parral y me gustaría pedir información.`)}`;
+      const waMsg = b.hasDelivery
+        ? `Hola, vi ${b.name} en Conecta Parral y me gustaría pedir de su menú a domicilio.`
+        : `Hola, vi ${b.name} en Conecta Parral y me gustaría pedir información.`;
+      const waUrl = `https://wa.me/52${digits}?text=${encodeURIComponent(waMsg)}`;
 
-      const reviewsHtml = (b.reviews || []).length
-        ? b.reviews.map(r => `
-            <div class="review-box">
-              <strong>${r.user}</strong> · <span style="color:var(--gold);">${'★'.repeat(r.stars)}</span>
-              <p style="margin-top:3px;">${r.text}</p>
-            </div>
-          `).join('')
-        : `<p style="font-size:0.82rem; color:var(--muted); margin-bottom:10px;">Sin reseñas todavía. Comparte tu experiencia con este negocio local.</p>`;
+      const menuItemsHtml = (b.menu || []).length
+        ? `<ul class="menu-modal-list">${b.menu.map(m => `<li><span>${m.item}</span><strong>${m.price}</strong></li>`).join('')}</ul>`
+        : `<p style="font-size:0.82rem; color:var(--muted); margin:8px 0 12px;">Consulta disponibilidad y precios directamente por WhatsApp.</p>`;
 
       document.getElementById('detailContent').innerHTML = `
         <div class="modal-top">
           <div>
-            <span class="cat-tag">${b.category}</span>
-            <span class="local-tag">Negocio Local Parral</span>
+            <div class="tags-line">
+              <span class="tag-cat">${b.category}</span>
+              <span class="${b.hasDelivery ? 'tag-delivery-yes' : 'tag-delivery-no'}">
+                ${b.hasDelivery ? 'Servicio a domicilio' : 'Sin servicio a domicilio'}
+              </span>
+            </div>
             <h2 style="margin-top:4px;">${b.name}</h2>
           </div>
           <button type="button" class="x-btn" onclick="closeModal('detailModal')">&times;</button>
         </div>
 
-        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:12px;">${b.description}</p>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:12px;">${b.description}</p>
 
-        <div class="biz-details" style="background:var(--surface-alt); border:1px solid var(--border); border-radius:10px; padding:12px;">
+        <div class="biz-meta" style="background:var(--surface-alt); border:1px solid var(--border); border-radius:10px; padding:12px;">
           <div><strong>Dirección:</strong> ${b.address}</div>
           <div><strong>Teléfono:</strong> ${b.phone}</div>
           <div><strong>Horario:</strong> ${b.hours}</div>
+          <div><strong>Domicilio:</strong> ${b.deliveryNote || (b.hasDelivery ? 'Sí disponible' : 'No disponible')}</div>
           <div><strong>Estado:</strong> <span class="pill-status ${b.isOpen ? 'pill-open' : 'pill-closed'}">${b.isOpen ? 'Abierto' : 'Cerrado'}</span></div>
         </div>
 
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin:14px 0;">
-          <a href="${waUrl}" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Enviar WhatsApp</a>
-          <button type="button" class="btn btn-ghost btn-sm" onclick="toggleFav('${b.id}')">${isFav ? '♥ Guardado' : '♡ Favorito'}</button>
+        <h3 style="font-size:0.92rem; color:var(--navy); margin-top:12px;">Menú / Catálogo</h3>
+        ${menuItemsHtml}
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="${waUrl}" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Pedir / Contactar por WhatsApp</a>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal('detailModal')">Cerrar</button>
         </div>
-
-        <hr style="border:none; border-top:1px solid var(--border); margin:14px 0;" />
-        <h3 style="font-size:0.94rem; color:var(--navy); margin-bottom:8px;">Reseñas de la comunidad</h3>
-        ${reviewsHtml}
-
-        <form onsubmit="postReview(event, '${b.id}')" style="margin-top:10px;">
-          <div class="form-grid" style="grid-template-columns: 1fr 105px;">
-            <input type="text" id="revText" required placeholder="Escribe tu comentario..." style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:0.84rem;" />
-            <select id="revStars" style="padding:8px 10px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:0.84rem;">
-              <option value="5">5 ★</option>
-              <option value="4">4 ★</option>
-              <option value="3">3 ★</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-navy btn-sm">Publicar reseña</button>
-        </form>
       `;
 
       document.getElementById('detailModal').classList.add('open');
       if (mainMap) mainMap.setView([b.lat, b.lng], 15);
     }
 
-    function postReview(e, bizId) {
-      e.preventDefault();
-      const text = document.getElementById('revText').value.trim();
-      const stars = parseInt(document.getElementById('revStars').value, 10);
-      if (!text) return;
-
-      const user = session ? session.name : 'Visitante de Parral';
-      db.businesses = db.businesses.map(item => {
-        if (item.id !== bizId) return item;
-        return { ...item, reviews: [{ user, stars, text }, ...(item.reviews || [])] };
-      });
-      persistDb();
-      openDetail(bizId);
-      renderAll();
-      notify('Reseña publicada');
-    }
-
     function renderAll() {
-      const list = filteredList();
-      const favs = userFavs();
-      document.getElementById('countBadge').textContent = `${list.length} negocio(s)`;
+      const list = getFiltered();
+      document.getElementById('countLabel').textContent = `${list.length} comercio(s)`;
 
-      const listEl = document.getElementById('bizList');
+      const listEl = document.getElementById('businessList');
       if (list.length === 0) {
         listEl.innerHTML = `
           <div class="biz-card" style="grid-template-columns:1fr; text-align:center;">
             <div>
-              <p style="font-weight:800; color:var(--navy); margin-bottom:4px;">Sin coincidencias en Parral</p>
-              <p style="font-size:0.85rem; color:var(--muted); margin-bottom:10px;">Intenta con otra palabra o restablece los filtros.</p>
-              <button type="button" class="btn btn-ghost btn-sm" onclick="clearAllFilters()">Ver todos los negocios</button>
+              <p style="font-weight:800; color:var(--navy); margin-bottom:4px;">No hay comercios con ese filtro</p>
+              <p style="font-size:0.84rem; color:var(--muted); margin-bottom:10px;">Cambia los filtros para ver los negocios locales disponibles.</p>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="clearFilters()">Mostrar todos</button>
             </div>
           </div>
         `;
       } else {
         listEl.innerHTML = list.map(b => {
-          const st = CATEGORY_STYLES[b.category] || { bg: 'linear-gradient(135deg, #0B3B60, #1E7E8B)', label: 'LOCAL' };
-          const saved = favs.includes(b.id);
+          const theme = THUMB_THEMES[b.category] || { bg: 'linear-gradient(135deg, #0B3B60, #1E7E8B)', badge: 'LOCAL' };
+          const topMenu = (b.menu || []).slice(0, 2).map(m => `${m.item} (${m.price})`).join(' · ');
+
           return `
             <article class="biz-card" onclick="openDetail('${b.id}')">
-              <div class="biz-thumb" style="background:${st.bg};">
-                <div>${st.label}</div>
-                <span>${b.name.split(' ')[0]}</span>
+              <div class="biz-thumb" style="background:${theme.bg};">
+                <div>${theme.badge}</div>
+                <small>${b.hasDelivery ? 'A domicilio' : 'En local'}</small>
               </div>
-              <div class="biz-body">
-                <div>
-                  <div class="biz-header">
-                    <div>
-                      <span class="cat-tag">${b.category}</span>
-                      <span class="local-tag">Local</span>
-                      <h3 class="biz-title">${b.name}</h3>
+              <div>
+                <div class="biz-header">
+                  <div>
+                    <div class="tags-line">
+                      <span class="tag-cat">${b.category}</span>
+                      <span class="${b.hasDelivery ? 'tag-delivery-yes' : 'tag-delivery-no'}">
+                        ${b.hasDelivery ? 'A domicilio' : 'Sin domicilio'}
+                      </span>
                     </div>
-                    <span class="pill-status ${b.isOpen ? 'pill-open' : 'pill-closed'}">
-                      ${b.isOpen ? 'Abierto' : 'Cerrado'}
-                    </span>
+                    <h3 class="biz-title">${b.name}</h3>
                   </div>
-                  <p class="biz-desc">${b.description}</p>
-                  <div class="biz-details">
-                    <div><strong>Dirección:</strong> ${b.address}</div>
-                    <div><strong>Tel:</strong> ${b.phone} · <strong>Horario:</strong> ${b.hours}</div>
-                  </div>
+                  <span class="pill-status ${b.isOpen ? 'pill-open' : 'pill-closed'}">
+                    ${b.isOpen ? 'Abierto' : 'Cerrado'}
+                  </span>
                 </div>
-                <div class="biz-footer">
-                  <button type="button" class="btn btn-navy btn-sm" onclick="event.stopPropagation(); openDetail('${b.id}')">Ver ficha y reseñas</button>
-                  <button type="button" class="btn btn-ghost btn-sm" onclick="toggleFav('${b.id}', event)">
-                    ${saved ? '♥ Favorito' : '♡ Favorito'}
-                  </button>
+
+                <p class="biz-desc">${b.description}</p>
+
+                ${topMenu ? `
+                  <div class="menu-preview">
+                    <strong>Menú destacado:</strong>
+                    <span>${topMenu}</span>
+                  </div>
+                ` : ''}
+
+                <div class="biz-meta">
+                  <div><strong>Dirección:</strong> ${b.address}</div>
+                  <div><strong>Tel:</strong> ${b.phone} · <strong>Horario:</strong> ${b.hours}</div>
+                </div>
+
+                <div class="biz-actions">
+                  <button type="button" class="btn btn-register btn-sm" onclick="event.stopPropagation(); openDetail('${b.id}')">Ver menú completo y detalles</button>
                 </div>
               </div>
             </article>
@@ -1773,33 +1623,33 @@
         }).join('');
       }
 
-      if (mainMap && markersGroup) {
-        markersGroup.clearLayers();
+      if (mainMap && markersLayer) {
+        markersLayer.clearLayers();
         list.forEach(b => {
-          const m = L.marker([b.lat, b.lng]).addTo(markersGroup);
-          m.bindPopup(`
+          const marker = L.marker([b.lat, b.lng]).addTo(markersLayer);
+          marker.bindPopup(`
             <strong>${b.name}</strong><br/>
-            <span style="font-size:12px; color:#1E7E8B;">${b.category}</span><br/>
+            <span style="font-size:11px; color:#1E7E8B;">${b.category} · ${b.hasDelivery ? 'A domicilio' : 'Solo en local'}</span><br/>
             <span style="font-size:11px; color:#444;">${b.address}</span><br/>
-            <button onclick="openDetail('${b.id}')" style="margin-top:6px; padding:4px 9px; background:#0B3B60; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:11px;">Abrir ficha</button>
+            <button onclick="openDetail('${b.id}')" style="margin-top:6px; padding:4px 9px; background:#0B3B60; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:11px;">Ver menú</button>
           `);
         });
       }
     }
 
-    function initMap() {
-      mainMap = L.map('map').setView(PARRAL_COORDS, 13);
+    function initMainMap() {
+      mainMap = L.map('map').setView(PARRAL_CENTER, 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(mainMap);
-      markersGroup = L.layerGroup().addTo(mainMap);
+      markersLayer = L.layerGroup().addTo(mainMap);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       renderHeader();
       renderChips();
-      renderOwnerSection();
-      initMap();
+      renderOwnerPanel();
+      initMainMap();
       renderAll();
     });
   </script>
