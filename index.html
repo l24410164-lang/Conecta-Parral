@@ -16,13 +16,17 @@
                         sans: ['Inter', 'system-ui', 'sans-serif'],
                     },
                     colors: {
+                        cpNavy: '#0B3B60',
+                        cpTeal: '#1E7E8B',
+                        cpGold: '#C99A2E',
+                        cpCream: '#F8F6F1',
                         brand: {
-                            50: '#fff7ed',
-                            100: '#ffedd5',
-                            500: '#f97316',
-                            600: '#ea580c',
-                            700: '#c2410c',
-                            900: '#7c2d12',
+                            50: '#f0f7fa',
+                            100: '#d9ecf2',
+                            500: '#1E7E8B',
+                            600: '#0B3B60',
+                            700: '#082c47',
+                            900: '#041929',
                         }
                     }
                 }
@@ -88,25 +92,70 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col">
+<body class="bg-[#F8F6F1] text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col">
 
     <!-- ==================== BARRA DE NAVEGACIÓN SUPERIOR ==================== -->
-    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 gap-3">
+            <div class="flex items-center justify-between h-16 sm:h-20 gap-3">
                 
-                <!-- Logo y Nombre -->
-                <div class="flex items-center gap-2.5 cursor-pointer shrink-0" onclick="switchView('explore')">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
-                        <i data-lucide="map-pin" class="w-6 h-6"></i>
-                    </div>
+                <!-- Logo Oficial Geométrico CP y Nombre -->
+                <div class="flex items-center gap-3 cursor-pointer shrink-0" onclick="switchView('explore')">
+                    <!-- SVG fiel al logotipo geométrico CP con silueta de Parral y nodos -->
+                    <svg viewBox="0 0 130 95" class="w-12 h-10 sm:w-14 sm:h-11 shrink-0 drop-shadow-sm" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Líneas y nodos de conexión -->
+                        <line x1="25" y1="22" x2="12" y2="10" stroke="#1E7E8B" stroke-width="2.5"/>
+                        <circle cx="12" cy="10" r="4.5" fill="#1E7E8B"/>
+                        <line x1="18" y1="45" x2="5" y2="45" stroke="#0B3B60" stroke-width="2.5"/>
+                        <circle cx="5" cy="45" r="4.5" fill="#0B3B60"/>
+                        <line x1="25" y1="68" x2="12" y2="80" stroke="#1E7E8B" stroke-width="2.5"/>
+                        <circle cx="12" cy="80" r="4.5" fill="#1E7E8B"/>
+                        <line x1="65" y1="22" x2="76" y2="9" stroke="#1E7E8B" stroke-width="2.5"/>
+                        <circle cx="76" cy="9" r="5" fill="#1E7E8B"/>
+                        <line x1="102" y1="22" x2="114" y2="12" stroke="#2A9D8F" stroke-width="2.5"/>
+                        <circle cx="114" cy="12" r="4.5" fill="#2A9D8F"/>
+                        <line x1="112" y1="45" x2="125" y2="41" stroke="#2A9D8F" stroke-width="2.5"/>
+                        <circle cx="125" cy="41" r="4.5" fill="#2A9D8F"/>
+
+                        <!-- Polígonos de la letra C -->
+                        <polygon points="48,12 65,24 48,32" fill="#C99A2E"/>
+                        <polygon points="28,18 48,12 48,32 34,35" fill="#1E7E8B"/>
+                        <polygon points="18,45 28,18 34,35 30,45" fill="#0B3B60"/>
+                        <polygon points="18,45 30,45 34,58 28,72" fill="#1E7E8B"/>
+                        <polygon points="28,72 34,58 48,64 48,80" fill="#0B3B60"/>
+                        <polygon points="48,64 65,68 65,82 48,80" fill="#1E7E8B"/>
+
+                        <!-- Silueta arquitectónica de Parral dentro de la C -->
+                        <path d="M33,60 L33,51 L36,48 L36,44 L38,44 L38,48 L41,51 L41,54 L44,54 L44,41 L46,35 L48,41 L48,53 L52,53 L52,46 C55,44 59,44 62,46 L62,62 L48,64 Z" fill="#0B3B60"/>
+
+                        <!-- Polígonos de la letra P -->
+                        <polygon points="65,24 78,16 78,34 65,42" fill="#1E7E8B"/>
+                        <polygon points="78,16 98,18 92,32 78,34" fill="#0B3B60"/>
+                        <polygon points="98,18 112,35 98,40 92,32" fill="#2A9D8F"/>
+                        <polygon points="112,35 110,54 96,48 98,40" fill="#C99A2E"/>
+                        <polygon points="110,54 92,64 86,52 96,48" fill="#1E7E8B"/>
+                        <polygon points="92,64 78,64 78,52 86,52" fill="#0B3B60"/>
+                        <polygon points="65,42 78,34 78,64 65,68" fill="#C99A2E"/>
+                        <polygon points="65,68 78,64 78,84 65,92" fill="#0B3B60"/>
+
+                        <!-- Nodos blancos en intersecciones clave -->
+                        <circle cx="28" cy="18" r="2.5" fill="#FFFFFF"/>
+                        <circle cx="18" cy="45" r="2.5" fill="#FFFFFF"/>
+                        <circle cx="28" cy="72" r="2.5" fill="#FFFFFF"/>
+                        <circle cx="65" cy="24" r="2.5" fill="#FFFFFF"/>
+                        <circle cx="92" cy="32" r="2.5" fill="#FFFFFF"/>
+                        <circle cx="110" cy="54" r="2.5" fill="#FFFFFF"/>
+                    </svg>
                     <div>
-                        <span class="font-extrabold text-lg sm:text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-amber-500 dark:from-orange-400 dark:to-amber-300">
-                            Conecta Parral
+                        <span class="font-extrabold text-base sm:text-xl tracking-tight text-[#0B3B60] dark:text-white block leading-none">
+                            CONECTA PARRAL
                         </span>
-                        <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 leading-none font-medium">
-                            Hidalgo del Parral, Chih.
-                        </p>
+                        <span class="text-[9px] sm:text-[10px] font-bold tracking-widest text-[#1E7E8B] dark:text-teal-400 block mt-0.5">
+                            PLATAFORMA DIGITAL
+                        </span>
+                        <span class="hidden sm:block text-[9px] font-semibold tracking-wider text-[#C99A2E] uppercase">
+                            Su negocio local en línea
+                        </span>
                     </div>
                 </div>
 
@@ -118,8 +167,8 @@
                             type="text" 
                             id="searchInputDesktop" 
                             oninput="handleSearch(this.value)"
-                            placeholder="Buscar comida, talleres, colonia, servicio..." 
-                            class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-orange-500 focus:bg-white dark:focus:bg-slate-900 rounded-xl outline-none transition-all"
+                            placeholder="Buscar crepas, uñas, ropa, Topo Chico, Centro..." 
+                            class="w-full pl-10 pr-4 py-2 text-sm bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:border-[#1E7E8B] focus:bg-white dark:focus:bg-slate-900 rounded-xl outline-none transition-all"
                         >
                     </div>
                 </div>
@@ -128,30 +177,30 @@
                 <div class="flex items-center gap-2 sm:gap-3">
                     
                     <!-- Botón Modo Oscuro/Claro -->
-                    <button onclick="toggleDarkMode()" title="Cambiar tema" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition">
+                    <button onclick="toggleDarkMode()" title="Cambiar tema" class="p-2.5 rounded-xl bg-[#F8F6F1] hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-[#0B3B60] dark:text-slate-300 transition">
                         <i data-lucide="moon" id="themeIconDark" class="w-4 h-4 hidden dark:block"></i>
                         <i data-lucide="sun" id="themeIconLight" class="w-4 h-4 block dark:hidden"></i>
                     </button>
 
                     <!-- Estado: Sin sesión iniciada -->
                     <div id="authButtonsGuest" class="flex items-center gap-2">
-                        <button onclick="openAuthModal('login')" class="px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-orange-600 hover:bg-orange-700 text-white shadow-sm shadow-orange-600/20 transition flex items-center gap-1.5">
+                        <button onclick="openAuthModal('login')" class="px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#0B3B60] hover:bg-[#1E7E8B] text-white shadow-sm transition flex items-center gap-1.5">
                             <i data-lucide="user-circle" class="w-4 h-4"></i>
-                            <span>Iniciar Sesión</span>
+                            <span>Acceder / Publicar</span>
                         </button>
                     </div>
 
                     <!-- Estado: Sesión iniciada -->
                     <div id="authButtonsLogged" class="hidden items-center gap-2">
                         <!-- Botón Panel Dueño (Solo si rol === 'owner') -->
-                        <button id="btnNavOwnerDashboard" onclick="switchView('owner')" class="hidden px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition items-center gap-1.5">
-                            <i data-lucide="store" class="w-4 h-4"></i>
+                        <button id="btnNavOwnerDashboard" onclick="switchView('owner')" class="hidden px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-[#C99A2E]/15 text-[#0B3B60] dark:text-amber-300 border border-[#C99A2E]/40 hover:bg-[#C99A2E]/25 transition items-center gap-1.5">
+                            <i data-lucide="store" class="w-4 h-4 text-[#C99A2E]"></i>
                             <span class="hidden sm:inline">Mi Negocio</span>
                         </button>
 
                         <!-- Botón Explorar (cuando está en dashboard) -->
                         <button id="btnNavExplore" onclick="switchView('explore')" class="hidden px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition items-center gap-1.5">
-                            <i data-lucide="compass" class="w-4 h-4"></i>
+                            <i data-lucide="compass" class="w-4 h-4 text-[#1E7E8B]"></i>
                             <span class="hidden sm:inline">Explorar Mapa</span>
                         </button>
 
@@ -165,8 +214,8 @@
                         <!-- Perfil / Cerrar Sesión -->
                         <div class="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-700">
                             <div class="text-right hidden sm:block">
-                                <p id="userNameDisplay" class="text-xs font-bold leading-tight">Usuario</p>
-                                <p id="userRoleDisplay" class="text-[10px] text-orange-600 dark:text-orange-400 font-medium">Explorador</p>
+                                <p id="userNameDisplay" class="text-xs font-bold leading-tight text-[#0B3B60] dark:text-white">Usuario</p>
+                                <p id="userRoleDisplay" class="text-[10px] text-[#1E7E8B] dark:text-teal-400 font-semibold">Explorador Gratis</p>
                             </div>
                             <button onclick="logout()" title="Cerrar Sesión" class="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition">
                                 <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -185,13 +234,30 @@
                         type="text" 
                         id="searchInputMobile" 
                         oninput="handleSearch(this.value)"
-                        placeholder="Buscar en Parral..." 
-                        class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-orange-500"
+                        placeholder="Buscar en colonias de Parral..." 
+                        class="w-full pl-10 pr-4 py-2 text-sm bg-[#F8F6F1] dark:bg-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-[#1E7E8B]"
                     >
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- ==================== BANNER DE PROPÓSITO LOCAL ==================== -->
+    <div class="bg-gradient-to-r from-[#0B3B60] via-[#135375] to-[#1E7E8B] text-white px-4 py-2.5 border-b border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+            <p class="text-xs sm:text-[13px] font-medium flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-[#C99A2E] shrink-0"></span>
+                <span>Impulsando los negocios locales y emprendimientos de Parral que merecen ser descubiertos.</span>
+            </p>
+            <div class="flex items-center gap-3 text-[11px] shrink-0">
+                <span class="text-teal-100">Exploradores: <strong>100% Gratis</strong></span>
+                <span class="text-white/40">|</span>
+                <button onclick="openAuthModal('register', 'owner')" class="text-[#F3D078] hover:underline font-bold">
+                    ¿Tienes un local? Súbelo aquí →
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- ==================== VISTA 1: EXPLORADOR PÚBLICO Y MAPA ==================== -->
     <main id="viewExplore" class="flex-1 flex flex-col">
@@ -208,10 +274,10 @@
                 <!-- Filtro Abierto Ahora y Contador -->
                 <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0">
                     <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-600 dark:text-slate-300 select-none">
-                        <input type="checkbox" id="filterOpenNow" onchange="applyFilters()" class="rounded text-orange-600 focus:ring-orange-500 w-4 h-4">
+                        <input type="checkbox" id="filterOpenNow" onchange="applyFilters()" class="rounded text-[#1E7E8B] focus:ring-[#1E7E8B] w-4 h-4">
                         <span>Solo abiertos ahora</span>
                     </label>
-                    <span id="resultsCount" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                    <span id="resultsCount" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-[#F8F6F1] dark:bg-slate-800 text-[#0B3B60] dark:text-slate-300 border border-slate-200/60 dark:border-slate-700">
                         0 negocios
                     </span>
                 </div>
@@ -223,19 +289,19 @@
             
             <!-- Columna Izquierda: Tarjetas de Negocios -->
             <div class="lg:col-span-5 xl:col-span-5 flex flex-col order-2 lg:order-1 px-4 py-4 lg:p-0">
-                <div id="businessListContainer" class="space-y-3.5 lg:max-h-[calc(100vh-190px)] lg:overflow-y-auto lg:pr-2">
+                <div id="businessListContainer" class="space-y-3.5 lg:max-h-[calc(100vh-225px)] lg:overflow-y-auto lg:pr-2">
                     <!-- Tarjetas renderizadas por JS -->
                 </div>
             </div>
 
             <!-- Columna Derecha: Mapa Interactivo de Hidalgo del Parral -->
-            <div class="lg:col-span-7 xl:col-span-7 order-1 lg:order-2 h-[360px] sm:h-[420px] lg:h-[calc(100vh-190px)] lg:sticky lg:top-24">
+            <div class="lg:col-span-7 xl:col-span-7 order-1 lg:order-2 h-[360px] sm:h-[420px] lg:h-[calc(100vh-225px)] lg:sticky lg:top-24">
                 <div class="relative w-full h-full lg:rounded-2xl overflow-hidden border-b lg:border border-slate-200 dark:border-slate-800 shadow-md">
                     <div id="mainMap" class="w-full h-full"></div>
                     
                     <!-- Botón Flotante para Centrar en Parral -->
-                    <button onclick="resetMapCenter()" title="Centrar en Hidalgo del Parral" class="absolute bottom-4 right-4 z-[400] bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold flex items-center gap-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
-                        <i data-lucide="crosshair" class="w-4 h-4 text-orange-600"></i>
+                    <button onclick="resetMapCenter()" title="Centrar en Hidalgo del Parral" class="absolute bottom-4 right-4 z-[400] bg-white dark:bg-slate-900 text-[#0B3B60] dark:text-slate-200 px-3 py-2 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 text-xs font-bold flex items-center gap-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                        <i data-lucide="crosshair" class="w-4 h-4 text-[#1E7E8B]"></i>
                         <span>Centrar Parral</span>
                     </button>
                 </div>
@@ -244,54 +310,64 @@
         </div>
     </main>
 
-    <!-- ==================== VISTA 2: PANEL DUEÑO DE LOCAL ==================== -->
+    <!-- ==================== VISTA 2: PANEL DUEÑO DE LOCAL (SUSCRIPCIÓN DE PAGA) ==================== -->
     <section id="viewOwner" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         
-        <!-- Encabezado del Dashboard -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <!-- Encabezado del Dashboard con Estado de Suscripción -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
             <div>
-                <h1 class="text-2xl font-extrabold tracking-tight">Panel de Administración de Negocio</h1>
-                <p class="text-sm text-slate-500 dark:text-slate-400">Gestiona la presencia digital, ubicación y horarios de tus locales en Parral.</p>
+                <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-[#0B3B60] dark:text-white">Panel de Socio Comercial</h1>
+                    <span id="ownerPlanBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#C99A2E]/15 text-[#9A7218] dark:text-amber-300 border border-[#C99A2E]/40">
+                        Plan Impulso Local Activo
+                    </span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Administra tus locales de barrio en Parral, actualiza horarios y llega a nuevos vecinos.</p>
             </div>
-            <button onclick="openBusinessFormModal()" class="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold text-sm shadow-md shadow-orange-600/20 flex items-center justify-center gap-2 transition">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                <span>Registrar Nuevo Local</span>
-            </button>
+            <div class="flex flex-wrap items-center gap-2.5">
+                <button onclick="openPlanUpgradeModal()" class="px-3.5 py-2.5 rounded-xl bg-[#F8F6F1] dark:bg-slate-800 hover:bg-slate-200 text-[#0B3B60] dark:text-slate-200 font-semibold text-xs sm:text-sm border border-slate-200 dark:border-slate-700 transition">
+                    Cambiar Plan
+                </button>
+                <button onclick="openBusinessFormModal()" class="px-4 py-2.5 rounded-xl bg-[#0B3B60] hover:bg-[#1E7E8B] text-white font-semibold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>Publicar Nuevo Local</span>
+                </button>
+            </div>
         </div>
 
         <!-- Tarjetas de Métricas del Dueño -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center">
+                <div class="w-12 h-12 rounded-xl bg-[#0B3B60]/10 text-[#0B3B60] dark:text-sky-400 flex items-center justify-center">
                     <i data-lucide="store" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Mis Locales Activos</p>
-                    <p id="statOwnerBusinesses" class="text-2xl font-extrabold">0</p>
+                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Locales Publicados</p>
+                    <p id="statOwnerBusinesses" class="text-2xl font-extrabold text-[#0B3B60] dark:text-white">0</p>
                 </div>
             </div>
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                <div class="w-12 h-12 rounded-xl bg-[#1E7E8B]/10 text-[#1E7E8B] flex items-center justify-center">
                     <i data-lucide="eye" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Vistas Totales en Mapa</p>
-                    <p id="statOwnerViews" class="text-2xl font-extrabold">0</p>
+                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Descubrimientos en Mapa</p>
+                    <p id="statOwnerViews" class="text-2xl font-extrabold text-[#0B3B60] dark:text-white">0</p>
                 </div>
             </div>
             <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center">
+                <div class="w-12 h-12 rounded-xl bg-[#C99A2E]/15 text-[#C99A2E] flex items-center justify-center">
                     <i data-lucide="heart" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Guardados en Favoritos</p>
-                    <p id="statOwnerFavorites" class="text-2xl font-extrabold">0</p>
+                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Clientes que te Guardaron</p>
+                    <p id="statOwnerFavorites" class="text-2xl font-extrabold text-[#0B3B60] dark:text-white">0</p>
                 </div>
             </div>
         </div>
 
         <!-- Lista de Locales del Dueño -->
-        <h2 class="text-lg font-bold mb-4">Mis Negocios Registrados</h2>
+        <h2 class="text-lg font-bold mb-4 text-[#0B3B60] dark:text-white">Mis Negocios Activos en Conecta Parral</h2>
         <div id="ownerBusinessesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             <!-- Renderizado dinámicamente -->
         </div>
@@ -303,9 +379,9 @@
         <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-fade-in my-auto">
             
             <!-- Cabecera visual -->
-            <div class="relative h-44 sm:h-52 bg-slate-800">
-                <img id="detailImage" src="" alt="Imagen del negocio" class="w-full h-full object-cover opacity-90">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+            <div class="relative h-48 sm:h-56 bg-slate-800">
+                <img id="detailImage" src="" alt="Imagen del negocio" class="w-full h-full object-cover opacity-95">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0B3B60]/95 via-[#0B3B60]/35 to-transparent"></div>
                 
                 <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -313,9 +389,14 @@
 
                 <div class="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-3">
                     <div>
-                        <span id="detailCategoryBadge" class="inline-block px-2.5 py-0.5 rounded-lg text-xs font-bold bg-orange-600 text-white mb-1.5">
-                            Categoría
-                        </span>
+                        <div class="flex flex-wrap items-center gap-1.5 mb-1.5">
+                            <span id="detailCategoryBadge" class="inline-block px-2.5 py-0.5 rounded-lg text-xs font-bold bg-[#1E7E8B] text-white">
+                                Categoría
+                            </span>
+                            <span id="detailHighlightBadge" class="hidden px-2.5 py-0.5 rounded-lg text-xs font-bold bg-[#C99A2E] text-white">
+                                Destacado
+                            </span>
+                        </div>
                         <h2 id="detailName" class="text-xl sm:text-2xl font-extrabold text-white leading-tight">Nombre del Local</h2>
                     </div>
                     <button id="detailFavBtn" onclick="toggleFavoriteFromModal()" class="p-2.5 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md text-white transition" title="Guardar en favoritos">
@@ -331,8 +412,8 @@
                 <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-100 dark:border-slate-800">
                     <div class="flex items-center gap-3">
                         <span id="detailStatusBadge" class="px-3 py-1 rounded-full text-xs font-bold">Abierto ahora</span>
-                        <div class="flex items-center gap-1 text-amber-500 font-bold text-sm">
-                            <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                        <div class="flex items-center gap-1 text-[#C99A2E] font-bold text-sm">
+                            <i data-lucide="star" class="w-4 h-4 fill-[#C99A2E]"></i>
                             <span id="detailRating">4.8</span>
                             <span id="detailReviewCount" class="text-xs text-slate-400 font-normal">(0 reseñas)</span>
                         </div>
@@ -344,24 +425,24 @@
 
                 <!-- Descripción -->
                 <div>
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Acerca del negocio</h3>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Acerca del emprendimiento</h3>
                     <p id="detailDescription" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
                 </div>
 
                 <!-- Información de Contacto y Horario -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/60 p-4 rounded-xl">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#F8F6F1] dark:bg-slate-800/60 p-4 rounded-xl border border-slate-200/60 dark:border-slate-700">
                     <div class="flex items-start gap-2.5">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-orange-600 shrink-0 mt-0.5"></i>
+                        <i data-lucide="map-pin" class="w-4 h-4 text-[#1E7E8B] shrink-0 mt-0.5"></i>
                         <div>
-                            <p class="text-xs font-bold">Ubicación en Parral</p>
-                            <p id="detailAddress" class="text-xs text-slate-500 dark:text-slate-400"></p>
+                            <p class="text-xs font-bold text-[#0B3B60] dark:text-white">Ubicación en Parral</p>
+                            <p id="detailAddress" class="text-xs text-slate-600 dark:text-slate-400"></p>
                         </div>
                     </div>
                     <div class="flex items-start gap-2.5">
-                        <i data-lucide="clock" class="w-4 h-4 text-orange-600 shrink-0 mt-0.5"></i>
+                        <i data-lucide="clock" class="w-4 h-4 text-[#1E7E8B] shrink-0 mt-0.5"></i>
                         <div>
-                            <p class="text-xs font-bold">Horario de Atención</p>
-                            <p id="detailHours" class="text-xs text-slate-500 dark:text-slate-400"></p>
+                            <p class="text-xs font-bold text-[#0B3B60] dark:text-white">Horario de Atención</p>
+                            <p id="detailHours" class="text-xs text-slate-600 dark:text-slate-400"></p>
                         </div>
                     </div>
                 </div>
@@ -370,22 +451,22 @@
                 <div class="flex flex-wrap gap-3">
                     <a id="detailWhatsappLink" href="#" target="_blank" class="flex-1 min-w-[160px] py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition shadow-sm">
                         <i data-lucide="message-circle" class="w-4 h-4"></i>
-                        <span>Contactar por WhatsApp</span>
+                        <span id="detailWhatsappText">Contactar por WhatsApp</span>
                     </a>
-                    <button onclick="focusBusinessOnMap()" class="py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 font-semibold text-sm flex items-center justify-center gap-2 transition">
-                        <i data-lucide="navigation" class="w-4 h-4 text-orange-600"></i>
-                        <span>Ver en Mapa</span>
+                    <button onclick="focusBusinessOnMap()" class="py-2.5 px-4 rounded-xl bg-[#0B3B60] hover:bg-[#1E7E8B] text-white font-semibold text-sm flex items-center justify-center gap-2 transition">
+                        <i data-lucide="navigation" class="w-4 h-4"></i>
+                        <span>Ubicar en Mapa</span>
                     </button>
                 </div>
 
                 <!-- Sección de Reseñas -->
                 <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <h3 class="text-sm font-bold mb-3">Opiniones de clientes en Parral</h3>
+                    <h3 class="text-sm font-bold mb-3 text-[#0B3B60] dark:text-white">Opiniones de vecinos en Parral</h3>
                     
                     <!-- Formulario para dejar reseña -->
-                    <form id="reviewForm" onsubmit="submitReview(event)" class="mb-4 bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl space-y-2.5">
+                    <form id="reviewForm" onsubmit="submitReview(event)" class="mb-4 bg-[#F8F6F1] dark:bg-slate-800/50 p-3.5 rounded-xl space-y-2.5">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-semibold">Califica tu experiencia:</span>
+                            <span class="text-xs font-semibold">Apoya recomendando este local:</span>
                             <select id="reviewRatingInput" class="text-xs font-bold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 outline-none">
                                 <option value="5">⭐⭐⭐⭐⭐ (5 - Excelente)</option>
                                 <option value="4">⭐⭐⭐⭐ (4 - Muy bueno)</option>
@@ -395,8 +476,8 @@
                             </select>
                         </div>
                         <div class="flex gap-2">
-                            <input type="text" id="reviewCommentInput" required placeholder="Escribe un comentario sobre este local..." class="flex-1 text-xs px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
-                            <button type="submit" class="px-3.5 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold transition">
+                            <input type="text" id="reviewCommentInput" required placeholder="Escribe tu experiencia para ayudar a otros clientes..." class="flex-1 text-xs px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
+                            <button type="submit" class="px-3.5 py-2 rounded-lg bg-[#0B3B60] hover:bg-[#1E7E8B] text-white text-xs font-semibold transition">
                                 Publicar
                             </button>
                         </div>
@@ -412,16 +493,20 @@
         </div>
     </div>
 
-    <!-- ==================== MODAL 2: INICIO DE SESIÓN Y REGISTRO (ROLES) ==================== -->
-    <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto">
-        <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 animate-fade-in my-auto">
+    <!-- ==================== MODAL 2: INICIO DE SESIÓN, REGISTRO Y PLANES DE PAGA ==================== -->
+    <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/65 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 animate-fade-in my-auto">
             
+            <!-- Encabezado con Logo CP -->
             <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-orange-600 text-white flex items-center justify-center">
-                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-[#0B3B60] text-white flex items-center justify-center font-extrabold text-sm border-b-2 border-[#C99A2E]">
+                        CP
                     </div>
-                    <h2 id="authModalTitle" class="text-lg font-extrabold">Bienvenido a Conecta Parral</h2>
+                    <div>
+                        <h2 id="authModalTitle" class="text-base sm:text-lg font-extrabold text-[#0B3B60] dark:text-white leading-none">CONECTA PARRAL</h2>
+                        <p class="text-[11px] text-[#1E7E8B] font-semibold mt-0.5">Su negocio local en línea</p>
+                    </div>
                 </div>
                 <button onclick="closeAuthModal()" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -429,66 +514,103 @@
             </div>
 
             <!-- Acceso Rápido Demo (1 Clic) -->
-            <div class="mb-5 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25">
-                <p class="text-xs font-bold text-amber-800 dark:text-amber-300 mb-2 flex items-center gap-1.5">
-                    <i data-lucide="zap" class="w-3.5 h-3.5"></i>
-                    <span>Acceso Rápido de Prueba (1 Clic):</span>
+            <div class="mb-4 p-3.5 rounded-xl bg-[#F8F6F1] dark:bg-slate-800/80 border border-[#C99A2E]/35">
+                <p class="text-xs font-bold text-[#0B3B60] dark:text-amber-300 mb-2 flex items-center gap-1.5">
+                    <i data-lucide="zap" class="w-3.5 h-3.5 text-[#C99A2E]"></i>
+                    <span>Acceso Rápido para Presentación (1 Clic):</span>
                 </p>
                 <div class="grid grid-cols-2 gap-2">
-                    <button type="button" onclick="quickDemoLogin('owner')" class="py-2 px-2.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition text-center shadow-sm">
-                        Entrar como Dueño
+                    <button type="button" onclick="quickDemoLogin('user')" class="py-2 px-2.5 rounded-lg bg-[#1E7E8B] hover:bg-[#16636e] text-white text-xs font-semibold transition text-center shadow-sm">
+                        Explorador (Gratis)
                     </button>
-                    <button type="button" onclick="quickDemoLogin('user')" class="py-2 px-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-semibold transition text-center shadow-sm">
-                        Entrar como Cliente
+                    <button type="button" onclick="quickDemoLogin('owner')" class="py-2 px-2.5 rounded-lg bg-[#0B3B60] hover:bg-[#082a45] text-white text-xs font-semibold transition text-center shadow-sm border-b-2 border-[#C99A2E]">
+                        Demo Dueño Activo
                     </button>
                 </div>
             </div>
 
             <!-- Tabs Login / Registro -->
             <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-4 text-xs font-bold">
-                <button id="tabLogin" onclick="setAuthMode('login')" class="py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-orange-600">Iniciar Sesión</button>
+                <button id="tabLogin" onclick="setAuthMode('login')" class="py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-[#0B3B60] dark:text-white">Iniciar Sesión</button>
                 <button id="tabRegister" onclick="setAuthMode('register')" class="py-2 rounded-lg text-slate-500">Crear Cuenta</button>
             </div>
 
             <!-- Formulario Auth -->
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3.5">
                 
-                <div id="authNameField" class="hidden">
-                    <label class="block text-xs font-semibold mb-1">Nombre completo</label>
-                    <input type="text" id="authName" placeholder="Ej. Carlos Mendoza" class="w-full px-3.5 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold mb-1">Correo electrónico</label>
-                    <input type="email" id="authEmail" required placeholder="correo@ejemplo.com" class="w-full px-3.5 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold mb-1">Contraseña</label>
-                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-3.5 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
-                </div>
-
+                <!-- Selector de Tipo de Cuenta en Registro -->
                 <div id="authRoleField" class="hidden">
-                    <label class="block text-xs font-semibold mb-1.5">Tipo de cuenta</label>
+                    <label class="block text-xs font-bold mb-1.5 text-[#0B3B60] dark:text-slate-200">Selecciona tu perfil en Conecta Parral:</label>
                     <div class="grid grid-cols-2 gap-2.5">
-                        <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 flex items-center gap-2 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-500/5">
-                            <input type="radio" name="authRole" value="user" checked class="text-orange-600">
-                            <div>
-                                <p class="text-xs font-bold">Explorador</p>
-                                <p class="text-[10px] text-slate-400">Guardar y reseñar</p>
+                        <label class="cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-xl p-3 flex flex-col justify-between has-[:checked]:border-[#1E7E8B] has-[:checked]:bg-[#1E7E8B]/5 transition">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-extrabold text-[#0B3B60] dark:text-white">Explorador</span>
+                                <input type="radio" name="authRole" value="user" checked onchange="toggleOwnerPlansInAuth()" class="text-[#1E7E8B]">
                             </div>
+                            <span class="inline-block w-fit px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 mb-1">GRATIS E ILIMITADO</span>
+                            <p class="text-[10px] text-slate-500">Descubre locales, guarda favoritos y deja reseñas.</p>
                         </label>
-                        <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 flex items-center gap-2 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-500/5">
-                            <input type="radio" name="authRole" value="owner" class="text-orange-600">
-                            <div>
-                                <p class="text-xs font-bold">Dueño de Local</p>
-                                <p class="text-[10px] text-slate-400">Publicar negocio</p>
+
+                        <label class="cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-xl p-3 flex flex-col justify-between has-[:checked]:border-[#C99A2E] has-[:checked]:bg-[#C99A2E]/5 transition">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-extrabold text-[#0B3B60] dark:text-white">Dueño de Local</span>
+                                <input type="radio" name="authRole" value="owner" onchange="toggleOwnerPlansInAuth()" class="text-[#C99A2E]">
                             </div>
+                            <span class="inline-block w-fit px-2 py-0.5 rounded text-[10px] font-bold bg-[#C99A2E]/20 text-[#8F6812] dark:text-amber-300 mb-1">MEMBRESÍA DE PAGA</span>
+                            <p class="text-[10px] text-slate-500">Publica tu negocio en el mapa y recibe clientes.</p>
                         </label>
                     </div>
                 </div>
 
-                <button type="submit" id="authSubmitBtn" class="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md shadow-orange-600/20 transition">
+                <!-- Selector de Planes de Paga (Visible solo si elige Dueño de Local al registrarse) -->
+                <div id="ownerPlansContainer" class="hidden space-y-2 pt-1">
+                    <label class="block text-xs font-bold text-[#0B3B60] dark:text-amber-300">Elige tu Plan de Visibilidad Comercial:</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <label class="cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-xl p-3 has-[:checked]:border-[#0B3B60] has-[:checked]:bg-[#0B3B60]/5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-extrabold">Plan Emprendedor</span>
+                                <input type="radio" name="ownerPlan" value="Emprendedor ($149/mes)" checked>
+                            </div>
+                            <p class="text-base font-black text-[#1E7E8B] mt-0.5">$149 <span class="text-[10px] font-normal text-slate-500">MXN / mes</span></p>
+                            <ul class="text-[10px] text-slate-600 dark:text-slate-400 mt-1.5 space-y-0.5">
+                                <li>✓ 1 local en mapa de Parral</li>
+                                <li>✓ Botón directo a WhatsApp</li>
+                                <li>✓ Horarios y reseñas</li>
+                            </ul>
+                        </label>
+
+                        <label class="cursor-pointer border-2 border-slate-200 dark:border-slate-700 rounded-xl p-3 has-[:checked]:border-[#C99A2E] has-[:checked]:bg-[#C99A2E]/10 relative">
+                            <span class="absolute -top-2 right-2 bg-[#C99A2E] text-white text-[9px] font-bold px-2 py-0.5 rounded-full">RECOMENDADO</span>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-extrabold">Plan Impulso Local</span>
+                                <input type="radio" name="ownerPlan" value="Impulso Local ($279/mes)">
+                            </div>
+                            <p class="text-base font-black text-[#C99A2E] mt-0.5">$279 <span class="text-[10px] font-normal text-slate-500">MXN / mes</span></p>
+                            <ul class="text-[10px] text-slate-600 dark:text-slate-400 mt-1.5 space-y-0.5">
+                                <li>✓ Primeros lugares en lista</li>
+                                <li>✓ Insignia "Negocio Verificado"</li>
+                                <li>✓ Hasta 3 sucursales en mapa</li>
+                            </ul>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="authNameField" class="hidden">
+                    <label class="block text-xs font-semibold mb-1">Nombre completo o del responsable</label>
+                    <input type="text" id="authName" placeholder="Ej. Daniela Holguín" class="w-full px-3.5 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Correo electrónico</label>
+                    <input type="email" id="authEmail" required placeholder="correo@ejemplo.com" class="w-full px-3.5 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Contraseña</label>
+                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-3.5 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
+                </div>
+
+                <button type="submit" id="authSubmitBtn" class="w-full py-2.5 rounded-xl bg-[#0B3B60] hover:bg-[#1E7E8B] text-white font-bold text-sm shadow-md transition">
                     Entrar a mi cuenta
                 </button>
             </form>
@@ -496,12 +618,72 @@
         </div>
     </div>
 
-    <!-- ==================== MODAL 3: REGISTRAR / EDITAR NEGOCIO (DUEÑO) ==================== -->
+    <!-- ==================== MODAL 3: PASARELA DE PAGO SIMULADA PARA DUEÑOS ==================== -->
+    <div id="paymentModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 animate-fade-in my-auto">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-[#1E7E8B]"></i>
+                    <h3 class="font-extrabold text-base text-[#0B3B60] dark:text-white">Activación de Membresía Comercial</h3>
+                </div>
+                <button onclick="closePaymentModal()" class="p-1 rounded-lg text-slate-400 hover:bg-slate-100">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="bg-[#F8F6F1] dark:bg-slate-800 p-3.5 rounded-xl mb-4 flex items-center justify-between">
+                <div>
+                    <p class="text-[11px] text-slate-500">Plan seleccionado:</p>
+                    <p id="paymentPlanName" class="text-sm font-extrabold text-[#0B3B60] dark:text-white">Plan Impulso Local ($279/mes)</p>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg bg-[#C99A2E]/20 text-[#8F6812] dark:text-amber-300 text-xs font-bold">Mensual</span>
+            </div>
+
+            <form onsubmit="confirmSimulatedPayment(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold mb-1">Método de Pago</label>
+                    <select id="paymentMethodSelect" onchange="togglePaymentFields()" class="w-full px-3 py-2 text-xs font-semibold rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none">
+                        <option value="card">💳 Tarjeta de Débito / Crédito</option>
+                        <option value="spei">🏦 Transferencia SPEI / Depósito OXXO</option>
+                    </select>
+                </div>
+
+                <div id="cardPaymentFields" class="space-y-2.5">
+                    <div>
+                        <label class="block text-[11px] font-semibold mb-1">Número de Tarjeta</label>
+                        <input type="text" value="4555 •••• •••• 8921" required class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-semibold mb-1">Vencimiento</label>
+                            <input type="text" value="09/29" required class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold mb-1">CVV</label>
+                            <input type="password" value="123" required class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="speiPaymentFields" class="hidden p-3 rounded-xl bg-blue-50 dark:bg-slate-800 text-xs space-y-1">
+                    <p class="font-bold text-[#0B3B60] dark:text-sky-300">Referencia de Pago Conecta Parral:</p>
+                    <p class="font-mono text-sm font-bold">CLABE: 012 150 00489210442 8</p>
+                    <p class="text-[11px] text-slate-500">Al confirmar se validará tu ficha de socio inmediatamente.</p>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 mt-2 rounded-xl bg-[#C99A2E] hover:bg-[#b58924] text-white font-extrabold text-sm shadow-md transition">
+                    Confirmar Pago y Activar Cuenta
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 4: REGISTRAR / EDITAR NEGOCIO (DUEÑO) ==================== -->
     <div id="businessFormModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 animate-fade-in my-auto">
             
             <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
-                <h2 id="formModalTitle" class="text-lg font-extrabold">Registrar Nuevo Local en Parral</h2>
+                <h2 id="formModalTitle" class="text-lg font-extrabold text-[#0B3B60] dark:text-white">Publicar Nuevo Local en Parral</h2>
                 <button onclick="closeBusinessFormModal()" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -514,24 +696,23 @@
                 <div class="space-y-3">
                     <div>
                         <label class="block text-xs font-bold mb-1">Nombre del Negocio *</label>
-                        <input type="text" id="bizName" required placeholder="Ej. Mariscos El Parralense" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                        <input type="text" id="bizName" required placeholder="Ej. CREPE (Crepas & waffles)" class="w-full px-3 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
                     </div>
 
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="block text-xs font-bold mb-1">Categoría *</label>
-                            <select id="bizCategory" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
-                                <option value="Restaurantes y Snacks">Restaurantes y Snacks</option>
-                                <option value="Servicios">Servicios</option>
-                                <option value="Tiendas Locales">Tiendas Locales</option>
-                                <option value="Salud">Salud</option>
-                                <option value="Entretenimiento">Entretenimiento</option>
-                                <option value="Automotriz">Automotriz</option>
+                            <select id="bizCategory" class="w-full px-3 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
+                                <option value="Comida y Postres">Comida y Postres</option>
+                                <option value="Uñas y Belleza">Uñas y Belleza</option>
+                                <option value="Ropa y Accesorios">Ropa y Accesorios</option>
+                                <option value="Barbería y Estética">Barbería y Estética</option>
+                                <option value="Servicios Locales">Servicios Locales</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold mb-1">Estado Actual</label>
-                            <select id="bizIsOpen" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                            <select id="bizIsOpen" class="w-full px-3 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
                                 <option value="true">🟢 Abierto ahora</option>
                                 <option value="false">🔴 Cerrado</option>
                             </select>
@@ -539,35 +720,35 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold mb-1">Dirección y Colonia en Parral *</label>
-                        <input type="text" id="bizAddress" required placeholder="Ej. Av. Independencia #45, Col. Centro" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                        <label class="block text-xs font-bold mb-1">Dirección completa y Colonia en Parral *</label>
+                        <input type="text" id="bizAddress" required placeholder="Ej. Prof. Daniel Royal 1, Topo Chico, 33834" class="w-full px-3 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
                     </div>
 
                     <div class="grid grid-cols-2 gap-2.5">
                         <div>
                             <label class="block text-xs font-bold mb-1">Horario *</label>
-                            <input type="text" id="bizHours" required placeholder="Lun-Dom 10:00 - 20:00" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                            <input type="text" id="bizHours" required placeholder="Mar-Dom 4:00 PM - 10:30 PM" class="w-full px-3 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold mb-1">WhatsApp / Teléfono *</label>
-                            <input type="text" id="bizPhone" required placeholder="6271234567" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                            <label class="block text-xs font-bold mb-1">Teléfono / WhatsApp *</label>
+                            <input type="text" id="bizPhone" required placeholder="627 123 3087" class="w-full px-3 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold mb-1">Descripción de productos o servicios *</label>
-                        <textarea id="bizDescription" rows="3" required placeholder="Describe lo mejor de tu negocio..." class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500"></textarea>
+                        <label class="block text-xs font-bold mb-1">Descripción de lo que ofreces *</label>
+                        <textarea id="bizDescription" rows="3" required placeholder="Cuenta qué hace especial a tu negocio local..." class="w-full px-3 py-2 text-sm rounded-xl bg-[#F8F6F1] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-[#1E7E8B]"></textarea>
                     </div>
                 </div>
 
                 <!-- Columna Derecha: Selector de Ubicación en Mapa -->
                 <div class="flex flex-col space-y-2">
-                    <label class="block text-xs font-bold">
-                        Ubicación Exacta en el Mapa *
-                        <span class="block font-normal text-slate-400">Haz clic sobre el mapa de Parral para colocar el pin de tu local.</span>
+                    <label class="block text-xs font-bold text-[#0B3B60] dark:text-white">
+                        Ubicación Exacta en el Mapa de Parral *
+                        <span class="block font-normal text-slate-400">Haz clic sobre el mapa o arrastra el pin hasta tu calle.</span>
                     </label>
                     <div id="pickerMap" class="w-full h-60 md:flex-1 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden"></div>
-                    <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg">
+                    <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-500 bg-[#F8F6F1] dark:bg-slate-800 px-3 py-1.5 rounded-lg">
                         <span>Lat: <strong id="displayLat">26.9317</strong></span>
                         <span>Lng: <strong id="displayLng">-105.6664</strong></span>
                     </div>
@@ -576,7 +757,7 @@
                 <!-- Botones Guardar / Cancelar -->
                 <div class="md:col-span-2 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2.5">
                     <button type="button" onclick="closeBusinessFormModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold shadow-md shadow-orange-600/20">
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-[#0B3B60] hover:bg-[#1E7E8B] text-white text-sm font-bold shadow-md">
                         Guardar y Publicar en Mapa
                     </button>
                 </div>
@@ -586,161 +767,242 @@
     </div>
 
     <!-- ==================== NOTIFICACIÓN TOAST ==================== -->
-    <div id="toastNotification" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] hidden items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-2xl text-xs sm:text-sm font-semibold animate-fade-in">
-        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 dark:text-emerald-600"></i>
+    <div id="toastNotification" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] hidden items-center gap-2.5 px-4 py-3 rounded-xl bg-[#0B3B60] text-white shadow-2xl text-xs sm:text-sm font-semibold animate-fade-in border border-white/15">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-[#C99A2E]"></i>
         <span id="toastMessage">Acción completada</span>
     </div>
 
     <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
     <script>
         // 1. CONSTANTES Y CONFIGURACIÓN DE HIDALGO DEL PARRAL
-        const PARRAL_CENTER = [26.9317, -105.6664]; // Plaza de la Identidad / Centro Histórico
+        const PARRAL_CENTER = [26.9335, -105.6664];
         
         const CATEGORIES = [
-            { id: 'Todas', label: 'Todas', icon: 'layout-grid', color: '#f97316' },
-            { id: 'Restaurantes y Snacks', label: 'Restaurantes y Snacks', icon: 'utensils', color: '#ef4444' },
-            { id: 'Servicios', label: 'Servicios', icon: 'briefcase', color: '#3b82f6' },
-            { id: 'Tiendas Locales', label: 'Tiendas Locales', icon: 'shopping-bag', color: '#10b981' },
-            { id: 'Salud', label: 'Salud', icon: 'heart-pulse', color: '#ec4899' },
-            { id: 'Entretenimiento', label: 'Entretenimiento', icon: 'gamepad-2', color: '#8b5cf6' },
-            { id: 'Automotriz', label: 'Automotriz', icon: 'car', color: '#f59e0b' }
+            { id: 'Todas', label: 'Todos los Locales', icon: 'layout-grid', color: '#0B3B60' },
+            { id: 'Comida y Postres', label: 'Comida y Postres', icon: 'utensils', color: '#C99A2E' },
+            { id: 'Uñas y Belleza', label: 'Uñas y Belleza', icon: 'sparkles', color: '#1E7E8B' },
+            { id: 'Ropa y Accesorios', label: 'Ropa y Accesorios', icon: 'shopping-bag', color: '#0B3B60' },
+            { id: 'Barbería y Estética', label: 'Barbería y Estética', icon: 'scissors', color: '#2A9D8F' },
+            { id: 'Servicios Locales', label: 'Servicios Locales', icon: 'briefcase', color: '#475569' }
         ];
 
-        // 2. DATOS SEMILLA REALISTAS DE HIDALGO DEL PARRAL, CHIHUAHUA
+        // 2. DATOS SEMILLA VERÍDICOS DE NEGOCIOS LOCALES Y DE BARRIO EN HIDALGO DEL PARRAL
         const INITIAL_USERS = [
-            { id: 'owner_1', name: 'Roberto Chávez (Emprendedor)', email: 'dueno@conectaparral.mx', password: '123', role: 'owner' },
-            { id: 'user_1', name: 'Sofía Martínez', email: 'cliente@conectaparral.mx', password: '123', role: 'user', favorites: ['biz_1', 'biz_3'] }
+            { 
+                id: 'owner_1', 
+                name: 'Emprendedor CREPE Parral', 
+                email: 'crepe@conectaparral.mx', 
+                password: '123', 
+                role: 'owner',
+                plan: 'Plan Impulso Local ($279/mes)'
+            },
+            { 
+                id: 'user_1', 
+                name: 'Valeria Sáenz (Exploradora)', 
+                email: 'cliente@conectaparral.mx', 
+                password: '123', 
+                role: 'user', 
+                favorites: ['biz_crepe', 'biz_kiu', 'biz_andromeda'] 
+            }
         ];
 
         const INITIAL_BUSINESSES = [
             {
-                id: 'biz_1',
+                id: 'biz_crepe',
                 ownerId: 'owner_1',
-                name: 'Mariscos y Snacks La Perla del Conchos',
-                category: 'Restaurantes y Snacks',
-                description: 'Especialidad en aguachiles, cocteles de camarón, tostadas de ceviche fresco y botanas preparadas al momento con el auténtico sazón parralense.',
-                address: 'Av. Independencia #112, Col. Centro, Hidalgo del Parral',
-                hours: 'Mar - Dom: 11:00 AM - 7:30 PM',
-                phone: '6271048821',
-                lat: 26.9324,
-                lng: -105.6678,
+                name: 'CREPE (Crepas & waffles)',
+                category: 'Comida y Postres',
+                badge: 'Nuevo en la red',
+                highlighted: true,
+                description: 'Crepas dulces y saladas, además de waffles recién hechos preparados al momento con Nutella, fresas frescas, plátano, nuez regional y toppings favoritos en la colonia Topo Chico.',
+                address: 'Prof. Daniel Royal 1, Topo Chico, 33834 Hidalgo del Parral, Chih.',
+                hours: 'Mar - Dom: 4:00 PM - 10:30 PM',
+                phone: '627 123 3087',
+                lat: 26.9388,
+                lng: -105.6615,
                 isOpen: true,
-                views: 342,
-                image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80',
+                views: 418,
+                image: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=800&q=80',
                 reviews: [
-                    { author: 'Sofía Martínez', rating: 5, comment: 'El aguachile verde está increíble y súper fresco. Excelente atención.', date: 'Hace 2 días' },
-                    { author: 'Luis Tarango', rating: 5, comment: 'Muy bien ubicados cerca del centro y precios justos.', date: 'Hace 1 semana' }
+                    { author: 'Valeria Sáenz', rating: 5, comment: 'La crepa de Nutella con fresa, plátano y nuez está deliciosa y súper bien servida.', date: 'Hace 1 día' },
+                    { author: 'Carlos Méndez', rating: 5, comment: 'Excelente opción en Topo Chico, muy amables y todo recién preparado.', date: 'Hace 4 días' }
                 ]
             },
             {
-                id: 'biz_2',
-                ownerId: 'owner_1',
-                name: 'Café Mina La Prieta',
-                category: 'Restaurantes y Snacks',
-                description: 'Cafetería artesanal con vista panorámica. Café de especialidad tostado en casa, pay de nuez regional, desayunos y ambiente ideal para trabajar o platicar.',
-                address: 'Calle Mercaderes #24, Centro Histórico, Parral',
-                hours: 'Lun - Dom: 8:00 AM - 10:00 PM',
-                phone: '6275223190',
-                lat: 26.9311,
-                lng: -105.6645,
-                isOpen: true,
-                views: 289,
-                image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80',
-                reviews: [
-                    { author: 'Ana Gabriela', rating: 5, comment: 'El pay de nuez de Parral con un latte frío es obligatorio.', date: 'Hace 3 días' }
-                ]
-            },
-            {
-                id: 'biz_3',
+                id: 'biz_kiu',
                 ownerId: 'owner_2',
-                name: 'Papelería y Copiado El Tecnológico',
-                category: 'Servicios',
-                description: 'Impresión láser a color, engargolados, ploteo de planos arquitectónicos, artículos escolares y soporte para estudiantes del Tec de Parral.',
-                address: 'Av. Tecnológico #58, Col. Tecnológico, Parral',
-                hours: 'Lun - Sáb: 7:30 AM - 8:00 PM',
-                phone: '6271194022',
-                lat: 26.9248,
-                lng: -105.6562,
+                name: 'Kiu Nails',
+                category: 'Uñas y Belleza',
+                badge: 'Negocio Verificado',
+                highlighted: true,
+                description: 'Estudio especializado en aplicación de uñas acrílicas, gelish, soft gel, manicure y diseños personalizados en el corazón de Parral.',
+                address: 'C. Constitución 10-G, Centro, 33850 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Vie: 10:00 AM - 7:00 PM | Sáb: 10:00 AM - 3:00 PM',
+                phone: '627 523 1987',
+                lat: 26.9321,
+                lng: -105.6672,
                 isOpen: true,
-                views: 195,
-                image: 'https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=800&q=80',
+                views: 274,
+                image: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=80',
                 reviews: [
-                    { author: 'Diego Holguín', rating: 4, comment: 'Siempre me sacan de apuros con las entregas del Tec.', date: 'Hace 5 días' }
+                    { author: 'Fernanda Ríos', rating: 5, comment: 'Me encantó el diseño y duran muchísimo sin levantarse.', date: 'Hace 3 días' }
                 ]
             },
             {
-                id: 'biz_4',
+                id: 'biz_cristy',
                 ownerId: 'owner_2',
-                name: 'Servicio Automotriz Las Fuentes',
-                category: 'Automotriz',
-                description: 'Diagnóstico por computadora, afinaciones, frenos, suspensión y cambio de aceite rápido con refacciones garantizadas.',
-                address: 'Blvd. Ortiz Mena #210, Col. Las Fuentes, Parral',
-                hours: 'Lun - Sáb: 9:00 AM - 6:30 PM',
-                phone: '6275239011',
-                lat: 26.9369,
-                lng: -105.6735,
+                name: 'Uñas Cristy',
+                category: 'Uñas y Belleza',
+                badge: '',
+                highlighted: false,
+                description: 'Servicio dedicado de uñas esculturales, retoques, pedicure spa y decoración artística con atención personalizada por cita.',
+                address: 'Real de Coruña 18, 33815 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Sáb: 9:00 AM - 6:00 PM',
+                phone: '627 119 0718',
+                lat: 26.9425,
+                lng: -105.6730,
                 isOpen: true,
-                views: 164,
-                image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80',
+                views: 163,
+                image: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=800&q=80',
                 reviews: [
-                    { author: 'Ing. Morales', rating: 5, comment: 'Honestos y rápidos, te explican exactamente qué falla tiene el carro.', date: 'Hace 1 semana' }
+                    { author: 'paola_hdz', rating: 5, comment: 'Súper detallista y precios muy accesibles.', date: 'Hace 1 semana' }
                 ]
             },
             {
-                id: 'biz_5',
-                ownerId: 'owner_1',
-                name: 'Dulcería Regional La Gota de Miel',
-                category: 'Tiendas Locales',
-                description: 'Tradicionales dulces de leche quemada, jamoncillos de nuez, rollos de guayaba y recuerdos típicos de la Capital del Mundo.',
-                address: 'Plaza de la Identidad Local 4, Centro, Parral',
-                hours: 'Lun - Dom: 9:30 AM - 8:00 PM',
-                phone: '6275220987',
-                lat: 26.9332,
-                lng: -105.6659,
-                isOpen: true,
-                views: 410,
-                image: 'https://images.unsplash.com/photo-1582716401301-b2407dc7563d?auto=format&fit=crop&w=800&q=80',
-                reviews: [
-                    { author: 'Fernanda Ruiz', rating: 5, comment: 'Los mejores jamoncillos de Parral para llevar de regalo.', date: 'Ayer' }
-                ]
-            },
-            {
-                id: 'biz_6',
+                id: 'biz_sutu',
                 ownerId: 'owner_3',
-                name: 'Clínica Dental Sonrisa Parral',
-                category: 'Salud',
-                description: 'Odontología integral, ortodoncia, limpiezas ultrasónicas y blanqueamiento dental con tecnología moderna y atención cálida.',
-                address: 'Calle Coronado #18, Zona Centro, Parral',
-                hours: 'Lun - Vie: 9:00 AM - 7:00 PM',
-                phone: '6271087744',
-                lat: 26.9295,
-                lng: -105.6682,
-                isOpen: false,
-                views: 128,
-                image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80',
+                name: 'Sútu Uñas y Más',
+                category: 'Uñas y Belleza',
+                badge: '',
+                highlighted: false,
+                description: 'Aplicación de uñas, gel semipermanente, planchado de ceja, lifting de pestañas y cuidado estético en local céntrico.',
+                address: 'C. Pensador Mexicano local 26, Centro, 33800 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Vie: 9:00 AM - 7:00 PM | Sáb: 10:00 AM - 5:00 PM',
+                phone: '627 523 0225',
+                lat: 26.9315,
+                lng: -105.6658,
+                isOpen: true,
+                views: 192,
+                image: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80',
                 reviews: []
             },
             {
-                id: 'biz_7',
+                id: 'biz_andromeda',
                 ownerId: 'owner_3',
-                name: 'Arena Gaming & Boliche Parral',
-                category: 'Entretenimiento',
-                description: 'Centro de entretenimiento familiar con pistas de boliche, zona gamer PC/consolas, snacks y torneos los fines de semana.',
-                address: 'Av. Niños Héroes #140, Col. AltaVista, Parral',
-                hours: 'Mié - Dom: 2:00 PM - 11:00 PM',
-                phone: '6271153399',
-                lat: 26.9412,
-                lng: -105.6618,
+                name: 'Andromeda Boutique',
+                category: 'Ropa y Accesorios',
+                badge: 'Comercio Local',
+                highlighted: true,
+                description: 'Boutique local con prendas de temporada, conjuntos casuales, blusas, bolsas y accesorios seleccionados para mujer.',
+                address: 'C. Carlos Fuero 28, Centro, 33800 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Sáb: 10:00 AM - 2:00 PM y 4:00 PM - 8:00 PM',
+                phone: '627 108 3653',
+                lat: 26.9308,
+                lng: -105.6669,
                 isOpen: true,
-                views: 256,
-                image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
+                views: 245,
+                image: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80',
                 reviews: [
-                    { author: 'Kevin Soto', rating: 5, comment: 'Excelente ambiente para ir con amigos el viernes por la noche.', date: 'Hace 4 días' }
+                    { author: 'Sofía G.', rating: 5, comment: 'Tienen ropa muy bonita y diferente a lo de siempre.', date: 'Hace 5 días' }
+                ]
+            },
+            {
+                id: 'biz_mariabonita',
+                ownerId: 'owner_4',
+                name: 'María Bonita Boutique',
+                category: 'Ropa y Accesorios',
+                badge: '',
+                highlighted: false,
+                description: 'Moda femenina, vestidos, calzado y accesorios con atención cercana en pleno centro histórico de Hidalgo del Parral.',
+                address: '20 de Noviembre #67 esq. J. Agustín Escudero, Centro, 33800 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Sáb: 9:30 AM - 1:00 PM y 3:30 PM - 7:30 PM',
+                phone: '627 112 2463',
+                lat: 26.9295,
+                lng: -105.6645,
+                isOpen: true,
+                views: 188,
+                image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=800&q=80',
+                reviews: []
+            },
+            {
+                id: 'biz_eliana',
+                ownerId: 'owner_4',
+                name: 'Eliana Boutique',
+                category: 'Ropa y Accesorios',
+                badge: '',
+                highlighted: false,
+                description: 'Tienda de ropa para dama, outfits casuales y de fiesta sobre Av. Independencia con novedades cada semana.',
+                address: 'Av. Independencia 163, Centro, 33800 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Dom: 10:00 AM - 1:30 PM y 3:00 PM - 8:00 PM',
+                phone: '627 521 0269',
+                lat: 26.9334,
+                lng: -105.6648,
+                isOpen: true,
+                views: 210,
+                image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80',
+                reviews: []
+            },
+            {
+                id: 'biz_corral',
+                ownerId: 'owner_5',
+                name: 'Antojitos "Corral"',
+                category: 'Comida y Postres',
+                badge: 'Sazón de Barrio',
+                highlighted: false,
+                description: 'Gorditas de harina y maíz recién hechas, burritos caseros, quesadillas y almuerzos tradicionales en la colonia Magisterial.',
+                address: 'Juan de Dios Peza, Col. Magisterial, 33860 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Sáb: 8:00 AM - 2:00 PM',
+                phone: '627 517 1141',
+                lat: 26.9278,
+                lng: -105.6602,
+                isOpen: false,
+                views: 179,
+                image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Profe. Ramírez', rating: 5, comment: 'Las gorditas de deshebrada y chile pasado son una joya oculta.', date: 'Hace 2 días' }
+                ]
+            },
+            {
+                id: 'biz_tommy',
+                ownerId: 'owner_5',
+                name: 'Antojitos Tommy',
+                category: 'Comida y Postres',
+                badge: '',
+                highlighted: false,
+                description: 'Comida corrida, antojitos mexicanos, tortas, enchiladas y platillos caseros con el toque tradicional del centro de Parral.',
+                address: 'Agustín Barbachano, Centro, 33800 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Dom: 9:00 AM - 5:00 PM',
+                phone: '627 522 0022',
+                lat: 26.9326,
+                lng: -105.6681,
+                isOpen: true,
+                views: 204,
+                image: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=800&q=80',
+                reviews: []
+            },
+            {
+                id: 'biz_michelle',
+                ownerId: 'owner_6',
+                name: 'Estética Michelle y Barbershop',
+                category: 'Barbería y Estética',
+                badge: 'Col. Fátima',
+                highlighted: false,
+                description: 'Cortes de cabello para dama y caballero, desvanecidos (fade), arreglo de barba, tintes y peinados en la colonia Fátima.',
+                address: 'Calle Oro 23, Col. Fátima, 33839 Hidalgo del Parral, Chih.',
+                hours: 'Lun - Sáb: 10:30 AM - 8:00 PM | Dom: 10:15 AM - 3:00 PM',
+                phone: '627 133 9146',
+                lat: 26.9396,
+                lng: -105.6712,
+                isOpen: true,
+                views: 152,
+                image: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Jorge Chávez', rating: 5, comment: 'Excelente corte y muy buena atención en Fátima.', date: 'Hace 6 días' }
                 ]
             }
         ];
 
-        // 3. ESTADO GLOBAL DE LA APLICACIÓN
+        // 3. ESTADO GLOBAL DE LA APLICACIÓN (Usamos v2 en localStorage para cargar los nuevos locales reales)
         let businesses = [];
         let users = [];
         let currentUser = null;
@@ -749,6 +1011,7 @@
         let onlyFavorites = false;
         let activeBusinessId = null;
         let authMode = 'login';
+        let pendingOwnerRegistration = null;
 
         // Variables de Mapas Leaflet
         let mainMap = null;
@@ -768,22 +1031,22 @@
         });
 
         function loadStateFromStorage() {
-            const storedBiz = localStorage.getItem('conectaParral_businesses');
-            const storedUsers = localStorage.getItem('conectaParral_users');
-            const storedSession = localStorage.getItem('conectaParral_session');
+            const storedBiz = localStorage.getItem('conectaParral_v2_businesses');
+            const storedUsers = localStorage.getItem('conectaParral_v2_users');
+            const storedSession = localStorage.getItem('conectaParral_v2_session');
 
             if (storedBiz) {
                 businesses = JSON.parse(storedBiz);
             } else {
                 businesses = INITIAL_BUSINESSES;
-                localStorage.setItem('conectaParral_businesses', JSON.stringify(businesses));
+                localStorage.setItem('conectaParral_v2_businesses', JSON.stringify(businesses));
             }
 
             if (storedUsers) {
                 users = JSON.parse(storedUsers);
             } else {
                 users = INITIAL_USERS;
-                localStorage.setItem('conectaParral_users', JSON.stringify(users));
+                localStorage.setItem('conectaParral_v2_users', JSON.stringify(users));
             }
 
             if (storedSession) {
@@ -792,20 +1055,20 @@
         }
 
         function saveBusinessesToStorage() {
-            localStorage.setItem('conectaParral_businesses', JSON.stringify(businesses));
+            localStorage.setItem('conectaParral_v2_businesses', JSON.stringify(businesses));
         }
 
         function saveUsersToStorage() {
-            localStorage.setItem('conectaParral_users', JSON.stringify(users));
+            localStorage.setItem('conectaParral_v2_users', JSON.stringify(users));
             if (currentUser) {
-                localStorage.setItem('conectaParral_session', JSON.stringify(currentUser));
+                localStorage.setItem('conectaParral_v2_session', JSON.stringify(currentUser));
             }
         }
 
         // 5. TEMA CLARO / OSCURO
         function initTheme() {
             const savedTheme = localStorage.getItem('conectaParral_theme');
-            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
             }
         }
@@ -821,7 +1084,7 @@
             mainMap = L.map('mainMap').setView(PARRAL_CENTER, 14);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors | Conecta Parral'
+                attribution: '&copy; OpenStreetMap | Conecta Parral'
             }).addTo(mainMap);
 
             markersLayer = L.layerGroup().addTo(mainMap);
@@ -835,7 +1098,7 @@
 
         function getCategoryColor(catName) {
             const found = CATEGORIES.find(c => c.id === catName);
-            return found ? found.color : '#f97316';
+            return found ? found.color : '#0B3B60';
         }
 
         function renderMapMarkers(filteredList) {
@@ -861,12 +1124,13 @@
                 const marker = L.marker([biz.lat, biz.lng], { icon: customIcon });
                 
                 const popupContent = `
-                    <div class="p-1 min-w-[180px]">
+                    <div class="p-1 min-w-[195px]">
                         <span class="text-[10px] font-bold uppercase tracking-wider" style="color:${color}">${biz.category}</span>
-                        <h4 class="font-bold text-sm text-slate-900 leading-tight mt-0.5">${biz.name}</h4>
-                        <p class="text-[11px] text-slate-500 mt-1">${biz.address}</p>
-                        <button onclick="openDetailModal('${biz.id}')" class="mt-2 w-full py-1.5 px-2.5 bg-orange-600 text-white text-xs font-semibold rounded-lg hover:bg-orange-700 transition">
-                            Ver detalles y reseñas
+                        <h4 class="font-bold text-sm text-[#0B3B60] leading-tight mt-0.5">${biz.name}</h4>
+                        <p class="text-[11px] text-slate-600 mt-1">${biz.address}</p>
+                        <p class="text-[11px] font-semibold text-[#1E7E8B] mt-0.5">Tel: ${biz.phone}</p>
+                        <button onclick="openDetailModal('${biz.id}')" class="mt-2 w-full py-1.5 px-2.5 bg-[#0B3B60] text-white text-xs font-semibold rounded-lg hover:bg-[#1E7E8B] transition">
+                            Ver ficha y WhatsApp
                         </button>
                     </div>
                 `;
@@ -886,11 +1150,11 @@
                         onclick="selectCategory('${cat.id}')"
                         class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition ${
                             isActive 
-                            ? 'bg-orange-600 text-white shadow-sm shadow-orange-600/20' 
-                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                            ? 'bg-[#0B3B60] text-white shadow-sm' 
+                            : 'bg-[#F8F6F1] dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                         }"
                     >
-                        <i data-lucide="${cat.icon}" class="w-3.5 h-3.5"></i>
+                        <i data-lucide="${cat.icon}" class="w-3.5 h-3.5 ${isActive ? 'text-[#C99A2E]' : 'text-[#1E7E8B]'}"></i>
                         <span>${cat.label}</span>
                     </button>
                 `;
@@ -920,7 +1184,7 @@
             onlyFavorites = !onlyFavorites;
             renderCategoryChips();
             applyFilters();
-            showToast(onlyFavorites ? 'Mostrando tus negocios favoritos' : 'Mostrando todos los negocios');
+            showToast(onlyFavorites ? 'Mostrando tus locales favoritos' : 'Mostrando todos los negocios');
         }
 
         function calculateAverageRating(reviews) {
@@ -945,7 +1209,10 @@
                 return matchesCat && matchesOpen && matchesSearch && matchesFav;
             });
 
-            document.getElementById('resultsCount').textContent = `${filtered.length} ${filtered.length === 1 ? 'negocio' : 'negocios'}`;
+            // Ordenar para mostrar primero los destacados (Plan Impulso Local)
+            filtered.sort((a, b) => (b.highlighted ? 1 : 0) - (a.highlighted ? 1 : 0));
+
+            document.getElementById('resultsCount').textContent = `${filtered.length} ${filtered.length === 1 ? 'local' : 'locales'}`;
             renderBusinessCards(filtered);
             renderMapMarkers(filtered);
         }
@@ -957,9 +1224,9 @@
                 container.innerHTML = `
                     <div class="bg-white dark:bg-slate-900 rounded-2xl p-8 text-center border border-slate-200 dark:border-slate-800">
                         <i data-lucide="search-x" class="w-10 h-10 text-slate-400 mx-auto mb-2"></i>
-                        <h3 class="font-bold text-sm">No se encontraron negocios</h3>
-                        <p class="text-xs text-slate-500 mt-1">Intenta cambiar la categoría o limpiar el buscador.</p>
-                        <button onclick="resetAllFilters()" class="mt-3 px-4 py-1.5 rounded-xl bg-orange-600 text-white text-xs font-semibold">Ver todos</button>
+                        <h3 class="font-bold text-sm">No se encontraron negocios con ese filtro</h3>
+                        <p class="text-xs text-slate-500 mt-1">Prueba buscando por colonia (Topo Chico, Centro, Fátima, Magisterial).</p>
+                        <button onclick="resetAllFilters()" class="mt-3 px-4 py-1.5 rounded-xl bg-[#0B3B60] text-white text-xs font-semibold">Ver todos los negocios</button>
                     </div>
                 `;
                 lucide.createIcons();
@@ -972,11 +1239,11 @@
                 const catColor = getCategoryColor(biz.category);
 
                 return `
-                    <div onclick="openDetailModal('${biz.id}')" class="group bg-white dark:bg-slate-900 rounded-2xl p-3.5 border border-slate-200 dark:border-slate-800 hover:border-orange-500/60 shadow-sm hover:shadow-md transition cursor-pointer flex gap-3.5">
+                    <div onclick="openDetailModal('${biz.id}')" class="group bg-white dark:bg-slate-900 rounded-2xl p-3.5 border ${biz.highlighted ? 'border-[#C99A2E]/60' : 'border-slate-200 dark:border-slate-800'} hover:border-[#1E7E8B] shadow-sm hover:shadow-md transition cursor-pointer flex gap-3.5">
                         
                         <!-- Imagen Miniatura -->
                         <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 shrink-0 relative">
-                            <img src="${biz.image}" onerror="this.src='https://placehold.co/300x300/ea580c/ffffff?text=Parral'" alt="${biz.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <img src="${biz.image}" onerror="this.src='https://placehold.co/300x300/0B3B60/ffffff?text=Parral'" alt="${biz.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold text-white shadow" style="background-color: ${catColor}">
                                 ${biz.category.split(' ')[0]}
                             </span>
@@ -986,15 +1253,18 @@
                         <div class="flex-1 min-w-0 flex flex-col justify-between">
                             <div>
                                 <div class="flex items-start justify-between gap-2">
-                                    <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate group-hover:text-orange-600 transition">
-                                        ${biz.name}
-                                    </h3>
+                                    <div class="min-w-0">
+                                        ${biz.badge ? `<span class="inline-block px-2 py-0.2 rounded text-[9px] font-extrabold uppercase tracking-wider bg-[#C99A2E]/15 text-[#8F6812] dark:text-amber-300 mb-0.5">${biz.badge}</span>` : ''}
+                                        <h3 class="font-bold text-sm sm:text-base text-[#0B3B60] dark:text-white truncate group-hover:text-[#1E7E8B] transition">
+                                            ${biz.name}
+                                        </h3>
+                                    </div>
                                     <button onclick="event.stopPropagation(); toggleFavorite('${biz.id}')" class="text-slate-400 hover:text-rose-500 transition shrink-0">
                                         <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
                                     </button>
                                 </div>
                                 
-                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">
+                                <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-0.5">
                                     ${biz.description}
                                 </p>
                             </div>
@@ -1006,12 +1276,12 @@
                                 </span>
 
                                 <div class="flex items-center gap-2 text-slate-500">
-                                    <span class="flex items-center gap-0.5 font-bold text-amber-500">
-                                        <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500"></i>
+                                    <span class="flex items-center gap-0.5 font-bold text-[#C99A2E]">
+                                        <i data-lucide="star" class="w-3.5 h-3.5 fill-[#C99A2E]"></i>
                                         ${avgRating}
                                     </span>
                                     <span>•</span>
-                                    <span class="truncate max-w-[110px]">${biz.address.split(',')[1] || 'Parral'}</span>
+                                    <span class="truncate max-w-[115px]">${biz.address.split(',')[1] || 'Parral'}</span>
                                 </div>
                             </div>
                         </div>
@@ -1046,6 +1316,15 @@
             document.getElementById('detailImage').src = biz.image;
             document.getElementById('detailCategoryBadge').textContent = biz.category;
             document.getElementById('detailCategoryBadge').style.backgroundColor = getCategoryColor(biz.category);
+            
+            const hlBadge = document.getElementById('detailHighlightBadge');
+            if (biz.badge) {
+                hlBadge.textContent = biz.badge;
+                hlBadge.classList.remove('hidden');
+            } else {
+                hlBadge.classList.add('hidden');
+            }
+
             document.getElementById('detailName').textContent = biz.name;
             document.getElementById('detailDescription').textContent = biz.description;
             document.getElementById('detailAddress').textContent = biz.address;
@@ -1062,8 +1341,9 @@
             }
 
             const cleanPhone = biz.phone.replace(/\D/g, '');
-            const waText = encodeURIComponent(`Hola ${biz.name}, los encontré en Conecta Parral y me gustaría pedir información.`);
+            const waText = encodeURIComponent(`Hola ${biz.name}, los encontré en Conecta Parral y me gustaría más información.`);
             document.getElementById('detailWhatsappLink').href = `https://wa.me/52${cleanPhone}?text=${waText}`;
+            document.getElementById('detailWhatsappText').textContent = `WhatsApp (${biz.phone})`;
 
             updateDetailFavoriteIcon();
             renderDetailReviews(biz);
@@ -1094,7 +1374,7 @@
 
         function toggleFavorite(bizId) {
             if (!currentUser) {
-                showToast('Inicia sesión para guardar negocios en favoritos');
+                showToast('Inicia sesión gratis como Explorador para guardar favoritos');
                 openAuthModal('login');
                 return;
             }
@@ -1140,15 +1420,15 @@
 
             const list = document.getElementById('detailReviewsList');
             if (!biz.reviews || biz.reviews.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 italic">Aún no hay reseñas. ¡Sé el primero en opinar!</p>`;
+                list.innerHTML = `<p class="text-xs text-slate-400 italic">Aún no hay reseñas. ¡Sé el primero en recomendar este local de Parral!</p>`;
                 return;
             }
 
             list.innerHTML = biz.reviews.map(r => `
-                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-100 dark:border-slate-800">
+                <div class="p-3 rounded-xl bg-[#F8F6F1] dark:bg-slate-800/70 border border-slate-200/60 dark:border-slate-800">
                     <div class="flex items-center justify-between mb-1">
-                        <span class="text-xs font-bold">${r.author}</span>
-                        <span class="text-[11px] text-amber-500 font-bold">${'⭐'.repeat(r.rating)}</span>
+                        <span class="text-xs font-bold text-[#0B3B60] dark:text-white">${r.author}</span>
+                        <span class="text-[11px] text-[#C99A2E] font-bold">${'⭐'.repeat(r.rating)}</span>
                     </div>
                     <p class="text-xs text-slate-600 dark:text-slate-300">${r.comment}</p>
                     <span class="text-[10px] text-slate-400 block mt-1">${r.date}</span>
@@ -1159,7 +1439,7 @@
         function submitReview(e) {
             e.preventDefault();
             if (!currentUser) {
-                showToast('Inicia sesión para dejar una reseña');
+                showToast('Inicia sesión gratis para dejar una reseña');
                 openAuthModal('login');
                 return;
             }
@@ -1181,12 +1461,17 @@
             saveBusinessesToStorage();
             document.getElementById('reviewCommentInput').value = '';
             renderDetailReviews(biz);
-            showToast('¡Gracias por compartir tu opinión!');
+            showToast('¡Gracias por apoyar al comercio local con tu reseña!');
         }
 
-        // 9. SISTEMA DE AUTENTICACIÓN Y ROLES
-        function openAuthModal(mode = 'login') {
+        // 9. SISTEMA DE AUTENTICACIÓN, ROLES ILIMITADOS (EXPLORADOR) Y PAGA (DUEÑO)
+        function openAuthModal(mode = 'login', defaultRole = 'user') {
             setAuthMode(mode);
+            if (mode === 'register') {
+                const radios = document.getElementsByName('authRole');
+                radios.forEach(r => r.checked = (r.value === defaultRole));
+                toggleOwnerPlansInAuth();
+            }
             const modal = document.getElementById('authModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -1204,24 +1489,44 @@
             document.getElementById('authNameField').classList.toggle('hidden', !isReg);
             document.getElementById('authRoleField').classList.toggle('hidden', !isReg);
             document.getElementById('authName').required = isReg;
-            document.getElementById('authSubmitBtn').textContent = isReg ? 'Crear cuenta en Conecta Parral' : 'Entrar a mi cuenta';
+            
+            if (!isReg) {
+                document.getElementById('ownerPlansContainer').classList.add('hidden');
+                document.getElementById('authSubmitBtn').textContent = 'Entrar a mi cuenta';
+            } else {
+                toggleOwnerPlansInAuth();
+            }
             
             document.getElementById('tabLogin').className = !isReg 
-                ? 'py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-orange-600' 
+                ? 'py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-[#0B3B60] dark:text-white' 
                 : 'py-2 rounded-lg text-slate-500';
             document.getElementById('tabRegister').className = isReg 
-                ? 'py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-orange-600' 
+                ? 'py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-[#0B3B60] dark:text-white' 
                 : 'py-2 rounded-lg text-slate-500';
+        }
+
+        function toggleOwnerPlansInAuth() {
+            const selectedRole = document.querySelector('input[name="authRole"]:checked')?.value;
+            const plansBox = document.getElementById('ownerPlansContainer');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            
+            if (selectedRole === 'owner') {
+                plansBox.classList.remove('hidden');
+                submitBtn.textContent = 'Continuar al Pago de Membresía';
+            } else {
+                plansBox.classList.add('hidden');
+                submitBtn.textContent = 'Crear Cuenta Gratuita e Ilimitada';
+            }
         }
 
         function quickDemoLogin(role) {
             const demoUser = users.find(u => u.role === role);
             if (demoUser) {
                 currentUser = demoUser;
-                localStorage.setItem('conectaParral_session', JSON.stringify(currentUser));
+                localStorage.setItem('conectaParral_v2_session', JSON.stringify(currentUser));
                 closeAuthModal();
                 updateAuthUI();
-                showToast(`Sesión iniciada como ${currentUser.name}`);
+                showToast(`Sesión iniciada: ${currentUser.name}`);
                 if (role === 'owner') {
                     switchView('owner');
                 }
@@ -1236,14 +1541,14 @@
             if (authMode === 'login') {
                 const user = users.find(u => u.email.toLowerCase() === email && u.password === password);
                 if (!user) {
-                    showToast('Correo o contraseña incorrectos. Prueba los botones de acceso rápido.');
+                    showToast('Correo o contraseña incorrectos. Usa los botones de Acceso Rápido o crea tu cuenta.');
                     return;
                 }
                 currentUser = user;
-                localStorage.setItem('conectaParral_session', JSON.stringify(currentUser));
+                localStorage.setItem('conectaParral_v2_session', JSON.stringify(currentUser));
                 closeAuthModal();
                 updateAuthUI();
-                showToast(`¡Bienvenido de nuevo, ${currentUser.name}!`);
+                showToast(`¡Bienvenido a Conecta Parral, ${currentUser.name}!`);
                 if (currentUser.role === 'owner') switchView('owner');
             } else {
                 const name = document.getElementById('authName').value.trim();
@@ -1254,33 +1559,94 @@
                     return;
                 }
 
-                const newUser = {
-                    id: 'usr_' + Date.now(),
-                    name,
-                    email,
-                    password,
-                    role,
-                    favorites: []
-                };
-
-                users.push(newUser);
-                currentUser = newUser;
-                saveUsersToStorage();
-                closeAuthModal();
-                updateAuthUI();
-                showToast(`¡Cuenta creada! Bienvenido, ${name}`);
-                if (role === 'owner') switchView('owner');
+                if (role === 'owner') {
+                    // Flujo de pago para dueños de local
+                    const selectedPlan = document.querySelector('input[name="ownerPlan"]:checked').value;
+                    pendingOwnerRegistration = {
+                        id: 'owner_' + Date.now(),
+                        name,
+                        email,
+                        password,
+                        role: 'owner',
+                        plan: selectedPlan
+                    };
+                    closeAuthModal();
+                    openPaymentModal(selectedPlan);
+                } else {
+                    // Registro gratuito e ilimitado para usuarios/exploradores
+                    const newUser = {
+                        id: 'usr_' + Date.now(),
+                        name,
+                        email,
+                        password,
+                        role: 'user',
+                        favorites: []
+                    };
+                    users.push(newUser);
+                    currentUser = newUser;
+                    saveUsersToStorage();
+                    closeAuthModal();
+                    updateAuthUI();
+                    showToast(`¡Cuenta gratuita creada! Explora los negocios de Parral, ${name}.`);
+                }
             }
+        }
+
+        // Pasarela de pago simulada
+        function openPaymentModal(planLabel) {
+            document.getElementById('paymentPlanName').textContent = planLabel;
+            const modal = document.getElementById('paymentModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function togglePaymentFields() {
+            const method = document.getElementById('paymentMethodSelect').value;
+            document.getElementById('cardPaymentFields').classList.toggle('hidden', method !== 'card');
+            document.getElementById('speiPaymentFields').classList.toggle('hidden', method !== 'spei');
+        }
+
+        function confirmSimulatedPayment(e) {
+            e.preventDefault();
+            if (pendingOwnerRegistration) {
+                users.push(pendingOwnerRegistration);
+                currentUser = pendingOwnerRegistration;
+                pendingOwnerRegistration = null;
+            } else if (currentUser && currentUser.role === 'owner') {
+                // Cambio de plan desde el panel
+                currentUser.plan = document.getElementById('paymentPlanName').textContent;
+                const idx = users.findIndex(u => u.id === currentUser.id);
+                if (idx > -1) users[idx] = currentUser;
+            }
+
+            saveUsersToStorage();
+            closePaymentModal();
+            updateAuthUI();
+            switchView('owner');
+            showToast('¡Pago aprobado! Tu membresía de Socio Comercial ya está activa.');
+        }
+
+        function openPlanUpgradeModal() {
+            const nextPlan = currentUser?.plan?.includes('Emprendedor') 
+                ? 'Plan Impulso Local ($279/mes)' 
+                : 'Plan Emprendedor ($149/mes)';
+            openPaymentModal(nextPlan);
         }
 
         function logout() {
             currentUser = null;
             onlyFavorites = false;
-            localStorage.removeItem('conectaParral_session');
+            localStorage.removeItem('conectaParral_v2_session');
             updateAuthUI();
             switchView('explore');
             applyFilters();
-            showToast('Has cerrado sesión');
+            showToast('Sesión cerrada');
         }
 
         function updateAuthUI() {
@@ -1299,12 +1665,13 @@
                 loggedDiv.classList.add('flex');
 
                 document.getElementById('userNameDisplay').textContent = currentUser.name.split(' ')[0];
-                document.getElementById('userRoleDisplay').textContent = currentUser.role === 'owner' ? 'Dueño de Local' : 'Explorador';
+                document.getElementById('userRoleDisplay').textContent = currentUser.role === 'owner' ? 'Socio Comercial' : 'Explorador Gratis';
 
                 if (currentUser.role === 'owner') {
                     btnOwner.classList.remove('hidden');
                     btnOwner.classList.add('flex');
                     btnFav.classList.add('hidden');
+                    document.getElementById('ownerPlanBadge').textContent = `${currentUser.plan || 'Plan Impulso Local'} Activo`;
                 } else {
                     btnOwner.classList.add('hidden');
                     btnFav.classList.remove('hidden');
@@ -1353,7 +1720,6 @@
             if (!currentUser) return;
             const myBusinesses = businesses.filter(b => b.ownerId === currentUser.id);
 
-            // Calcular métricas
             const totalViews = myBusinesses.reduce((acc, b) => acc + (b.views || 0), 0);
             const totalFavs = users.reduce((acc, u) => {
                 if (!u.favorites) return acc;
@@ -1369,10 +1735,10 @@
             if (myBusinesses.length === 0) {
                 grid.innerHTML = `
                     <div class="md:col-span-3 bg-white dark:bg-slate-900 rounded-2xl p-10 text-center border border-dashed border-slate-300 dark:border-slate-700">
-                        <i data-lucide="store" class="w-12 h-12 text-orange-500 mx-auto mb-3"></i>
-                        <h3 class="font-bold text-base">Aún no has registrado ningún local</h3>
-                        <p class="text-xs text-slate-500 mt-1 mb-4">Publica tu negocio en el mapa interactivo de Hidalgo del Parral para que miles de clientes te encuentren.</p>
-                        <button onclick="openBusinessFormModal()" class="px-4 py-2 rounded-xl bg-orange-600 text-white text-xs font-bold">Registrar mi primer negocio</button>
+                        <i data-lucide="store" class="w-12 h-12 text-[#1E7E8B] mx-auto mb-3"></i>
+                        <h3 class="font-bold text-base text-[#0B3B60] dark:text-white">Aún no has publicado tu negocio</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4">Tu membresía está activa. Coloca el pin de tu local en el mapa de Parral para que nuevos clientes te descubran.</p>
+                        <button onclick="openBusinessFormModal()" class="px-4 py-2 rounded-xl bg-[#0B3B60] text-white text-xs font-bold">Publicar mi local ahora</button>
                     </div>
                 `;
                 lucide.createIcons();
@@ -1389,25 +1755,25 @@
                             </span>
                         </div>
                         <div class="p-4">
-                            <span class="text-[11px] font-bold text-orange-600">${biz.category}</span>
-                            <h3 class="font-bold text-base mt-0.5">${biz.name}</h3>
+                            <span class="text-[11px] font-bold text-[#1E7E8B]">${biz.category}</span>
+                            <h3 class="font-bold text-base mt-0.5 text-[#0B3B60] dark:text-white">${biz.name}</h3>
                             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5 shrink-0"></i>
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 shrink-0 text-[#1E7E8B]"></i>
                                 <span class="truncate">${biz.address}</span>
                             </p>
                             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
-                                <i data-lucide="clock" class="w-3.5 h-3.5 shrink-0"></i>
+                                <i data-lucide="clock" class="w-3.5 h-3.5 shrink-0 text-[#C99A2E]"></i>
                                 <span>${biz.hours}</span>
                             </p>
                         </div>
                     </div>
 
-                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-                        <button onclick="toggleBusinessStatus('${biz.id}')" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-orange-500 transition">
+                    <div class="px-4 py-3 bg-[#F8F6F1] dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                        <button onclick="toggleBusinessStatus('${biz.id}')" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-[#1E7E8B] transition">
                             ${biz.isOpen ? 'Marcar Cerrado' : 'Marcar Abierto'}
                         </button>
                         <div class="flex items-center gap-1.5">
-                            <button onclick="openBusinessFormModal('${biz.id}')" title="Editar negocio" class="p-2 rounded-lg bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 transition">
+                            <button onclick="openBusinessFormModal('${biz.id}')" title="Editar negocio" class="p-2 rounded-lg bg-[#0B3B60]/10 text-[#0B3B60] dark:text-sky-400 hover:bg-[#0B3B60]/20 transition">
                                 <i data-lucide="pencil" class="w-4 h-4"></i>
                             </button>
                             <button onclick="deleteBusiness('${biz.id}')" title="Eliminar negocio" class="p-2 rounded-lg bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 transition">
@@ -1434,7 +1800,7 @@
             businesses = businesses.filter(b => b.id !== bizId);
             saveBusinessesToStorage();
             renderOwnerDashboard();
-            showToast('Negocio eliminado del directorio');
+            showToast('Negocio retirado del directorio');
         }
 
         // 11. MODAL FORMULARIO DE NEGOCIO CON SELECTOR DE UBICACIÓN EN MAPA
@@ -1460,7 +1826,7 @@
                 initialLat = biz.lat;
                 initialLng = biz.lng;
             } else {
-                document.getElementById('formModalTitle').textContent = 'Registrar Nuevo Local en Parral';
+                document.getElementById('formModalTitle').textContent = 'Publicar Nuevo Local en Parral';
                 document.getElementById('businessForm').reset();
                 document.getElementById('editBusinessId').value = '';
             }
@@ -1506,14 +1872,13 @@
 
         function getCategoryDefaultImage(cat) {
             const map = {
-                'Restaurantes y Snacks': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
-                'Servicios': 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
-                'Tiendas Locales': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
-                'Salud': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
-                'Entretenimiento': 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=800&q=80',
-                'Automotriz': 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80'
+                'Comida y Postres': 'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=800&q=80',
+                'Uñas y Belleza': 'https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=80',
+                'Ropa y Accesorios': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80',
+                'Barbería y Estética': 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80',
+                'Servicios Locales': 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80'
             };
-            return map[cat] || map['Servicios'];
+            return map[cat] || map['Servicios Locales'];
         }
 
         function saveBusiness(e) {
@@ -1523,6 +1888,7 @@
             const editId = document.getElementById('editBusinessId').value;
             const pos = pickerMarker.getLatLng();
             const category = document.getElementById('bizCategory').value;
+            const isHighlighted = (currentUser.plan || '').includes('Impulso');
 
             const bizData = {
                 name: document.getElementById('bizName').value.trim(),
@@ -1540,19 +1906,21 @@
                 const idx = businesses.findIndex(b => b.id === editId);
                 if (idx > -1) {
                     businesses[idx] = { ...businesses[idx], ...bizData };
-                    showToast('¡Cambios guardados y actualizados en el mapa!');
+                    showToast('¡Cambios actualizados en el mapa de Parral!');
                 }
             } else {
                 const newBiz = {
                     id: 'biz_' + Date.now(),
                     ownerId: currentUser.id,
                     ...bizData,
+                    badge: isHighlighted ? 'Negocio Verificado' : 'Nuevo en la red',
+                    highlighted: isHighlighted,
                     views: 1,
                     image: getCategoryDefaultImage(category),
                     reviews: []
                 };
                 businesses.unshift(newBiz);
-                showToast('¡Tu negocio ya está publicado en Conecta Parral!');
+                showToast('¡Tu local ya está publicado en Conecta Parral!');
             }
 
             saveBusinessesToStorage();
@@ -1572,7 +1940,7 @@
             toastTimeout = setTimeout(() => {
                 toast.classList.add('hidden');
                 toast.classList.remove('flex');
-            }, 3200);
+            }, 3400);
         }
     </script>
 </body>
