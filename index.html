@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecta Parral | Directorio Comercial y Mapa Digital</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            900: '#7c2d12',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Leaflet CSS & JS (Mapa Interactivo OpenStreetMap) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Personalización de scrollbar y ajustes de Leaflet */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        .leaflet-container {
+            font-family: 'Inter', sans-serif !important;
+            z-index: 10;
+        }
+        /* Marcadores personalizados en el mapa */
+        .custom-pin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2.5px solid white;
+            transition: transform 0.2s ease;
+        }
+        .custom-pin:hover {
+            transform: scale(1.18);
+            z-index: 999 !important;
+        }
+        /* Animación suave para modales y notificaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col">
+
+    <!-- ==================== BARRA DE NAVEGACIÓN SUPERIOR ==================== -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-3">
+                
+                <!-- Logo y Nombre -->
+                <div class="flex items-center gap-2.5 cursor-pointer shrink-0" onclick="switchView('explore')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
+                        <i data-lucide="map-pin" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-lg sm:text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-amber-500 dark:from-orange-400 dark:to-amber-300">
+                            Conecta Parral
+                        </span>
+                        <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 leading-none font-medium">
+                            Hidalgo del Parral, Chih.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Buscador Global (visible en vista explorar) -->
+                <div id="globalSearchWrapper" class="hidden md:flex flex-1 max-w-md mx-4">
+                    <div class="relative w-full">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input 
+                            type="text" 
+                            id="searchInputDesktop" 
+                            oninput="handleSearch(this.value)"
+                            placeholder="Buscar comida, talleres, colonia, servicio..." 
+                            class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-orange-500 focus:bg-white dark:focus:bg-slate-900 rounded-xl outline-none transition-all"
+                        >
+                    </div>
+                </div>
+
+                <!-- Controles Derecha: Tema, Navegación de Roles y Sesión -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    
+                    <!-- Botón Modo Oscuro/Claro -->
+                    <button onclick="toggleDarkMode()" title="Cambiar tema" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition">
+                        <i data-lucide="moon" id="themeIconDark" class="w-4 h-4 hidden dark:block"></i>
+                        <i data-lucide="sun" id="themeIconLight" class="w-4 h-4 block dark:hidden"></i>
+                    </button>
+
+                    <!-- Estado: Sin sesión iniciada -->
+                    <div id="authButtonsGuest" class="flex items-center gap-2">
+                        <button onclick="openAuthModal('login')" class="px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-orange-600 hover:bg-orange-700 text-white shadow-sm shadow-orange-600/20 transition flex items-center gap-1.5">
+                            <i data-lucide="user-circle" class="w-4 h-4"></i>
+                            <span>Iniciar Sesión</span>
+                        </button>
+                    </div>
+
+                    <!-- Estado: Sesión iniciada -->
+                    <div id="authButtonsLogged" class="hidden items-center gap-2">
+                        <!-- Botón Panel Dueño (Solo si rol === 'owner') -->
+                        <button id="btnNavOwnerDashboard" onclick="switchView('owner')" class="hidden px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition items-center gap-1.5">
+                            <i data-lucide="store" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Mi Negocio</span>
+                        </button>
+
+                        <!-- Botón Explorar (cuando está en dashboard) -->
+                        <button id="btnNavExplore" onclick="switchView('explore')" class="hidden px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition items-center gap-1.5">
+                            <i data-lucide="compass" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Explorar Mapa</span>
+                        </button>
+
+                        <!-- Botón Favoritos (Solo si rol === 'user') -->
+                        <button id="btnNavFavorites" onclick="toggleFavoritesFilter()" class="hidden px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 hover:bg-rose-500/20 transition items-center gap-1.5">
+                            <i data-lucide="heart" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Favoritos</span>
+                            <span id="favCountBadge" class="bg-rose-600 text-white text-[10px] px-1.5 py-0.5 rounded-full">0</span>
+                        </button>
+
+                        <!-- Perfil / Cerrar Sesión -->
+                        <div class="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-700">
+                            <div class="text-right hidden sm:block">
+                                <p id="userNameDisplay" class="text-xs font-bold leading-tight">Usuario</p>
+                                <p id="userRoleDisplay" class="text-[10px] text-orange-600 dark:text-orange-400 font-medium">Explorador</p>
+                            </div>
+                            <button onclick="logout()" title="Cerrar Sesión" class="p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition">
+                                <i data-lucide="log-out" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Buscador Móvil -->
+            <div id="mobileSearchWrapper" class="pb-3 md:hidden">
+                <div class="relative w-full">
+                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input 
+                        type="text" 
+                        id="searchInputMobile" 
+                        oninput="handleSearch(this.value)"
+                        placeholder="Buscar en Parral..." 
+                        class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 rounded-xl outline-none focus:ring-2 focus:ring-orange-500"
+                    >
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== VISTA 1: EXPLORADOR PÚBLICO Y MAPA ==================== -->
+    <main id="viewExplore" class="flex-1 flex flex-col">
+        
+        <!-- Barra de Categorías y Filtros Rápidos -->
+        <div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-3 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                
+                <!-- Chips de Categorías -->
+                <div id="categoryFilters" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar">
+                    <!-- Generado dinámicamente por JS -->
+                </div>
+
+                <!-- Filtro Abierto Ahora y Contador -->
+                <div class="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+                    <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-medium text-slate-600 dark:text-slate-300 select-none">
+                        <input type="checkbox" id="filterOpenNow" onchange="applyFilters()" class="rounded text-orange-600 focus:ring-orange-500 w-4 h-4">
+                        <span>Solo abiertos ahora</span>
+                    </label>
+                    <span id="resultsCount" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                        0 negocios
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenedor Principal: Lista de Negocios (Izquierda) + Mapa Interactivo (Derecha) -->
+        <div class="flex-1 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 lg:p-6">
+            
+            <!-- Columna Izquierda: Tarjetas de Negocios -->
+            <div class="lg:col-span-5 xl:col-span-5 flex flex-col order-2 lg:order-1 px-4 py-4 lg:p-0">
+                <div id="businessListContainer" class="space-y-3.5 lg:max-h-[calc(100vh-190px)] lg:overflow-y-auto lg:pr-2">
+                    <!-- Tarjetas renderizadas por JS -->
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Mapa Interactivo de Hidalgo del Parral -->
+            <div class="lg:col-span-7 xl:col-span-7 order-1 lg:order-2 h-[360px] sm:h-[420px] lg:h-[calc(100vh-190px)] lg:sticky lg:top-24">
+                <div class="relative w-full h-full lg:rounded-2xl overflow-hidden border-b lg:border border-slate-200 dark:border-slate-800 shadow-md">
+                    <div id="mainMap" class="w-full h-full"></div>
+                    
+                    <!-- Botón Flotante para Centrar en Parral -->
+                    <button onclick="resetMapCenter()" title="Centrar en Hidalgo del Parral" class="absolute bottom-4 right-4 z-[400] bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold flex items-center gap-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                        <i data-lucide="crosshair" class="w-4 h-4 text-orange-600"></i>
+                        <span>Centrar Parral</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ==================== VISTA 2: PANEL DUEÑO DE LOCAL ==================== -->
+    <section id="viewOwner" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        
+        <!-- Encabezado del Dashboard -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+                <h1 class="text-2xl font-extrabold tracking-tight">Panel de Administración de Negocio</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Gestiona la presencia digital, ubicación y horarios de tus locales en Parral.</p>
+            </div>
+            <button onclick="openBusinessFormModal()" class="px-4 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-semibold text-sm shadow-md shadow-orange-600/20 flex items-center justify-center gap-2 transition">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                <span>Registrar Nuevo Local</span>
+            </button>
+        </div>
+
+        <!-- Tarjetas de Métricas del Dueño -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center">
+                    <i data-lucide="store" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Mis Locales Activos</p>
+                    <p id="statOwnerBusinesses" class="text-2xl font-extrabold">0</p>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                    <i data-lucide="eye" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Vistas Totales en Mapa</p>
+                    <p id="statOwnerViews" class="text-2xl font-extrabold">0</p>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-600 flex items-center justify-center">
+                    <i data-lucide="heart" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Guardados en Favoritos</p>
+                    <p id="statOwnerFavorites" class="text-2xl font-extrabold">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Locales del Dueño -->
+        <h2 class="text-lg font-bold mb-4">Mis Negocios Registrados</h2>
+        <div id="ownerBusinessesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Renderizado dinámicamente -->
+        </div>
+
+    </section>
+
+    <!-- ==================== MODAL 1: DETALLE DEL NEGOCIO ==================== -->
+    <div id="businessDetailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-fade-in my-auto">
+            
+            <!-- Cabecera visual -->
+            <div class="relative h-44 sm:h-52 bg-slate-800">
+                <img id="detailImage" src="" alt="Imagen del negocio" class="w-full h-full object-cover opacity-90">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+                
+                <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+
+                <div class="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-3">
+                    <div>
+                        <span id="detailCategoryBadge" class="inline-block px-2.5 py-0.5 rounded-lg text-xs font-bold bg-orange-600 text-white mb-1.5">
+                            Categoría
+                        </span>
+                        <h2 id="detailName" class="text-xl sm:text-2xl font-extrabold text-white leading-tight">Nombre del Local</h2>
+                    </div>
+                    <button id="detailFavBtn" onclick="toggleFavoriteFromModal()" class="p-2.5 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md text-white transition" title="Guardar en favoritos">
+                        <i data-lucide="heart" id="detailFavIcon" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cuerpo del Modal -->
+            <div class="p-5 sm:p-6 space-y-5 max-h-[70vh] overflow-y-auto">
+                
+                <!-- Estado, Calificación y Vistas -->
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <span id="detailStatusBadge" class="px-3 py-1 rounded-full text-xs font-bold">Abierto ahora</span>
+                        <div class="flex items-center gap-1 text-amber-500 font-bold text-sm">
+                            <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                            <span id="detailRating">4.8</span>
+                            <span id="detailReviewCount" class="text-xs text-slate-400 font-normal">(0 reseñas)</span>
+                        </div>
+                    </div>
+                    <span id="detailViews" class="text-xs text-slate-400 flex items-center gap-1">
+                        <i data-lucide="eye" class="w-3.5 h-3.5"></i> 0 visitas
+                    </span>
+                </div>
+
+                <!-- Descripción -->
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Acerca del negocio</h3>
+                    <p id="detailDescription" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+                </div>
+
+                <!-- Información de Contacto y Horario -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-800/60 p-4 rounded-xl">
+                    <div class="flex items-start gap-2.5">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-orange-600 shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="text-xs font-bold">Ubicación en Parral</p>
+                            <p id="detailAddress" class="text-xs text-slate-500 dark:text-slate-400"></p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                        <i data-lucide="clock" class="w-4 h-4 text-orange-600 shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="text-xs font-bold">Horario de Atención</p>
+                            <p id="detailHours" class="text-xs text-slate-500 dark:text-slate-400"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción Directa -->
+                <div class="flex flex-wrap gap-3">
+                    <a id="detailWhatsappLink" href="#" target="_blank" class="flex-1 min-w-[160px] py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition shadow-sm">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>Contactar por WhatsApp</span>
+                    </a>
+                    <button onclick="focusBusinessOnMap()" class="py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 font-semibold text-sm flex items-center justify-center gap-2 transition">
+                        <i data-lucide="navigation" class="w-4 h-4 text-orange-600"></i>
+                        <span>Ver en Mapa</span>
+                    </button>
+                </div>
+
+                <!-- Sección de Reseñas -->
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <h3 class="text-sm font-bold mb-3">Opiniones de clientes en Parral</h3>
+                    
+                    <!-- Formulario para dejar reseña -->
+                    <form id="reviewForm" onsubmit="submitReview(event)" class="mb-4 bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-semibold">Califica tu experiencia:</span>
+                            <select id="reviewRatingInput" class="text-xs font-bold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 outline-none">
+                                <option value="5">⭐⭐⭐⭐⭐ (5 - Excelente)</option>
+                                <option value="4">⭐⭐⭐⭐ (4 - Muy bueno)</option>
+                                <option value="3">⭐⭐⭐ (3 - Regular)</option>
+                                <option value="2">⭐⭐ (2 - Malo)</option>
+                                <option value="1">⭐ (1 - Pésimo)</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="reviewCommentInput" required placeholder="Escribe un comentario sobre este local..." class="flex-1 text-xs px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                            <button type="submit" class="px-3.5 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold transition">
+                                Publicar
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Lista de reseñas -->
+                    <div id="detailReviewsList" class="space-y-2.5 max-h-48 overflow-y-auto pr-1">
+                        <!-- Renderizado por JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 2: INICIO DE SESIÓN Y REGISTRO (ROLES) ==================== -->
+    <div id="authModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 animate-fade-in my-auto">
+            
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-orange-600 text-white flex items-center justify-center">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                    </div>
+                    <h2 id="authModalTitle" class="text-lg font-extrabold">Bienvenido a Conecta Parral</h2>
+                </div>
+                <button onclick="closeAuthModal()" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Acceso Rápido Demo (1 Clic) -->
+            <div class="mb-5 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25">
+                <p class="text-xs font-bold text-amber-800 dark:text-amber-300 mb-2 flex items-center gap-1.5">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                    <span>Acceso Rápido de Prueba (1 Clic):</span>
+                </p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" onclick="quickDemoLogin('owner')" class="py-2 px-2.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition text-center shadow-sm">
+                        Entrar como Dueño
+                    </button>
+                    <button type="button" onclick="quickDemoLogin('user')" class="py-2 px-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-semibold transition text-center shadow-sm">
+                        Entrar como Cliente
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs Login / Registro -->
+            <div class="grid grid-cols-2 gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl mb-4 text-xs font-bold">
+                <button id="tabLogin" onclick="setAuthMode('login')" class="py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-orange-600">Iniciar Sesión</button>
+                <button id="tabRegister" onclick="setAuthMode('register')" class="py-2 rounded-lg text-slate-500">Crear Cuenta</button>
+            </div>
+
+            <!-- Formulario Auth -->
+            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3.5">
+                
+                <div id="authNameField" class="hidden">
+                    <label class="block text-xs font-semibold mb-1">Nombre completo</label>
+                    <input type="text" id="authName" placeholder="Ej. Carlos Mendoza" class="w-full px-3.5 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Correo electrónico</label>
+                    <input type="email" id="authEmail" required placeholder="correo@ejemplo.com" class="w-full px-3.5 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Contraseña</label>
+                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full px-3.5 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                </div>
+
+                <div id="authRoleField" class="hidden">
+                    <label class="block text-xs font-semibold mb-1.5">Tipo de cuenta</label>
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 flex items-center gap-2 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-500/5">
+                            <input type="radio" name="authRole" value="user" checked class="text-orange-600">
+                            <div>
+                                <p class="text-xs font-bold">Explorador</p>
+                                <p class="text-[10px] text-slate-400">Guardar y reseñar</p>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 flex items-center gap-2 has-[:checked]:border-orange-500 has-[:checked]:bg-orange-500/5">
+                            <input type="radio" name="authRole" value="owner" class="text-orange-600">
+                            <div>
+                                <p class="text-xs font-bold">Dueño de Local</p>
+                                <p class="text-[10px] text-slate-400">Publicar negocio</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" id="authSubmitBtn" class="w-full py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md shadow-orange-600/20 transition">
+                    Entrar a mi cuenta
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 3: REGISTRAR / EDITAR NEGOCIO (DUEÑO) ==================== -->
+    <div id="businessFormModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 animate-fade-in my-auto">
+            
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+                <h2 id="formModalTitle" class="text-lg font-extrabold">Registrar Nuevo Local en Parral</h2>
+                <button onclick="closeBusinessFormModal()" class="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="businessForm" onsubmit="saveBusiness(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[75vh] overflow-y-auto pr-1">
+                <input type="hidden" id="editBusinessId">
+
+                <!-- Columna Izquierda: Datos del Local -->
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Nombre del Negocio *</label>
+                        <input type="text" id="bizName" required placeholder="Ej. Mariscos El Parralense" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Categoría *</label>
+                            <select id="bizCategory" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                                <option value="Restaurantes y Snacks">Restaurantes y Snacks</option>
+                                <option value="Servicios">Servicios</option>
+                                <option value="Tiendas Locales">Tiendas Locales</option>
+                                <option value="Salud">Salud</option>
+                                <option value="Entretenimiento">Entretenimiento</option>
+                                <option value="Automotriz">Automotriz</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Estado Actual</label>
+                            <select id="bizIsOpen" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                                <option value="true">🟢 Abierto ahora</option>
+                                <option value="false">🔴 Cerrado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Dirección y Colonia en Parral *</label>
+                        <input type="text" id="bizAddress" required placeholder="Ej. Av. Independencia #45, Col. Centro" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">Horario *</label>
+                            <input type="text" id="bizHours" required placeholder="Lun-Dom 10:00 - 20:00" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">WhatsApp / Teléfono *</label>
+                            <input type="text" id="bizPhone" required placeholder="6271234567" class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Descripción de productos o servicios *</label>
+                        <textarea id="bizDescription" rows="3" required placeholder="Describe lo mejor de tu negocio..." class="w-full px-3 py-2 text-sm rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none focus:border-orange-500"></textarea>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Selector de Ubicación en Mapa -->
+                <div class="flex flex-col space-y-2">
+                    <label class="block text-xs font-bold">
+                        Ubicación Exacta en el Mapa *
+                        <span class="block font-normal text-slate-400">Haz clic sobre el mapa de Parral para colocar el pin de tu local.</span>
+                    </label>
+                    <div id="pickerMap" class="w-full h-60 md:flex-1 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden"></div>
+                    <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg">
+                        <span>Lat: <strong id="displayLat">26.9317</strong></span>
+                        <span>Lng: <strong id="displayLng">-105.6664</strong></span>
+                    </div>
+                </div>
+
+                <!-- Botones Guardar / Cancelar -->
+                <div class="md:col-span-2 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-2.5">
+                    <button type="button" onclick="closeBusinessFormModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm font-semibold">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-bold shadow-md shadow-orange-600/20">
+                        Guardar y Publicar en Mapa
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ==================== NOTIFICACIÓN TOAST ==================== -->
+    <div id="toastNotification" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] hidden items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-2xl text-xs sm:text-sm font-semibold animate-fade-in">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 dark:text-emerald-600"></i>
+        <span id="toastMessage">Acción completada</span>
+    </div>
+
+    <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
+    <script>
+        // 1. CONSTANTES Y CONFIGURACIÓN DE HIDALGO DEL PARRAL
+        const PARRAL_CENTER = [26.9317, -105.6664]; // Plaza de la Identidad / Centro Histórico
+        
+        const CATEGORIES = [
+            { id: 'Todas', label: 'Todas', icon: 'layout-grid', color: '#f97316' },
+            { id: 'Restaurantes y Snacks', label: 'Restaurantes y Snacks', icon: 'utensils', color: '#ef4444' },
+            { id: 'Servicios', label: 'Servicios', icon: 'briefcase', color: '#3b82f6' },
+            { id: 'Tiendas Locales', label: 'Tiendas Locales', icon: 'shopping-bag', color: '#10b981' },
+            { id: 'Salud', label: 'Salud', icon: 'heart-pulse', color: '#ec4899' },
+            { id: 'Entretenimiento', label: 'Entretenimiento', icon: 'gamepad-2', color: '#8b5cf6' },
+            { id: 'Automotriz', label: 'Automotriz', icon: 'car', color: '#f59e0b' }
+        ];
+
+        // 2. DATOS SEMILLA REALISTAS DE HIDALGO DEL PARRAL, CHIHUAHUA
+        const INITIAL_USERS = [
+            { id: 'owner_1', name: 'Roberto Chávez (Emprendedor)', email: 'dueno@conectaparral.mx', password: '123', role: 'owner' },
+            { id: 'user_1', name: 'Sofía Martínez', email: 'cliente@conectaparral.mx', password: '123', role: 'user', favorites: ['biz_1', 'biz_3'] }
+        ];
+
+        const INITIAL_BUSINESSES = [
+            {
+                id: 'biz_1',
+                ownerId: 'owner_1',
+                name: 'Mariscos y Snacks La Perla del Conchos',
+                category: 'Restaurantes y Snacks',
+                description: 'Especialidad en aguachiles, cocteles de camarón, tostadas de ceviche fresco y botanas preparadas al momento con el auténtico sazón parralense.',
+                address: 'Av. Independencia #112, Col. Centro, Hidalgo del Parral',
+                hours: 'Mar - Dom: 11:00 AM - 7:30 PM',
+                phone: '6271048821',
+                lat: 26.9324,
+                lng: -105.6678,
+                isOpen: true,
+                views: 342,
+                image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Sofía Martínez', rating: 5, comment: 'El aguachile verde está increíble y súper fresco. Excelente atención.', date: 'Hace 2 días' },
+                    { author: 'Luis Tarango', rating: 5, comment: 'Muy bien ubicados cerca del centro y precios justos.', date: 'Hace 1 semana' }
+                ]
+            },
+            {
+                id: 'biz_2',
+                ownerId: 'owner_1',
+                name: 'Café Mina La Prieta',
+                category: 'Restaurantes y Snacks',
+                description: 'Cafetería artesanal con vista panorámica. Café de especialidad tostado en casa, pay de nuez regional, desayunos y ambiente ideal para trabajar o platicar.',
+                address: 'Calle Mercaderes #24, Centro Histórico, Parral',
+                hours: 'Lun - Dom: 8:00 AM - 10:00 PM',
+                phone: '6275223190',
+                lat: 26.9311,
+                lng: -105.6645,
+                isOpen: true,
+                views: 289,
+                image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Ana Gabriela', rating: 5, comment: 'El pay de nuez de Parral con un latte frío es obligatorio.', date: 'Hace 3 días' }
+                ]
+            },
+            {
+                id: 'biz_3',
+                ownerId: 'owner_2',
+                name: 'Papelería y Copiado El Tecnológico',
+                category: 'Servicios',
+                description: 'Impresión láser a color, engargolados, ploteo de planos arquitectónicos, artículos escolares y soporte para estudiantes del Tec de Parral.',
+                address: 'Av. Tecnológico #58, Col. Tecnológico, Parral',
+                hours: 'Lun - Sáb: 7:30 AM - 8:00 PM',
+                phone: '6271194022',
+                lat: 26.9248,
+                lng: -105.6562,
+                isOpen: true,
+                views: 195,
+                image: 'https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Diego Holguín', rating: 4, comment: 'Siempre me sacan de apuros con las entregas del Tec.', date: 'Hace 5 días' }
+                ]
+            },
+            {
+                id: 'biz_4',
+                ownerId: 'owner_2',
+                name: 'Servicio Automotriz Las Fuentes',
+                category: 'Automotriz',
+                description: 'Diagnóstico por computadora, afinaciones, frenos, suspensión y cambio de aceite rápido con refacciones garantizadas.',
+                address: 'Blvd. Ortiz Mena #210, Col. Las Fuentes, Parral',
+                hours: 'Lun - Sáb: 9:00 AM - 6:30 PM',
+                phone: '6275239011',
+                lat: 26.9369,
+                lng: -105.6735,
+                isOpen: true,
+                views: 164,
+                image: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Ing. Morales', rating: 5, comment: 'Honestos y rápidos, te explican exactamente qué falla tiene el carro.', date: 'Hace 1 semana' }
+                ]
+            },
+            {
+                id: 'biz_5',
+                ownerId: 'owner_1',
+                name: 'Dulcería Regional La Gota de Miel',
+                category: 'Tiendas Locales',
+                description: 'Tradicionales dulces de leche quemada, jamoncillos de nuez, rollos de guayaba y recuerdos típicos de la Capital del Mundo.',
+                address: 'Plaza de la Identidad Local 4, Centro, Parral',
+                hours: 'Lun - Dom: 9:30 AM - 8:00 PM',
+                phone: '6275220987',
+                lat: 26.9332,
+                lng: -105.6659,
+                isOpen: true,
+                views: 410,
+                image: 'https://images.unsplash.com/photo-1582716401301-b2407dc7563d?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Fernanda Ruiz', rating: 5, comment: 'Los mejores jamoncillos de Parral para llevar de regalo.', date: 'Ayer' }
+                ]
+            },
+            {
+                id: 'biz_6',
+                ownerId: 'owner_3',
+                name: 'Clínica Dental Sonrisa Parral',
+                category: 'Salud',
+                description: 'Odontología integral, ortodoncia, limpiezas ultrasónicas y blanqueamiento dental con tecnología moderna y atención cálida.',
+                address: 'Calle Coronado #18, Zona Centro, Parral',
+                hours: 'Lun - Vie: 9:00 AM - 7:00 PM',
+                phone: '6271087744',
+                lat: 26.9295,
+                lng: -105.6682,
+                isOpen: false,
+                views: 128,
+                image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80',
+                reviews: []
+            },
+            {
+                id: 'biz_7',
+                ownerId: 'owner_3',
+                name: 'Arena Gaming & Boliche Parral',
+                category: 'Entretenimiento',
+                description: 'Centro de entretenimiento familiar con pistas de boliche, zona gamer PC/consolas, snacks y torneos los fines de semana.',
+                address: 'Av. Niños Héroes #140, Col. AltaVista, Parral',
+                hours: 'Mié - Dom: 2:00 PM - 11:00 PM',
+                phone: '6271153399',
+                lat: 26.9412,
+                lng: -105.6618,
+                isOpen: true,
+                views: 256,
+                image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80',
+                reviews: [
+                    { author: 'Kevin Soto', rating: 5, comment: 'Excelente ambiente para ir con amigos el viernes por la noche.', date: 'Hace 4 días' }
+                ]
+            }
+        ];
+
+        // 3. ESTADO GLOBAL DE LA APLICACIÓN
+        let businesses = [];
+        let users = [];
+        let currentUser = null;
+        let selectedCategory = 'Todas';
+        let searchQuery = '';
+        let onlyFavorites = false;
+        let activeBusinessId = null;
+        let authMode = 'login';
+
+        // Variables de Mapas Leaflet
+        let mainMap = null;
+        let markersLayer = null;
+        let pickerMap = null;
+        let pickerMarker = null;
+
+        // 4. INICIALIZACIÓN AL CARGAR LA PÁGINA
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStateFromStorage();
+            initTheme();
+            renderCategoryChips();
+            initMainMap();
+            updateAuthUI();
+            applyFilters();
+            lucide.createIcons();
+        });
+
+        function loadStateFromStorage() {
+            const storedBiz = localStorage.getItem('conectaParral_businesses');
+            const storedUsers = localStorage.getItem('conectaParral_users');
+            const storedSession = localStorage.getItem('conectaParral_session');
+
+            if (storedBiz) {
+                businesses = JSON.parse(storedBiz);
+            } else {
+                businesses = INITIAL_BUSINESSES;
+                localStorage.setItem('conectaParral_businesses', JSON.stringify(businesses));
+            }
+
+            if (storedUsers) {
+                users = JSON.parse(storedUsers);
+            } else {
+                users = INITIAL_USERS;
+                localStorage.setItem('conectaParral_users', JSON.stringify(users));
+            }
+
+            if (storedSession) {
+                currentUser = JSON.parse(storedSession);
+            }
+        }
+
+        function saveBusinessesToStorage() {
+            localStorage.setItem('conectaParral_businesses', JSON.stringify(businesses));
+        }
+
+        function saveUsersToStorage() {
+            localStorage.setItem('conectaParral_users', JSON.stringify(users));
+            if (currentUser) {
+                localStorage.setItem('conectaParral_session', JSON.stringify(currentUser));
+            }
+        }
+
+        // 5. TEMA CLARO / OSCURO
+        function initTheme() {
+            const savedTheme = localStorage.getItem('conectaParral_theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            localStorage.setItem('conectaParral_theme', html.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        // 6. MAPA PRINCIPAL INTERACTIVO (LEAFLET)
+        function initMainMap() {
+            mainMap = L.map('mainMap').setView(PARRAL_CENTER, 14);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors | Conecta Parral'
+            }).addTo(mainMap);
+
+            markersLayer = L.layerGroup().addTo(mainMap);
+        }
+
+        function resetMapCenter() {
+            if (mainMap) {
+                mainMap.flyTo(PARRAL_CENTER, 14, { duration: 0.8 });
+            }
+        }
+
+        function getCategoryColor(catName) {
+            const found = CATEGORIES.find(c => c.id === catName);
+            return found ? found.color : '#f97316';
+        }
+
+        function renderMapMarkers(filteredList) {
+            if (!markersLayer) return;
+            markersLayer.clearLayers();
+
+            filteredList.forEach(biz => {
+                const color = getCategoryColor(biz.category);
+                const iconHtml = `
+                    <div class="custom-pin" style="background-color: ${color}; width: 34px; height: 34px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                `;
+
+                const customIcon = L.divIcon({
+                    html: iconHtml,
+                    className: '',
+                    iconSize: [34, 34],
+                    iconAnchor: [17, 34],
+                    popupAnchor: [0, -34]
+                });
+
+                const marker = L.marker([biz.lat, biz.lng], { icon: customIcon });
+                
+                const popupContent = `
+                    <div class="p-1 min-w-[180px]">
+                        <span class="text-[10px] font-bold uppercase tracking-wider" style="color:${color}">${biz.category}</span>
+                        <h4 class="font-bold text-sm text-slate-900 leading-tight mt-0.5">${biz.name}</h4>
+                        <p class="text-[11px] text-slate-500 mt-1">${biz.address}</p>
+                        <button onclick="openDetailModal('${biz.id}')" class="mt-2 w-full py-1.5 px-2.5 bg-orange-600 text-white text-xs font-semibold rounded-lg hover:bg-orange-700 transition">
+                            Ver detalles y reseñas
+                        </button>
+                    </div>
+                `;
+
+                marker.bindPopup(popupContent);
+                markersLayer.addLayer(marker);
+            });
+        }
+
+        // 7. FILTROS, BÚSQUEDA Y DIRECTORIO
+        function renderCategoryChips() {
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = CATEGORIES.map(cat => {
+                const isActive = selectedCategory === cat.id && !onlyFavorites;
+                return `
+                    <button 
+                        onclick="selectCategory('${cat.id}')"
+                        class="px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition ${
+                            isActive 
+                            ? 'bg-orange-600 text-white shadow-sm shadow-orange-600/20' 
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                        }"
+                    >
+                        <i data-lucide="${cat.icon}" class="w-3.5 h-3.5"></i>
+                        <span>${cat.label}</span>
+                    </button>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function selectCategory(catId) {
+            selectedCategory = catId;
+            onlyFavorites = false;
+            renderCategoryChips();
+            applyFilters();
+        }
+
+        function handleSearch(val) {
+            searchQuery = val.toLowerCase().trim();
+            document.getElementById('searchInputDesktop').value = val;
+            document.getElementById('searchInputMobile').value = val;
+            applyFilters();
+        }
+
+        function toggleFavoritesFilter() {
+            if (!currentUser) {
+                openAuthModal('login');
+                return;
+            }
+            onlyFavorites = !onlyFavorites;
+            renderCategoryChips();
+            applyFilters();
+            showToast(onlyFavorites ? 'Mostrando tus negocios favoritos' : 'Mostrando todos los negocios');
+        }
+
+        function calculateAverageRating(reviews) {
+            if (!reviews || reviews.length === 0) return 'Nuevo';
+            const sum = reviews.reduce((acc, r) => acc + Number(r.rating), 0);
+            return (sum / reviews.length).toFixed(1);
+        }
+
+        function applyFilters() {
+            const onlyOpen = document.getElementById('filterOpenNow').checked;
+
+            const filtered = businesses.filter(biz => {
+                const matchesCat = selectedCategory === 'Todas' || biz.category === selectedCategory;
+                const matchesOpen = !onlyOpen || biz.isOpen;
+                const matchesSearch = !searchQuery || 
+                    biz.name.toLowerCase().includes(searchQuery) ||
+                    biz.category.toLowerCase().includes(searchQuery) ||
+                    biz.address.toLowerCase().includes(searchQuery) ||
+                    biz.description.toLowerCase().includes(searchQuery);
+                const matchesFav = !onlyFavorites || (currentUser && currentUser.favorites && currentUser.favorites.includes(biz.id));
+
+                return matchesCat && matchesOpen && matchesSearch && matchesFav;
+            });
+
+            document.getElementById('resultsCount').textContent = `${filtered.length} ${filtered.length === 1 ? 'negocio' : 'negocios'}`;
+            renderBusinessCards(filtered);
+            renderMapMarkers(filtered);
+        }
+
+        function renderBusinessCards(list) {
+            const container = document.getElementById('businessListContainer');
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-8 text-center border border-slate-200 dark:border-slate-800">
+                        <i data-lucide="search-x" class="w-10 h-10 text-slate-400 mx-auto mb-2"></i>
+                        <h3 class="font-bold text-sm">No se encontraron negocios</h3>
+                        <p class="text-xs text-slate-500 mt-1">Intenta cambiar la categoría o limpiar el buscador.</p>
+                        <button onclick="resetAllFilters()" class="mt-3 px-4 py-1.5 rounded-xl bg-orange-600 text-white text-xs font-semibold">Ver todos</button>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = list.map(biz => {
+                const avgRating = calculateAverageRating(biz.reviews);
+                const isFav = currentUser && currentUser.favorites && currentUser.favorites.includes(biz.id);
+                const catColor = getCategoryColor(biz.category);
+
+                return `
+                    <div onclick="openDetailModal('${biz.id}')" class="group bg-white dark:bg-slate-900 rounded-2xl p-3.5 border border-slate-200 dark:border-slate-800 hover:border-orange-500/60 shadow-sm hover:shadow-md transition cursor-pointer flex gap-3.5">
+                        
+                        <!-- Imagen Miniatura -->
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 shrink-0 relative">
+                            <img src="${biz.image}" onerror="this.src='https://placehold.co/300x300/ea580c/ffffff?text=Parral'" alt="${biz.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                            <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold text-white shadow" style="background-color: ${catColor}">
+                                ${biz.category.split(' ')[0]}
+                            </span>
+                        </div>
+
+                        <!-- Información -->
+                        <div class="flex-1 min-w-0 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-start justify-between gap-2">
+                                    <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate group-hover:text-orange-600 transition">
+                                        ${biz.name}
+                                    </h3>
+                                    <button onclick="event.stopPropagation(); toggleFavorite('${biz.id}')" class="text-slate-400 hover:text-rose-500 transition shrink-0">
+                                        <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
+                                    </button>
+                                </div>
+                                
+                                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">
+                                    ${biz.description}
+                                </p>
+                            </div>
+
+                            <div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px]">
+                                <span class="font-semibold flex items-center gap-1 ${biz.isOpen ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500'}">
+                                    <span class="w-2 h-2 rounded-full ${biz.isOpen ? 'bg-emerald-500' : 'bg-rose-500'}"></span>
+                                    ${biz.isOpen ? 'Abierto' : 'Cerrado'}
+                                </span>
+
+                                <div class="flex items-center gap-2 text-slate-500">
+                                    <span class="flex items-center gap-0.5 font-bold text-amber-500">
+                                        <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500"></i>
+                                        ${avgRating}
+                                    </span>
+                                    <span>•</span>
+                                    <span class="truncate max-w-[110px]">${biz.address.split(',')[1] || 'Parral'}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function resetAllFilters() {
+            selectedCategory = 'Todas';
+            searchQuery = '';
+            onlyFavorites = false;
+            document.getElementById('searchInputDesktop').value = '';
+            document.getElementById('searchInputMobile').value = '';
+            document.getElementById('filterOpenNow').checked = false;
+            renderCategoryChips();
+            applyFilters();
+        }
+
+        // 8. DETALLE DE NEGOCIO, FAVORITOS Y RESEÑAS
+        function openDetailModal(bizId) {
+            const biz = businesses.find(b => b.id === bizId);
+            if (!biz) return;
+
+            activeBusinessId = bizId;
+            biz.views = (biz.views || 0) + 1;
+            saveBusinessesToStorage();
+
+            document.getElementById('detailImage').src = biz.image;
+            document.getElementById('detailCategoryBadge').textContent = biz.category;
+            document.getElementById('detailCategoryBadge').style.backgroundColor = getCategoryColor(biz.category);
+            document.getElementById('detailName').textContent = biz.name;
+            document.getElementById('detailDescription').textContent = biz.description;
+            document.getElementById('detailAddress').textContent = biz.address;
+            document.getElementById('detailHours').textContent = biz.hours;
+            document.getElementById('detailViews').innerHTML = `<i data-lucide="eye" class="w-3.5 h-3.5"></i> ${biz.views} visitas`;
+
+            const statusBadge = document.getElementById('detailStatusBadge');
+            if (biz.isOpen) {
+                statusBadge.textContent = '🟢 Abierto ahora';
+                statusBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300';
+            } else {
+                statusBadge.textContent = '🔴 Cerrado en este momento';
+                statusBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-rose-500/15 text-rose-700 dark:text-rose-300';
+            }
+
+            const cleanPhone = biz.phone.replace(/\D/g, '');
+            const waText = encodeURIComponent(`Hola ${biz.name}, los encontré en Conecta Parral y me gustaría pedir información.`);
+            document.getElementById('detailWhatsappLink').href = `https://wa.me/52${cleanPhone}?text=${waText}`;
+
+            updateDetailFavoriteIcon();
+            renderDetailReviews(biz);
+
+            const modal = document.getElementById('businessDetailModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('businessDetailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            activeBusinessId = null;
+            applyFilters();
+        }
+
+        function focusBusinessOnMap() {
+            const biz = businesses.find(b => b.id === activeBusinessId);
+            if (!biz) return;
+            closeDetailModal();
+            switchView('explore');
+            setTimeout(() => {
+                mainMap.flyTo([biz.lat, biz.lng], 16, { duration: 0.9 });
+            }, 150);
+        }
+
+        function toggleFavorite(bizId) {
+            if (!currentUser) {
+                showToast('Inicia sesión para guardar negocios en favoritos');
+                openAuthModal('login');
+                return;
+            }
+            if (!currentUser.favorites) currentUser.favorites = [];
+
+            const index = currentUser.favorites.indexOf(bizId);
+            if (index > -1) {
+                currentUser.favorites.splice(index, 1);
+                showToast('Eliminado de tus favoritos');
+            } else {
+                currentUser.favorites.push(bizId);
+                showToast('¡Guardado en tus favoritos!');
+            }
+
+            const userIdx = users.findIndex(u => u.id === currentUser.id);
+            if (userIdx > -1) users[userIdx] = currentUser;
+            saveUsersToStorage();
+            updateAuthUI();
+            applyFilters();
+        }
+
+        function toggleFavoriteFromModal() {
+            if (activeBusinessId) {
+                toggleFavorite(activeBusinessId);
+                updateDetailFavoriteIcon();
+            }
+        }
+
+        function updateDetailFavoriteIcon() {
+            const icon = document.getElementById('detailFavIcon');
+            const isFav = currentUser && currentUser.favorites && currentUser.favorites.includes(activeBusinessId);
+            if (isFav) {
+                icon.classList.add('fill-rose-500', 'text-rose-500');
+            } else {
+                icon.classList.remove('fill-rose-500', 'text-rose-500');
+            }
+        }
+
+        function renderDetailReviews(biz) {
+            const avg = calculateAverageRating(biz.reviews);
+            document.getElementById('detailRating').textContent = avg;
+            document.getElementById('detailReviewCount').textContent = `(${biz.reviews.length} ${biz.reviews.length === 1 ? 'reseña' : 'reseñas'})`;
+
+            const list = document.getElementById('detailReviewsList');
+            if (!biz.reviews || biz.reviews.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 italic">Aún no hay reseñas. ¡Sé el primero en opinar!</p>`;
+                return;
+            }
+
+            list.innerHTML = biz.reviews.map(r => `
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-xs font-bold">${r.author}</span>
+                        <span class="text-[11px] text-amber-500 font-bold">${'⭐'.repeat(r.rating)}</span>
+                    </div>
+                    <p class="text-xs text-slate-600 dark:text-slate-300">${r.comment}</p>
+                    <span class="text-[10px] text-slate-400 block mt-1">${r.date}</span>
+                </div>
+            `).join('');
+        }
+
+        function submitReview(e) {
+            e.preventDefault();
+            if (!currentUser) {
+                showToast('Inicia sesión para dejar una reseña');
+                openAuthModal('login');
+                return;
+            }
+
+            const biz = businesses.find(b => b.id === activeBusinessId);
+            if (!biz) return;
+
+            const rating = Number(document.getElementById('reviewRatingInput').value);
+            const comment = document.getElementById('reviewCommentInput').value.trim();
+            if (!comment) return;
+
+            biz.reviews.unshift({
+                author: currentUser.name,
+                rating,
+                comment,
+                date: 'Justo ahora'
+            });
+
+            saveBusinessesToStorage();
+            document.getElementById('reviewCommentInput').value = '';
+            renderDetailReviews(biz);
+            showToast('¡Gracias por compartir tu opinión!');
+        }
+
+        // 9. SISTEMA DE AUTENTICACIÓN Y ROLES
+        function openAuthModal(mode = 'login') {
+            setAuthMode(mode);
+            const modal = document.getElementById('authModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function setAuthMode(mode) {
+            authMode = mode;
+            const isReg = mode === 'register';
+            document.getElementById('authNameField').classList.toggle('hidden', !isReg);
+            document.getElementById('authRoleField').classList.toggle('hidden', !isReg);
+            document.getElementById('authName').required = isReg;
+            document.getElementById('authSubmitBtn').textContent = isReg ? 'Crear cuenta en Conecta Parral' : 'Entrar a mi cuenta';
+            
+            document.getElementById('tabLogin').className = !isReg 
+                ? 'py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-orange-600' 
+                : 'py-2 rounded-lg text-slate-500';
+            document.getElementById('tabRegister').className = isReg 
+                ? 'py-2 rounded-lg bg-white dark:bg-slate-900 shadow-sm text-orange-600' 
+                : 'py-2 rounded-lg text-slate-500';
+        }
+
+        function quickDemoLogin(role) {
+            const demoUser = users.find(u => u.role === role);
+            if (demoUser) {
+                currentUser = demoUser;
+                localStorage.setItem('conectaParral_session', JSON.stringify(currentUser));
+                closeAuthModal();
+                updateAuthUI();
+                showToast(`Sesión iniciada como ${currentUser.name}`);
+                if (role === 'owner') {
+                    switchView('owner');
+                }
+            }
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value.trim().toLowerCase();
+            const password = document.getElementById('authPassword').value;
+
+            if (authMode === 'login') {
+                const user = users.find(u => u.email.toLowerCase() === email && u.password === password);
+                if (!user) {
+                    showToast('Correo o contraseña incorrectos. Prueba los botones de acceso rápido.');
+                    return;
+                }
+                currentUser = user;
+                localStorage.setItem('conectaParral_session', JSON.stringify(currentUser));
+                closeAuthModal();
+                updateAuthUI();
+                showToast(`¡Bienvenido de nuevo, ${currentUser.name}!`);
+                if (currentUser.role === 'owner') switchView('owner');
+            } else {
+                const name = document.getElementById('authName').value.trim();
+                const role = document.querySelector('input[name="authRole"]:checked').value;
+
+                if (users.some(u => u.email.toLowerCase() === email)) {
+                    showToast('Este correo ya está registrado.');
+                    return;
+                }
+
+                const newUser = {
+                    id: 'usr_' + Date.now(),
+                    name,
+                    email,
+                    password,
+                    role,
+                    favorites: []
+                };
+
+                users.push(newUser);
+                currentUser = newUser;
+                saveUsersToStorage();
+                closeAuthModal();
+                updateAuthUI();
+                showToast(`¡Cuenta creada! Bienvenido, ${name}`);
+                if (role === 'owner') switchView('owner');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            onlyFavorites = false;
+            localStorage.removeItem('conectaParral_session');
+            updateAuthUI();
+            switchView('explore');
+            applyFilters();
+            showToast('Has cerrado sesión');
+        }
+
+        function updateAuthUI() {
+            const guestDiv = document.getElementById('authButtonsGuest');
+            const loggedDiv = document.getElementById('authButtonsLogged');
+            const btnOwner = document.getElementById('btnNavOwnerDashboard');
+            const btnFav = document.getElementById('btnNavFavorites');
+
+            if (!currentUser) {
+                guestDiv.classList.remove('hidden');
+                loggedDiv.classList.add('hidden');
+                loggedDiv.classList.remove('flex');
+            } else {
+                guestDiv.classList.add('hidden');
+                loggedDiv.classList.remove('hidden');
+                loggedDiv.classList.add('flex');
+
+                document.getElementById('userNameDisplay').textContent = currentUser.name.split(' ')[0];
+                document.getElementById('userRoleDisplay').textContent = currentUser.role === 'owner' ? 'Dueño de Local' : 'Explorador';
+
+                if (currentUser.role === 'owner') {
+                    btnOwner.classList.remove('hidden');
+                    btnOwner.classList.add('flex');
+                    btnFav.classList.add('hidden');
+                } else {
+                    btnOwner.classList.add('hidden');
+                    btnFav.classList.remove('hidden');
+                    btnFav.classList.add('flex');
+                    document.getElementById('favCountBadge').textContent = (currentUser.favorites || []).length;
+                }
+            }
+        }
+
+        // 10. CAMBIO DE VISTAS Y PANEL DE DUEÑO DE LOCAL
+        function switchView(viewName) {
+            const viewExplore = document.getElementById('viewExplore');
+            const viewOwner = document.getElementById('viewOwner');
+            const btnExplore = document.getElementById('btnNavExplore');
+            const btnOwner = document.getElementById('btnNavOwnerDashboard');
+            const desktopSearch = document.getElementById('globalSearchWrapper');
+            const mobileSearch = document.getElementById('mobileSearchWrapper');
+
+            if (viewName === 'owner' && currentUser && currentUser.role === 'owner') {
+                viewExplore.classList.add('hidden');
+                viewOwner.classList.remove('hidden');
+                btnExplore.classList.remove('hidden');
+                btnExplore.classList.add('flex');
+                btnOwner.classList.add('hidden');
+                desktopSearch.classList.add('hidden');
+                mobileSearch.classList.add('hidden');
+                renderOwnerDashboard();
+            } else {
+                viewOwner.classList.add('hidden');
+                viewExplore.classList.remove('hidden');
+                btnExplore.classList.add('hidden');
+                desktopSearch.classList.remove('hidden');
+                mobileSearch.classList.remove('hidden');
+                if (currentUser && currentUser.role === 'owner') {
+                    btnOwner.classList.remove('hidden');
+                    btnOwner.classList.add('flex');
+                }
+                setTimeout(() => {
+                    if (mainMap) mainMap.invalidateSize();
+                }, 100);
+                applyFilters();
+            }
+        }
+
+        function renderOwnerDashboard() {
+            if (!currentUser) return;
+            const myBusinesses = businesses.filter(b => b.ownerId === currentUser.id);
+
+            // Calcular métricas
+            const totalViews = myBusinesses.reduce((acc, b) => acc + (b.views || 0), 0);
+            const totalFavs = users.reduce((acc, u) => {
+                if (!u.favorites) return acc;
+                const count = u.favorites.filter(favId => myBusinesses.some(mb => mb.id === favId)).length;
+                return acc + count;
+            }, 0);
+
+            document.getElementById('statOwnerBusinesses').textContent = myBusinesses.length;
+            document.getElementById('statOwnerViews').textContent = totalViews;
+            document.getElementById('statOwnerFavorites').textContent = totalFavs;
+
+            const grid = document.getElementById('ownerBusinessesGrid');
+            if (myBusinesses.length === 0) {
+                grid.innerHTML = `
+                    <div class="md:col-span-3 bg-white dark:bg-slate-900 rounded-2xl p-10 text-center border border-dashed border-slate-300 dark:border-slate-700">
+                        <i data-lucide="store" class="w-12 h-12 text-orange-500 mx-auto mb-3"></i>
+                        <h3 class="font-bold text-base">Aún no has registrado ningún local</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4">Publica tu negocio en el mapa interactivo de Hidalgo del Parral para que miles de clientes te encuentren.</p>
+                        <button onclick="openBusinessFormModal()" class="px-4 py-2 rounded-xl bg-orange-600 text-white text-xs font-bold">Registrar mi primer negocio</button>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            grid.innerHTML = myBusinesses.map(biz => `
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="h-36 bg-slate-200 dark:bg-slate-800 relative">
+                            <img src="${biz.image}" class="w-full h-full object-cover">
+                            <span class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full text-[11px] font-bold ${biz.isOpen ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}">
+                                ${biz.isOpen ? 'Abierto' : 'Cerrado'}
+                            </span>
+                        </div>
+                        <div class="p-4">
+                            <span class="text-[11px] font-bold text-orange-600">${biz.category}</span>
+                            <h3 class="font-bold text-base mt-0.5">${biz.name}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span class="truncate">${biz.address}</span>
+                            </p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 shrink-0"></i>
+                                <span>${biz.hours}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                        <button onclick="toggleBusinessStatus('${biz.id}')" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-orange-500 transition">
+                            ${biz.isOpen ? 'Marcar Cerrado' : 'Marcar Abierto'}
+                        </button>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="openBusinessFormModal('${biz.id}')" title="Editar negocio" class="p-2 rounded-lg bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 transition">
+                                <i data-lucide="pencil" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="deleteBusiness('${biz.id}')" title="Eliminar negocio" class="p-2 rounded-lg bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function toggleBusinessStatus(bizId) {
+            const biz = businesses.find(b => b.id === bizId);
+            if (!biz) return;
+            biz.isOpen = !biz.isOpen;
+            saveBusinessesToStorage();
+            renderOwnerDashboard();
+            showToast(`Estado actualizado a: ${biz.isOpen ? 'Abierto' : 'Cerrado'}`);
+        }
+
+        function deleteBusiness(bizId) {
+            businesses = businesses.filter(b => b.id !== bizId);
+            saveBusinessesToStorage();
+            renderOwnerDashboard();
+            showToast('Negocio eliminado del directorio');
+        }
+
+        // 11. MODAL FORMULARIO DE NEGOCIO CON SELECTOR DE UBICACIÓN EN MAPA
+        function openBusinessFormModal(bizId = null) {
+            const modal = document.getElementById('businessFormModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            let initialLat = PARRAL_CENTER[0];
+            let initialLng = PARRAL_CENTER[1];
+
+            if (bizId) {
+                const biz = businesses.find(b => b.id === bizId);
+                document.getElementById('formModalTitle').textContent = 'Editar Información del Local';
+                document.getElementById('editBusinessId').value = biz.id;
+                document.getElementById('bizName').value = biz.name;
+                document.getElementById('bizCategory').value = biz.category;
+                document.getElementById('bizIsOpen').value = String(biz.isOpen);
+                document.getElementById('bizAddress').value = biz.address;
+                document.getElementById('bizHours').value = biz.hours;
+                document.getElementById('bizPhone').value = biz.phone;
+                document.getElementById('bizDescription').value = biz.description;
+                initialLat = biz.lat;
+                initialLng = biz.lng;
+            } else {
+                document.getElementById('formModalTitle').textContent = 'Registrar Nuevo Local en Parral';
+                document.getElementById('businessForm').reset();
+                document.getElementById('editBusinessId').value = '';
+            }
+
+            updatePickerCoordsDisplay(initialLat, initialLng);
+
+            setTimeout(() => {
+                if (!pickerMap) {
+                    pickerMap = L.map('pickerMap').setView([initialLat, initialLng], 15);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap'
+                    }).addTo(pickerMap);
+
+                    pickerMarker = L.marker([initialLat, initialLng], { draggable: true }).addTo(pickerMap);
+
+                    pickerMap.on('click', (e) => {
+                        pickerMarker.setLatLng(e.latlng);
+                        updatePickerCoordsDisplay(e.latlng.lat, e.latlng.lng);
+                    });
+
+                    pickerMarker.on('dragend', () => {
+                        const pos = pickerMarker.getLatLng();
+                        updatePickerCoordsDisplay(pos.lat, pos.lng);
+                    });
+                } else {
+                    pickerMap.invalidateSize();
+                    pickerMap.setView([initialLat, initialLng], 15);
+                    pickerMarker.setLatLng([initialLat, initialLng]);
+                }
+            }, 150);
+        }
+
+        function updatePickerCoordsDisplay(lat, lng) {
+            document.getElementById('displayLat').textContent = lat.toFixed(5);
+            document.getElementById('displayLng').textContent = lng.toFixed(5);
+        }
+
+        function closeBusinessFormModal() {
+            const modal = document.getElementById('businessFormModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function getCategoryDefaultImage(cat) {
+            const map = {
+                'Restaurantes y Snacks': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',
+                'Servicios': 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+                'Tiendas Locales': 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
+                'Salud': 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
+                'Entretenimiento': 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=800&q=80',
+                'Automotriz': 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80'
+            };
+            return map[cat] || map['Servicios'];
+        }
+
+        function saveBusiness(e) {
+            e.preventDefault();
+            if (!currentUser || currentUser.role !== 'owner') return;
+
+            const editId = document.getElementById('editBusinessId').value;
+            const pos = pickerMarker.getLatLng();
+            const category = document.getElementById('bizCategory').value;
+
+            const bizData = {
+                name: document.getElementById('bizName').value.trim(),
+                category,
+                isOpen: document.getElementById('bizIsOpen').value === 'true',
+                address: document.getElementById('bizAddress').value.trim(),
+                hours: document.getElementById('bizHours').value.trim(),
+                phone: document.getElementById('bizPhone').value.trim(),
+                description: document.getElementById('bizDescription').value.trim(),
+                lat: pos.lat,
+                lng: pos.lng
+            };
+
+            if (editId) {
+                const idx = businesses.findIndex(b => b.id === editId);
+                if (idx > -1) {
+                    businesses[idx] = { ...businesses[idx], ...bizData };
+                    showToast('¡Cambios guardados y actualizados en el mapa!');
+                }
+            } else {
+                const newBiz = {
+                    id: 'biz_' + Date.now(),
+                    ownerId: currentUser.id,
+                    ...bizData,
+                    views: 1,
+                    image: getCategoryDefaultImage(category),
+                    reviews: []
+                };
+                businesses.unshift(newBiz);
+                showToast('¡Tu negocio ya está publicado en Conecta Parral!');
+            }
+
+            saveBusinessesToStorage();
+            closeBusinessFormModal();
+            renderOwnerDashboard();
+        }
+
+        // 12. UTILIDAD DE NOTIFICACIONES TOAST
+        let toastTimeout = null;
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastMessage').textContent = msg;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3200);
+        }
+    </script>
+</body>
+</html>
